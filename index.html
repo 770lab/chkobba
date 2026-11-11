@@ -621,6 +621,35 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 
 .namesl{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;padding:12px 14px;border-radius:14px;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font:800 15px Nunito,sans-serif;cursor:pointer}.namesl span{font-size:20px;opacity:.8}
 </style>
+<style id="correctifs-affichage">
+/* Correctifs d'affichage (12/11/2026), après toutes les autres règles.
+   1) Coins des figures : l'index (lettre + petit symbole) touchait le cadre du dessin. Index un peu plus petit et
+      plus près du bord, dessin réduit juste assez (--fk) ; marge mesurée sur tous les styles de cartes. */
+.card .ix{left:4.5%;top:4%;font-size:calc(var(--cw)*.18)}
+.card .ix svg{width:calc(var(--cw)*.125);height:calc(var(--cw)*.125)}
+.card .ix.br{right:4.5%;bottom:4%}
+.card.pk .ix.tr{right:4.5%}
+.card.pk .ix.bl{bottom:4%}
+.card .fimg{height:calc(var(--fh,72%)*var(--fk,1))}
+.card .fimg{--fk:.92}
+.card .fimg.fs-m{--fk:.89}
+.card .fimg.fs-f{--fk:1}
+.card.jb:not(.rm) .fimg,.card.jb:not(.rm) .fimg.fs-m{--fk:.93}
+.card.jb:not(.rm) .fimg.fs-f{--fk:1}
+.card.nu .fimg,.card.rm .fimg{--fk:1}
+.card .fframe{inset:10% 21%}
+.card.jb:not(.rm) .fframe{inset:24% 26%}
+.card.jb:not(.rm) .ix{left:3.5%;top:3%}
+.card.jb:not(.rm) .ix.br{left:auto;top:auto;right:3.5%;bottom:3%}
+/* 2) Barre du haut : à la dernière donne, « Dernière donne » l'élargissait et la colonne de la grille suivait
+      (413 px sur un écran de 360) : toute la table glissait à droite. La colonne ne dépasse plus l'écran, l'étiquette
+      passe sur deux lignes, « en 21 » s'efface sur les petits écrans et un prénom trop long finit par « … ». */
+#app{grid-template-columns:minmax(0,1fr)}
+.scorepill span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scorepill b,.scorepill small{flex:none}
+.deckind.last span{white-space:normal;width:min-content;line-height:1.05;text-align:center;font-size:11px}
+@media (max-width:400px){.scorepill{gap:5px;padding:0 4px}.bar:has(.deckind.last) #tgt{display:none}}
+</style>
 </head>
 <body data-theme="cafe">
 
