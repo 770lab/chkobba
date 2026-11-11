@@ -1,0 +1,30 @@
+{
+ "name": "Chkobba",
+ "short_name": "Chkobba",
+ "description": "Le jeu de cartes tunisien, contre l'ordinateur, à 2 ou à 4.",
+ "lang": "fr",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#6c3f1f",
+ "theme_color": "#1f7f48",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-maskable.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
