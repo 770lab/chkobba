@@ -648,7 +648,11 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 .scorepill span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .scorepill b,.scorepill small{flex:none}
 .deckind.last span{white-space:normal;width:min-content;line-height:1.05;text-align:center;font-size:11px}
-@media (max-width:400px){.scorepill{gap:5px;padding:0 4px}.bar:has(.deckind.last) #tgt{display:none}}
+@media (max-width:400px){.scorepill{gap:5px;padding:0 4px}}
+/* « en 21 » cède sa place aux prénoms pendant la dernière donne (sinon « Toi » devenait « T… » à 412 px). */
+@media (max-width:480px){.bar:has(.deckind.last) #tgt{display:none}}
+@media (max-width:400px){.deckind.last{padding:0 6px;gap:4px}}
+#tn0,#tn1{min-width:1.7em}
 </style>
 </head>
 <body data-theme="cafe">
