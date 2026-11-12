@@ -653,6 +653,25 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 @media (max-width:480px){.bar:has(.deckind.last) #tgt{display:none}}
 @media (max-width:400px){.deckind.last{padding:0 6px;gap:4px}}
 #tn0,#tn1{min-width:1.7em}
+/* 3) Accueil (12/11) : l'écran ne doit pas avoir l'air coupé en bas. L'en-tête et le bas (Jouer, Réglages / Amis /
+   Règles) restent fixes, au-dessus de la barre de gestes ; seul le milieu (.hmilieu, posé par le bloc correctifs-jeu)
+   défile entre les deux, avec un fondu en bas. Plus rien ne passe sous l'heure et la batterie. */
+.overlay.home{overflow:hidden}
+.overlay.home .hwrap{height:100%;min-height:0}
+.hhead,.hplay,.hbar{flex:none}
+.hmilieu{display:flex;flex-direction:column;gap:12px;flex:0 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  margin:-4px -14px 0;padding:4px 14px 16px;scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(#000 calc(100% - 16px),transparent);mask-image:linear-gradient(#000 calc(100% - 16px),transparent)}
+.hmilieu::-webkit-scrollbar{display:none}
+.hmilieu.defile{-webkit-mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 16px),transparent)}
+.hmilieu+.hplay{margin-top:-4px}
+.hme small{display:block;line-height:1.25}
+/* Téléphones de 920 px de haut ou moins : un peu plus serré, pour que l'accueil par défaut tienne sans défiler. */
+@media (orientation:portrait) and (max-height:920px){
+  .overlay.home .hwrap,.hmilieu{gap:10px}.mill{height:104px}.hfelt{padding:10px 0 12px}.htitle{font-size:18px;margin-bottom:6px}
+  .namesl{padding:10px 14px}}
+@media (orientation:landscape) and (max-height:600px){
+  .overlay.home{overflow:auto}.overlay.home .hwrap{height:auto;min-height:100%}.hmilieu{display:contents}}
 </style>
 </head>
 <body data-theme="cafe">
@@ -2371,6 +2390,23 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
       statut.onDisconnect().set({on:false,at:Date.now()}).then(function(){return statut.set({on:true,at:Date.now()})}).catch(function(){});
     });
   },1000);
+})();
+
+/* Accueil : le milieu (parties, adversaires, invitations) dans un conteneur qui défile seul (CSS « 3) Accueil » du bloc
+   correctifs-affichage). En paysage, ce conteneur s'efface (display:contents) et la grille d'origine reprend la main.
+   Le niveau et les victoires passent sur deux lignes au lieu de trois (« Moyen · 1027 » / « 2 victoires sur 2 »). */
+(function(){
+  var w=document.querySelector('#ovStart .hwrap'),f=w&&w.querySelector('.hfelt'),sec=w&&w.querySelector('.hsec'),inv=document.getElementById('invBox');
+  if(w&&f&&sec&&!w.querySelector('.hmilieu')){
+    var m=document.createElement('div');m.className='hmilieu';f.parentNode.insertBefore(m,f);m.appendChild(f);m.appendChild(sec);
+    if(inv&&inv.parentNode===w)m.appendChild(inv);
+    m.addEventListener('scroll',function(){m.classList.toggle('defile',m.scrollTop>4)},{passive:true});
+  }
+  function stats(){var e=document.getElementById('homeStats'),t=e&&e.textContent,i=t?t.indexOf(' · ',t.indexOf(' · ')+3):-1;
+    if(i>0){e.textContent='';e.appendChild(document.createTextNode(t.slice(0,i)));e.appendChild(document.createElement('br'));e.appendChild(document.createTextNode(t.slice(i+3)))}}
+  var _homeProfile=homeProfile;
+  homeProfile=function(){var r=_homeProfile.apply(this,arguments);try{stats()}catch(x){}return r};
+  try{stats()}catch(x){}
 })();
 </script>
 <script id="ajouts-amis">
