@@ -2351,5 +2351,23 @@ applyLook();syncStart();homeIll();homeProfile();
 try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===window.self)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}catch(e){}
 
 </script>
+<script id="correctifs-jeu">
+/* Correctif du jeu entre amis (12/11/2026). Ce bloc n'est PAS dans le zip d'origine : le garder si le jeu est remplacé.
+   Présence : le jeu ne marquait le joueur « en ligne » qu'une fois, au démarrage. Dès que la connexion coupait (téléphone
+   en veille, passage sur WhatsApp pour envoyer son code…), Firebase le passait « hors ligne » et il le restait jusqu'au
+   redémarrage du jeu : ses amis le voyaient hors ligne et, en partie, l'hôte faisait jouer l'ordinateur à sa place dès
+   qu'il réfléchissait plus de 12 s. Il est désormais remis en ligne à chaque reconnexion (.info/connected de Firebase). */
+(function(){
+  var iv=setInterval(function(){
+    if(!(typeof NET!=='undefined'&&NET.ok&&NET.kind==='firebase'&&window.firebase&&firebase.database)) return;
+    clearInterval(iv);
+    var db=firebase.database(),statut=db.ref('status/'+NET.uid);
+    db.ref('.info/connected').on('value',function(s){
+      if(s.val()!==true) return;
+      statut.onDisconnect().set({on:false,at:Date.now()}).then(function(){return statut.set({on:true,at:Date.now()})}).catch(function(){});
+    });
+  },1000);
+})();
+</script>
 </body>
 </html>

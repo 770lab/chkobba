@@ -10,4 +10,4 @@ Site statique servi par GitHub Pages (mode legacy, `.nojekyll`), ex-chkobba-5555
 - Les applis iPhone / Android (dépôt `770lab/chkobba-app`) embarquent ces mêmes fichiers.
 
 Mettre à jour depuis un zip : `unzip -o ~/Downloads/chkobba-app.zip -d ~/chkobba`, puis commit + push.
-**Garder le bloc `<style id="correctifs-affichage">`** (avant `</head>`) : il n'est pas dans le zip d'origine.
+**Garder les blocs `<style id="correctifs-affichage">` (avant `</head>`) et `<script id="correctifs-jeu">` (avant `</body>`)** : ils ne sont pas dans le zip d'origine.
