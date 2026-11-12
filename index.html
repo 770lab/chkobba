@@ -2369,5 +2369,173 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
   },1000);
 })();
 </script>
+<script id="ajouts-amis">
+/* Ajouts « jeu entre amis » (12/11/2026). Ce bloc n'est PAS dans le zip d'origine : le garder si le jeu est remplacé.
+   Il ne modifie pas le code du jeu : il enveloppe quelques-unes de ses fonctions (renderFriends, renderLobby,
+   renderInvites, addFriendByCode, endManche, leaveOnline) et ajoute ses boutons après coup.
+   1) « Partager mon code » (Mes amis) et « Envoyer le lien de la table » (table) : feuille de partage du téléphone
+      (WhatsApp, SMS…). Dans l'appli, navigator.share vient de natif.js (plugin Share) ; sans partage, le message est copié.
+   2) Liens : 770lab.com/chkobba/?ami=CODE ajoute l'ami, ?table=1234 fait rejoindre la table.
+   3) Revanche en fin de partie en ligne : le premier qui la demande ouvre une table avec les mêmes joueurs (places
+      tournées : les équipes ne changent pas) et l'annonce dans le journal de l'ancienne table (putIfAbsent : un seul
+      gagnant si deux joueurs appuient en même temps) ; les autres voient « Rejoindre la revanche ».
+   4) Pseudo à choisir dans la table quand on s'appelle encore « Joueur » ; son + vibration à l'arrivée d'une invitation ;
+      le message « … est maintenant dans tes amis » ne disparaît plus aussitôt. */
+(function(){
+  var SITE='https://770lab.com/chkobba/';
+  function el(h){var d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild}
+  function sonnerie(){try{tone(880,.12,'sine',.12);tone(1320,.2,'sine',.12,.14)}catch(e){}try{vib([30,40,30])}catch(e){}}
+  function partager(texte,bouton){
+    if(navigator.share) return navigator.share({text:texte}).catch(function(){});
+    var dire=function(t){if(!bouton)return;var a=bouton.textContent;bouton.textContent=t;setTimeout(function(){bouton.textContent=a},2500)};
+    try{navigator.clipboard.writeText(texte).then(function(){dire('Message copié : colle-le à ton ami')},function(){dire('Copie impossible')})}
+    catch(e){dire('Copie impossible')}
+  }
+  function texteCode(c){return 'On se fait une Chkobba ? Ajoute-moi en ami avec mon code '+c+' :\n'+SITE+'?ami='+c}
+  function texteTable(n){return 'Je t\'attends à la table '+n+' pour une Chkobba ! Rejoins-moi : '+SITE+'?table='+n+
+    '\n(Dans l\'appli : Mes amis, puis code de table '+n+'.)'}
+
+  /* ---------- Mes amis : bouton Partager, aide au pseudo, message d'ajout ---------- */
+  var msgAmi=null;
+  var _renderFriends=renderFriends;
+  renderFriends=function(){
+    _renderFriends.apply(this,arguments);
+    try{
+      if(!FR.ready||!P.myCode) return;
+      var carte=document.querySelector('#friendsPanel .mecard');
+      if(carte&&!$('shareCode')) carte.parentNode.insertBefore(el('<button class="btn" id="shareCode" style="width:100%;margin:10px 0 4px">📲 Partager mon code</button>'),carte.nextSibling);
+      if(!P.seats.me&&!$('pseudoAide')&&$('myNameIn')){$('myNameIn').value='';$('myNameIn').placeholder='Ton pseudo'}
+      if(!P.seats.me&&!$('pseudoAide')&&$('myNameIn')) $('myNameIn').parentNode.appendChild(el('<p class="amsg small" id="pseudoAide" style="margin:6px 0 0">Choisis ton pseudo : c\'est le nom que tes amis verront.</p>'));
+      if(msgAmi&&Date.now()-msgAmi.at<6000&&$('addMsg')) $('addMsg').textContent=msgAmi.t;
+    }catch(e){}
+  };
+  var _addFriendByCode=addFriendByCode;
+  addFriendByCode=async function(){
+    var avant=Object.keys(FR.list);
+    await _addFriendByCode.apply(this,arguments);
+    await new Promise(function(r){setTimeout(r,800)});
+    var neuf=Object.keys(FR.list).filter(function(u){return avant.indexOf(u)<0})[0];
+    if(neuf){var nm=FR.list[neuf].name;msgAmi={t:'✓ '+(nm&&nm!=='…'?nm:'Ton ami')+' est maintenant dans tes amis.',at:Date.now()};
+      if($('addMsg'))$('addMsg').textContent=msgAmi.t;if($('addCode'))$('addCode').value=''}
+  };
+
+  /* ---------- Table : lien à envoyer, pseudo ---------- */
+  function maPlace(t){var s=t&&t.seats||{};for(var k in s)if(s[k]&&s[k].kind==='human'&&s[k].uid===NET.uid)return k;return null}
+  var _renderLobby=renderLobby;
+  renderLobby=function(){
+    var saisie=$('pseudoIn')?$('pseudoIn').value:null,focus=document.activeElement&&document.activeElement.id==='pseudoIn';
+    _renderLobby.apply(this,arguments);
+    try{
+      var t=LB.t,quitter=$('lobbyLeave');if(!t||!LB.code||!quitter)return;
+      var n=MODES[t.mode].n,s=t.seats||{},place=false;
+      for(var i=0;i<n;i++){var x=s[i];if(!x||x.kind==='open'||x.kind==='invited')place=true}
+      if(place) quitter.parentNode.insertBefore(el('<button class="btn" id="shareTable">📲 Envoyer le lien de la table</button>'),quitter);
+      if(maPlace(t)!==null&&!P.seats.me){
+        var h=document.querySelector('#lobbyPanel h2');
+        var bloc=el('<div id="pseudoRow"><p class="amsg small" style="margin:0 0 6px">Choisis ton pseudo : les autres joueurs le verront.</p>'+
+          '<div class="addp"><input class="inp" id="pseudoIn" maxlength="14" placeholder="Ton pseudo"><button class="btn sm" id="pseudoOk">OK</button></div></div>');
+        h.parentNode.insertBefore(bloc,h.nextSibling);
+        if(saisie!==null)$('pseudoIn').value=saisie;if(focus)$('pseudoIn').focus();
+      }
+    }catch(e){}
+  };
+  function validerPseudo(){
+    var i=$('pseudoIn'),nm=i&&i.value.trim();if(!nm)return;
+    P.seats.me=nm;savePrefs();netSaveProfile();try{homeProfile()}catch(e){}
+    var k=maPlace(LB.t);if(k!==null&&LB.code)NET.update('tables/'+LB.code+'/seats/'+k,{name:nm}).catch(function(){});
+    renderLobby();
+  }
+
+  /* ---------- Invitation reçue : son + vibration (seulement les nouvelles, de moins d'une minute) ---------- */
+  var vues={};
+  var _renderInvites=renderInvites;
+  renderInvites=function(){
+    _renderInvites.apply(this,arguments);
+    try{var now=Date.now(),neuve=false,inv=FR.inv||{};
+      for(var c in inv){var v=inv[c];if(v&&!vues[c]){vues[c]=1;if(now-(v.at||0)<60e3)neuve=true}}
+      if(neuve)sonnerie();
+    }catch(e){}
+  };
+
+  /* ---------- Revanche ---------- */
+  var rev={unsub:null,info:null,enCours:false};
+  function finRevanche(){if(rev.unsub){try{rev.unsub()}catch(e){}}rev.unsub=null;rev.info=null;rev.enCours=false}
+  var _leaveOnline=leaveOnline;
+  leaveOnline=function(){finRevanche();return _leaveOnline.apply(this,arguments)};
+  var _endManche=endManche;
+  endManche=function(){
+    var r=_endManche.apply(this,arguments);
+    try{if(S&&S.over&&S.online)preparerRevanche()}catch(e){}
+    return r;
+  };
+  function preparerRevanche(){
+    var suivant=$('nextBtn');if(!suivant||$('revBtn'))return;
+    suivant.textContent='Retour à l\'accueil';suivant.classList.add('ghost');suivant.style.marginTop='8px';
+    suivant.parentNode.insertBefore(el('<p class="amsg" id="revMsg" style="text-align:center;margin:12px 0 6px;font-weight:800"></p>'),suivant);
+    suivant.parentNode.insertBefore(el('<button class="btn" id="revBtn" style="width:100%">🔁 Revanche</button>'),suivant);
+    finRevanche();
+    rev.unsub=NET.onChild('tables/'+S.online.code+'/ev',function(k,v){
+      if(!v||v.t!=='revanche'||rev.info)return;
+      rev.info=v;
+      if(v.uid===NET.uid||rev.enCours)return;
+      if($('revBtn'))$('revBtn').textContent='Rejoindre la revanche';
+      if($('revMsg'))$('revMsg').textContent=v.by+' propose une revanche !';
+      sonnerie();
+      try{$('revBtn').scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}
+    });
+  }
+  function rejoindre(code){$('ovScore').classList.remove('on');leaveOnline();joinTable(code)}
+  async function lancerRevanche(){
+    if(rev.info&&rev.info.uid!==NET.uid){rejoindre(rev.info.code);return}
+    if(rev.enCours||!S||!S.online||!S.over||!$('ovScore').classList.contains('on'))return;
+    rev.enCours=true;
+    var b=$('revBtn');if(b){b.disabled=true;b.textContent='Revanche…'}
+    var O=S.online,n=S.n,ancien=O.code,seats={},code=null;
+    for(var i=0;i<n;i++){var x=O.seats[(O.r+i)%n];
+      seats[i]=i===0?{kind:'human',uid:NET.uid,name:myName(),elo:P.elo,c:'#e0a526'}
+        :x.kind==='cpu'?{kind:'cpu',name:x.name,lvl:x.lvl,c:x.c}
+        :{kind:'invited',uid:x.uid,name:x.name,elo:x.elo||1000}}
+    try{
+      for(var j=0;j<10&&!code;j++){var c=String(1000+Math.floor(Math.random()*9000));
+        if(await NET.putIfAbsent('tables/'+c,{host:NET.uid,mode:S.mode,target:S.target,napola:!!S.napola,status:'lobby',at:Date.now(),seats:seats}))code=c}
+    }catch(e){}
+    if(!code){rev.enCours=false;if(b){b.disabled=false;b.textContent='🔁 Revanche'}if($('revMsg'))$('revMsg').textContent='Pas de connexion, réessaie.';return}
+    // Annonce dans le journal de l'ancienne table, à la suite du dernier coup : le premier arrivé l'emporte.
+    try{
+      for(var cle=O.seq+1,t=0;t<6;t++,cle++){
+        if(await NET.putIfAbsent('tables/'+ancien+'/ev/'+evKey(cle),{t:'revanche',code:code,by:myName(),uid:NET.uid}))break;
+        var deja=await NET.get('tables/'+ancien+'/ev/'+evKey(cle));
+        if(deja&&deja.t==='revanche'&&deja.uid!==NET.uid){NET.remove('tables/'+code).catch(function(){});rejoindre(deja.code);return}
+      }
+    }catch(e){}
+    for(var k=1;k<n;k++)if(seats[k].kind==='invited')
+      NET.set('users/'+seats[k].uid+'/invites/'+code,{from:myName(),fromUid:NET.uid,mode:S.mode,seat:k,at:Date.now()}).catch(function(){});
+    $('ovScore').classList.remove('on');leaveOnline();openLobby(code);
+  }
+
+  /* ---------- Clics sur les boutons ajoutés ---------- */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('#shareCode,#shareTable,#revBtn,#pseudoOk');if(!b)return;
+    if(b.id==='shareCode'&&P.myCode)partager(texteCode(P.myCode),b);
+    else if(b.id==='shareTable'&&LB.code)partager(texteTable(LB.code),b);
+    else if(b.id==='revBtn')lancerRevanche();
+    else if(b.id==='pseudoOk')validerPseudo();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='pseudoIn')validerPseudo()});
+
+  /* ---------- Liens ?ami=CODE et ?table=1234 (site seulement : l'appli n'a pas d'adresse) ---------- */
+  var q=new URLSearchParams(location.search),ami=(q.get('ami')||'').toUpperCase().replace(/[^A-Z0-9]/g,''),table=(q.get('table')||'').replace(/\D/g,'');
+  if(ami.length===6||table.length===4){
+    try{q.delete('ami');q.delete('table');history.replaceState(null,'',location.pathname+(String(q)?'?'+q:'')+location.hash)}catch(e){}
+    var essais=0,iv=setInterval(function(){
+      if(++essais>60){clearInterval(iv);return}
+      if(!FR.ready){if(!FR.booting&&essais%10===1)netBoot();return}
+      clearInterval(iv);
+      if(table.length===4)joinTable(table);
+      else{$('ovFriends').classList.add('on');renderFriends();if($('addCode'))$('addCode').value=ami;addFriendByCode(ami)}
+    },500);
+  }
+})();
+</script>
 </body>
 </html>
