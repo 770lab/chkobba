@@ -672,6 +672,17 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
   .namesl{padding:10px 14px}}
 @media (orientation:landscape) and (max-height:600px){
   .overlay.home{overflow:auto}.overlay.home .hwrap{height:auto;min-height:100%}.hmilieu{display:contents}}
+/* 4) Barres du téléphone (13/11) : l'appli Android donne aussi leurs hauteurs en variables --safe-area-inset-*
+   (Capacitor SystemBars, insetsHandling "css"). On prend la plus grande des deux valeurs, au cas où env() resterait à 0
+   dans la WebView d'un téléphone : « Jouer » et la main ne passent jamais sous la barre de gestes. Sur le web, ces
+   variables n'existent pas (0px) : rien ne change. Mêmes marges que les règles d'origine, paysage compris. */
+#app{padding:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 8px) calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 10px) calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 8px) calc(max(env(safe-area-inset-left),var(--safe-area-inset-left,0px)) + 10px)}
+.hwrap{padding-top:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 12px);padding-bottom:calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 12px)}
+@media (orientation:landscape) and (max-height:600px){
+  .hwrap{padding-top:8px}
+  #app{padding-top:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 4px);padding-bottom:0}
+  .hintrow .sortbtn{right:calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 10px)}
+  .hintrow .sortbtn.lastbtn{right:auto;left:calc(max(env(safe-area-inset-left),var(--safe-area-inset-left,0px)) + 10px)}}
 </style>
 </head>
 <body data-theme="cafe">
