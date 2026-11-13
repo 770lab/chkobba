@@ -660,10 +660,10 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 .overlay.home .hwrap{height:100%;min-height:0}
 .hhead,.hplay,.hbar{flex:none}
 .hmilieu{display:flex;flex-direction:column;gap:12px;flex:0 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
-  margin:-4px -14px 0;padding:4px 14px 16px;scrollbar-width:none;
-  -webkit-mask-image:linear-gradient(#000 calc(100% - 16px),transparent);mask-image:linear-gradient(#000 calc(100% - 16px),transparent)}
+  margin:-4px -14px 0;padding:4px 14px 0;scrollbar-width:none}
+.hmilieu.deborde{padding-bottom:16px;-webkit-mask-image:linear-gradient(#000 calc(100% - 16px),transparent);mask-image:linear-gradient(#000 calc(100% - 16px),transparent)}
 .hmilieu::-webkit-scrollbar{display:none}
-.hmilieu.defile{-webkit-mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 16px),transparent)}
+.hmilieu.deborde.defile{-webkit-mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 16px),transparent)}
 .hmilieu+.hplay{margin-top:-4px}
 .hme small{display:block;line-height:1.25}
 /* Téléphones de 920 px de haut ou moins : un peu plus serré, pour que l'accueil par défaut tienne sans défiler. */
@@ -2401,6 +2401,10 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
     var m=document.createElement('div');m.className='hmilieu';f.parentNode.insertBefore(m,f);m.appendChild(f);m.appendChild(sec);
     if(inv&&inv.parentNode===w)m.appendChild(inv);
     m.addEventListener('scroll',function(){m.classList.toggle('defile',m.scrollTop>4)},{passive:true});
+    // Fondu seulement quand le milieu déborde (sinon, pas de calque de masque : le texte reste net partout).
+    var mesurer=function(){m.classList.toggle('deborde',m.scrollHeight>m.clientHeight+1)};
+    if(window.ResizeObserver){var ro=new ResizeObserver(mesurer);ro.observe(m);for(var i=0;i<m.children.length;i++)ro.observe(m.children[i])}
+    addEventListener('resize',mesurer);setTimeout(mesurer,0);
   }
   function stats(){var e=document.getElementById('homeStats'),t=e&&e.textContent,i=t?t.indexOf(' · ',t.indexOf(' · ')+3):-1;
     if(i>0){e.textContent='';e.appendChild(document.createTextNode(t.slice(0,i)));e.appendChild(document.createElement('br'));e.appendChild(document.createTextNode(t.slice(i+3)))}}
