@@ -20,6 +20,9 @@ Nos ajouts sont dans trois blocs posés après coup, **absents de son fichier** 
 `<style id="correctifs-affichage">` (avant `</head>`), `<script id="correctifs-jeu">` et `<script id="ajouts-amis">`
 (avant `</body>`). Ils enveloppent ses fonctions sans les modifier.
 
+Un 4e ajout (16/11) : `<style id="suivi-direct-style">` + `<script id="suivi-direct">`,
+le volet « En direct » à droite sur écran large (iPhone Duo ouvert, tablette, ordinateur).
+
 Reprendre une nouvelle version de Laurent :
 1. garder nos trois blocs (les copier depuis l'`index.html` actuel), remplacer le reste par son fichier, reposer les blocs ;
 2. changer `V` dans `sw.js` (`chkobba-AAAAMMJJ-HHMM`) ;

@@ -3263,5 +3263,105 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
   }catch(e){}
 })();
 </script>
+<style id="suivi-direct-style">
+/* Suivi en direct (770lab, 16/11/2026) : sur un écran large (iPhone Duo ouvert, tablette, ordinateur), un volet à droite
+   montre l'état de la manche pendant qu'on joue. Bloc absent du fichier de Laurent, comme les trois autres. */
+#direct{display:none}
+html.direct #app{width:calc(100% - var(--dw));margin:0}
+html.direct .banner{left:calc((100vw - var(--dw))/2)}
+html.direct #direct{display:flex;flex-direction:column;gap:10px;position:fixed;top:0;right:0;bottom:0;width:var(--dw);z-index:5;
+  box-sizing:border-box;overflow-y:auto;scrollbar-width:none;color:#fff;font-weight:700;
+  padding:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 10px) calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 12px) calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 10px) 12px;
+  background:rgba(0,0,0,.22);border-left:1px solid rgba(255,255,255,.14)}
+#direct::-webkit-scrollbar{display:none}
+#direct h4{margin:0;font-family:var(--fd);font-size:17px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+#direct h4 small{font-family:inherit;font-size:12px;font-weight:700;opacity:.7}
+#direct .dq{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:9px 11px}
+#direct .dq.ok{background:rgba(255,207,90,.2);border-color:rgba(255,207,90,.6)}
+#direct .dq.ko{opacity:.72}
+#direct .dt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14.5px;font-weight:900}
+#direct .dt i{font-style:normal;font-size:12px;font-weight:800;opacity:.85;text-align:right}
+#direct .dq.ok .dt i{color:#ffcf5a;opacity:1}
+#direct .db{position:relative;height:9px;border-radius:9px;background:rgba(255,255,255,.14);margin:7px 0 5px;overflow:hidden}
+#direct .db b{position:absolute;top:0;bottom:0;left:0;background:#ffcf5a;border-radius:9px 0 0 9px}
+#direct .db u{position:absolute;top:0;bottom:0;right:0;background:rgba(255,255,255,.55);border-radius:0 9px 9px 0}
+#direct .db s{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.9}
+#direct .dl{display:flex;justify-content:space-between;font-size:12px;font-weight:700;opacity:.85}
+#direct .dl b{font-weight:900;opacity:1}
+#direct .dp{display:flex;gap:8px}
+#direct .dp>div{flex:1;text-align:center;background:rgba(255,255,255,.1);border-radius:14px;padding:8px 4px}
+#direct .dp b{display:block;font-family:var(--fd);font-size:26px;line-height:1}
+#direct .dp span{font-size:11.5px;opacity:.8}
+#direct .dnote{font-size:11.5px;font-weight:600;opacity:.65;line-height:1.3;margin:0}
+#direct table{width:100%;border-collapse:collapse;font-size:12px}
+#direct th,#direct td{padding:3px 2px;text-align:center;font-weight:700}
+#direct td:first-child,#direct th:first-child{text-align:left;opacity:.8}
+#direct th{font-size:11px;opacity:.75;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+</style>
+<script id="suivi-direct">
+/* Suivi en direct de la manche (770lab, 16/11/2026). N'écrit rien, ne change aucune règle : il relit S.piles, S.chk, S.gm
+   et tally() après chaque render(). Affiché seulement en partie, sur un écran d'au moins 700 × 480 (iPhone Duo ouvert,
+   tablette, ordinateur) ; sur un pliable, le volet prend exactement le deuxième écran (viewport.segments).
+   Pour que les cartes soient calculées sur la largeur restante, innerWidth est diminué de la largeur du volet tant
+   qu'il est affiché (sizes(), render() et bubble() lisent innerWidth). */
+(function(){
+  var box=document.createElement('aside');box.id='direct';document.body.appendChild(box);
+  var racine=document.documentElement,larg=0;
+  var vraie=function(){return racine.clientWidth};
+  try{Object.defineProperty(window,'innerWidth',{configurable:true,get:function(){return vraie()-larg}})}catch(e){}
+  function voulu(){
+    var W=vraie(),H=window.innerHeight;
+    if(typeof S==='undefined'||!S||!S.piles||W<700||H<480) return 0;
+    try{var sg=window.viewport&&window.viewport.segments||(window.visualViewport&&window.visualViewport.segments);
+      if(sg&&sg.length===2&&sg[1].left>sg[0].left) return Math.round(W-sg[1].left)}catch(e){}
+    return Math.round(Math.min(360,Math.max(250,W*.36)));
+  }
+  function pl(n,mot,pluriel){return n+' '+(n>1?(pluriel||mot+'s'):mot)}
+  function jauge(a,b,total,seuil){ // a = nous, b = eux, sur total ; trait au seuil à atteindre
+    return '<div class="db"><b style="width:'+(a/total*100)+'%"></b><u style="width:'+(b/total*100)+'%"></u><s style="left:'+(seuil/total*100)+'%"></s></div>'}
+  function bloc(titre,etat,cls,corps){return '<div class="dq '+cls+'"><div class="dt"><span>'+titre+'</span><i>'+etat+'</i></div>'+corps+'</div>'}
+  function dessiner(){
+    var T=tally(),n=T.n,d=T.d,s7=T.s7,s6=T.s6,r=T.r,moi=S.n===2?'Toi':'Nous',eux=esc(teamName(1));
+    var qui=function(x,gagne,perdu,attente){return x[0]?['✓ '+gagne,'ok']:x[1]?[perdu,'ko']:[attente,'']};
+    var h='<h4>En direct <small>Manche '+(S.manche||1)+' · '+pl(S.deck?S.deck.length:0,'carte')+' au talon</small></h4>';
+    h+='<div class="dp"><div><b>'+T.tot[0]+'</b><span>'+moi+' · points de la manche</span></div><div><b>'+T.tot[1]+'</b><span>'+eux+'</span></div></div>';
+    var k=qui(r.karta,'Karta gagnée','Karta perdue',n[0]>=n[1]?'encore '+pl(21-n[0],'carte'):'il t\'en faut '+(21-n[0]));
+    h+=bloc('Karta',k[0],k[1],jauge(n[0],n[1],40,21)+'<div class="dl"><span>'+moi+' <b>'+pl(n[0],'carte')+'</b></span><span><b>'+n[1]+'</b> '+eux+'</span></div>');
+    var q=qui(r.dinari,'Dinari gagné','Dinari perdu',d[0]+d[1]>=10?'égalité : personne':'encore '+pl(6-d[0],'carreau','carreaux'));
+    h+=bloc('Dinari',q[0],q[1],jauge(d[0],d[1],10,6)+'<div class="dl"><span>'+moi+' <b>'+pl(d[0],'carreau','carreaux')+'</b></span><span><b>'+d[1]+'</b> '+eux+'</span></div>');
+    var y=qui(r.haya,'tu l\'as','chez '+(S.n===2?eux:'eux'),'pas encore pris');
+    h+=bloc('El Haya · 7 de carreau',y[0],y[1],'');
+    var reste7=4-s7[0]-s7[1],b=r.bermila[0]?['en tête','ok']:r.bermila[1]?['en retard','ko']:['à égalité',''];
+    if(!reste7&&s7[0]!==s7[1])b=s7[0]>s7[1]?['✓ Bermila gagnée','ok']:['Bermila perdue','ko'];
+    h+=bloc('Bermila',b[0],b[1],jauge(s7[0],s7[1],4,2.5)+'<div class="dl"><span>'+moi+' <b>'+pl(s7[0],'sept','sept')+'</b> · '+pl(s6[0],'six','six')+'</span><span>'+s6[1]+' six · <b>'+s7[1]+'</b> '+eux+'</span></div>');
+    h+=bloc('Chkobba',S.chk[0]||S.chk[1]?'':'aucune',S.chk[0]?'ok':'','<div class="dl"><span>'+moi+' <b>'+S.chk[0]+'</b></span><span><b>'+S.chk[1]+'</b> '+eux+'</span></div>');
+    if(S.napola){
+      var a=S.piles[0],o=S.piles[1],car=function(p,v){return p.some(function(c){return c.s==='♦'&&c.v===v})};
+      var suite=[1,2,3].map(function(v){return (car(a,v)?'✓':car(o,v)?'✗':'·')+' '+(v===1?'As':v)}).join('   ');
+      var np=r.napola[0]?['✓ '+r.napola[0]+' points','ok']:r.napola[1]?[r.napola[1]+' points chez '+(S.n===2?eux:'eux'),'ko']:[1,2,3].some(function(v){return car(o,v)})?['perdue','ko']:['possible',''];
+      h+=bloc('Napola',np[0],np[1],'<div class="dl"><span>'+suite+'</span><span>✓ à toi · ✗ à eux</span></div>');
+    }
+    if(S.n===4&&S.gm){
+      var G=function(p){return S.gm[p]||{cards:0,dia:0,sev:0,chk:0}},ps=[0,2,1,3];
+      h+='<div class="dq"><div class="dt"><span>Joueur par joueur</span><i>cette manche</i></div><table><tr><th></th>'+ps.map(function(p){return '<th>'+esc(p===0?'Toi':person(p).n)+'</th>'}).join('')+'</tr>'+
+        [['Cartes','cards'],['Carreaux','dia'],['Sept','sev'],['Chkobba','chk']].map(function(l){return '<tr><td>'+l[0]+'</td>'+ps.map(function(p){return '<td>'+(G(p)[l[1]]||0)+'</td>'}).join('')+'</tr>'}).join('')+'</table></div>';
+    }
+    h+='<p class="dnote">Le trait blanc marque ce qu\'il faut dépasser. Les cartes encore au milieu à la fin de la manche vont à l\'équipe qui a ramassé en dernier.</p>';
+    box.innerHTML=h;
+  }
+  var enCours=false;
+  function maj(){
+    if(enCours) return;
+    var w=voulu();
+    if(w!==larg){larg=w;racine.classList.toggle('direct',w>0);racine.style.setProperty('--dw',w+'px');
+      if(typeof S!=='undefined'&&S){enCours=true;try{_render()}catch(e){}enCours=false}}
+    if(larg){try{dessiner()}catch(e){}}
+  }
+  var _render=render;
+  render=function(){var x=_render.apply(this,arguments);try{maj()}catch(e){}return x};
+  addEventListener('resize',function(){setTimeout(maj,0)});
+  setInterval(maj,1500); // retour à l'accueil (S remis à zéro), repli du téléphone
+})();
+</script>
 </body>
 </html>
