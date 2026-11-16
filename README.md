@@ -9,5 +9,20 @@ Site statique servi par GitHub Pages (mode legacy, `.nojekyll`), ex-chkobba-5555
 - `sw.js` : hors ligne (réseau d'abord, cache ensuite). **Changer `V` à chaque mise à jour.**
 - Les applis iPhone / Android (dépôt `770lab/chkobba-app`) embarquent ces mêmes fichiers.
 
-Mettre à jour depuis un zip : `unzip -o ~/Downloads/chkobba-app.zip -d ~/chkobba`, puis commit + push.
-**Garder les blocs `<style id="correctifs-affichage">` (avant `</head>`), `<script id="correctifs-jeu">` et `<script id="ajouts-amis">` (avant `</body>`)** : ils ne sont pas dans le zip d'origine.
+## Version commune avec Laurent (depuis le 16/11/2026)
+
+Le jeu est développé à deux : Laurent (sa copie d'essai : chkobba-55555.netlify.app) et 770lab. **La base est le fichier de
+Laurent** (dernière reprise : sa version du 14/11/2026 à 22 h 30, `PROTO = 2`). Tout ce qui touche au jeu en ligne (journal
+`ev/`, tables, sièges, schéma et règles Firebase, note, classements, ordre de `REACTS`, `PROTO`) vient de lui et ne se
+change pas seul.
+
+Nos ajouts sont dans trois blocs posés après coup, **absents de son fichier** :
+`<style id="correctifs-affichage">` (avant `</head>`), `<script id="correctifs-jeu">` et `<script id="ajouts-amis">`
+(avant `</body>`). Ils enveloppent ses fonctions sans les modifier.
+
+Reprendre une nouvelle version de Laurent :
+1. garder nos trois blocs (les copier depuis l'`index.html` actuel), remplacer le reste par son fichier, reposer les blocs ;
+2. changer `V` dans `sw.js` (`chkobba-AAAAMMJJ-HHMM`) ;
+3. `node --check` sur chaque `<script>` extrait, puis les essais (simulateur `chk-mock` : un petit serveur WebSocket qui
+   répond aux opérations de `initMock`) ;
+4. lui rendre le journal de ce qui vient de nous, pour que sa copie reste identique.

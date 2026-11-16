@@ -110,8 +110,8 @@ body{
 /* ===== Ambiance « Tapis moderne » ===== */
 [data-theme="pro"]{
   --bg:var(--noise),radial-gradient(ellipse 120% 85% at 50% 42%,#2fa565 0%,#1a7a45 42%,#0e5130 78%,#093a22 100%);
-  --mat:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.09) 0%,rgba(255,255,255,.03) 55%,transparent 75%);
-  --mat-b:1.5px solid rgba(255,255,255,.10);--mat-r:999px;--mat-bgsize:auto;--mat-sh:none;
+  --mat:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.08) 0%,rgba(255,255,255,.025) 55%,transparent 78%);
+  --mat-b:none;--mat-r:22px;--mat-bgsize:auto;--mat-sh:none;
   --ink:#fff;--ink2:rgba(255,255,255,.85);--accent:#ffcf5a;--accent-ink:#2e1d00;--chip:rgba(0,30,15,.32);--hl:#ffe27a;
   --fd:'Nunito',system-ui,sans-serif;--fb:'Nunito',system-ui,sans-serif;
   --panel:#fbfdfb;--panel-ink:#11291b;--panel-line:#e3ebe6;--crad:.09;
@@ -565,7 +565,7 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 /* ===== Paysage compact (téléphone couché) ===== */
 @media (orientation:landscape) and (max-height:600px){
   .panel{padding:12px 16px;max-width:560px}.panel h2{font-size:21px;margin-bottom:2px}
-  .panel table{font-size:13px;margin:4px 0 8px}.panel td,.panel th{padding:4px 4px}.panel .det{display:none}
+  .panel table{font-size:13px;margin:4px 0 8px}.panel td,.panel th{padding:4px 4px}.panel .det{font-size:10.5px;line-height:1.15}
   .panel tr.tot td{font-size:14px}.panel .btn{padding:9px 14px;font-size:15px}
   #app{gap:3px;padding-top:calc(env(safe-area-inset-top) + 4px);padding-bottom:calc(env(safe-area-inset-bottom) + 2px)}
   .ib,.scorepill,.deckind{height:32px}
@@ -620,6 +620,49 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 }
 
 .namesl{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;padding:12px 14px;border-radius:14px;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font:800 15px Nunito,sans-serif;cursor:pointer}.namesl span{font-size:20px;opacity:.8}
+.nap{display:flex;flex-direction:column;line-height:1.05;text-align:left}.nap small{font-size:11px;font-weight:700;opacity:.7}
+.avw{position:relative;display:inline-flex;flex:none}.rbdg{position:absolute;right:-5px;bottom:-4px;z-index:3;width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:900 11px/1 Nunito,sans-serif;border:2px solid rgba(0,0,0,.55);box-shadow:0 1px 3px rgba(0,0,0,.35);pointer-events:none}.rbdg.d{background:#fff;color:#1b1b1b}.rbdg.f{background:var(--accent,#ffcf5a);color:#2e1d00}
+.panel tbody.grp{border:1.5px solid rgba(0,0,0,.22)}.panel tbody.grp tr:last-child td{border-bottom:none}.panel tbody.grp td:first-child{padding-left:10px}
+.panel tbody.gnap{border-color:#c9952b;background:rgba(201,149,43,.07)}
+.panel tbody.gsp td{padding:0!important;height:8px;border:none!important}
+.panel tbody.gchk td{border-bottom:none}.panel tbody.gchk td:first-child{padding-left:10px}.panel tbody.gchk .pt{color:#c62828}
+.lvtab{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 12px!important;border:1.5px solid rgba(0,0,0,.18)}.lvtab th,.lvtab td{padding:5px 8px!important;text-align:left!important;font-weight:700}.lvtab th{font-weight:900;background:rgba(0,0,0,.05)}.lvtab .up{color:#1b8a4c;font-weight:900}.lvtab .dn{color:#c62828;font-weight:900}
+.card.m2::after,.card.m3::after,.card.m4::after{content:'×2';position:absolute;left:calc(var(--cw)*.04);top:52%;transform:translateY(-50%);z-index:2;padding:1px calc(var(--cw)*.07);border-radius:999px;background:#1d4f91;color:#fff;font:900 calc(var(--cw)*.17)/1.25 Nunito,sans-serif;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);pointer-events:none}.card.m3::after{content:'×3';background:#7a3fb0}.card.m4::after{content:'×4';background:#c9952b}
+.elodet{display:block;font-size:11.5px;font-weight:700;opacity:.65;margin-top:3px;line-height:1.3}
+.mmwait{animation:mmp 1.2s ease-in-out infinite}@keyframes mmp{50%{opacity:.35}}
+.hcx{padding:6px 10px!important;font-size:12.5px!important;opacity:.85}.htoast{position:fixed;left:50%;bottom:18%;transform:translateX(-50%);background:#1b1b1b;color:#fff;font-weight:800;padding:10px 16px;border-radius:999px;z-index:200;box-shadow:0 6px 18px rgba(0,0,0,.4);font-size:14px}
+.lgup{margin:10px 0;padding:12px;border-radius:16px;text-align:center;font-weight:800;background:linear-gradient(135deg,#ffe9a8,#ffc94d);color:#3a2500;animation:lgpop .5s cubic-bezier(.2,1.4,.4,1) both}.lgup b{display:block;font-family:var(--fd);font-size:26px;line-height:1.1;margin-top:2px}@keyframes lgpop{from{transform:scale(.6);opacity:0}}
+.lgdn{margin:10px 0;padding:10px;border-radius:14px;text-align:center;font-weight:700;background:rgba(0,0,0,.06)}
+.rmoffer{margin:10px 0;padding:12px;border-radius:16px;border:2px solid var(--accent,#ffcf5a);text-align:center;font-weight:700}.rmoffer .btn{width:100%;margin-top:8px}
+.rxgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rxgrid .btn{width:100%;font-size:14px!important;padding:11px 6px!important}
+.bubble.rx{font-size:15px;padding:9px 14px;z-index:90;white-space:normal;max-width:min(58vw,260px);width:max-content;text-align:center;line-height:1.2}.rxgrid .btn{white-space:normal;line-height:1.15}.btn.wa{background:#25d366!important;color:#06351a!important;box-shadow:0 3px 0 #128c4b!important;text-shadow:none!important}
+#rxBtn{font-size:17px}
+.scorepill{min-width:0;padding:0 8px}.scorepill #tn0,.scorepill #tn1{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto}.scorepill b{flex:none}
+@media(max-width:400px){.bar{gap:6px}.scorepill{gap:5px}.scorepill small{display:none}}
+#app{grid-template-columns:minmax(0,1fr)}.head,.bar{min-width:0}
+.rxtabs{display:flex;gap:6px;margin:0 0 10px;overflow-x:auto}.rxtabs button{flex:1 1 auto;border:2px solid var(--panel-line);background:transparent;color:var(--panel-ink);border-radius:999px;padding:7px 6px;font:800 12.5px Nunito,sans-serif;cursor:pointer;white-space:nowrap}.rxtabs button.on{background:var(--accent,#ffcf5a);border-color:transparent;color:#2e1d00}
+.rxgrid.emo{grid-template-columns:repeat(4,1fr)}.rxgrid.emo .btn{font-size:26px!important;padding:8px 0!important}.bubble.emo{font-size:34px;padding:4px 12px;line-height:1.2}
+.stgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}.stgrid.four{grid-template-columns:repeat(4,1fr)}
+.stt{border:1.5px solid var(--panel-line);border-radius:14px;padding:9px 8px;text-align:center;min-width:0}.stt b{display:block;font-family:var(--fd);font-size:22px;line-height:1.1}.stt span{display:block;font-size:12.5px;font-weight:800;margin-top:2px}.stt small{display:block;font-size:11px;opacity:.65;font-weight:700}
+.stgrid.four .stt b{font-size:17px}.stgrid.four .stt span{font-size:11px}
+.gstab{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0;table-layout:fixed}.gstab th,.gstab td{padding:5px 3px!important;text-align:center!important;border-bottom:1px solid var(--panel-line);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.gstab th{font-weight:900;font-size:12px}.gstab td:first-child,.gstab th:first-child{text-align:left!important;width:38%;white-space:normal}.gstab .bst{color:#1b8a4c;font-weight:900}
+.gstab.cmp td:first-child{width:44%}.gstab.cmp td{white-space:normal}
+.seg2.three{display:grid;grid-template-columns:repeat(3,1fr)}
+.lbd{margin:10px 0}.lbr{display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:1px solid var(--panel-line)}.lbr.mine{background:rgba(255,207,90,.18);border-radius:10px}.lbr i{font-style:normal;font-family:var(--fd);font-size:18px;width:22px;text-align:center;flex:none}.lbr div{flex:1;min-width:0}.lbr b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lbr small{display:block;font-size:11px;opacity:.65}.lbr span{font-weight:900;font-size:13px;white-space:nowrap}
+.tutob{display:flex;align-items:center;gap:10px;width:100%;text-align:left;margin:0 0 6px;padding:10px 12px;border-radius:14px;border:1.5px solid var(--panel-line);background:rgba(255,207,90,.16);color:var(--panel-ink);cursor:pointer;font-family:inherit}.tutob>span:first-child{font-size:24px}.tutob b{display:block;font-size:14.5px}.tutob small{display:block;font-size:12px;opacity:.7;font-weight:700}.tutob i{margin-left:auto;font-style:normal;font-size:22px;opacity:.6}
+.tustep{margin:0 0 2px;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;opacity:.6}
+.tumat{height:108px;background:#1f7f48!important;border:none!important;border-radius:16px;display:flex;align-items:center;justify-content:center}.tumat .lp-table{display:flex}.tumat .lp-table{--cw:50px;gap:8px}
+.tuq{margin:12px 0 6px;font-weight:900}
+.tuhand{display:flex;justify-content:center;gap:10px;--cw:62px;margin-bottom:6px}.tuhand.one{margin-bottom:10px}
+.tuc{border:none;background:none;padding:4px;border-radius:12px;cursor:pointer;transition:transform .12s}.tuc:active{transform:translateY(-4px)}.tuc.ok{outline:3px solid #1b8a4c;transform:translateY(-6px)}.tuc.ko{outline:3px solid #c62828;opacity:.6}
+.tuc .card{pointer-events:none}.btn.ok{outline:3px solid #1b8a4c}.btn.ko{outline:3px solid #c62828;opacity:.7}
+.tufb{min-height:38px;margin:4px 0 8px;font-weight:800;font-size:14px}.tufb.ok{color:#1b8a4c}.tufb.ko{color:#c62828}
+.seg2.five{display:grid;grid-template-columns:1.15fr .8fr 1.2fr .9fr 1.15fr}.seg2.five button{font-size:11.5px;padding:8px 0}
+.mframe{display:none;position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+[data-theme="pro"] .mframe{display:block}
+.mframe .fl1{fill:none;stroke:rgba(255,255,255,.30);stroke-width:1.6}.mframe .fl2{fill:none;stroke:rgba(255,255,255,.16);stroke-width:1}
+.mframe .fr{color:#d8423a}.mframe .fk{color:#0c1f16}
+.gscap{margin:8px 0 0;font-size:12px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;opacity:.6}
 </style>
 <style id="correctifs-affichage">
 /* Correctifs d'affichage (12/11/2026), après toutes les autres règles.
@@ -683,6 +726,13 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
   #app{padding-top:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 4px);padding-bottom:0}
   .hintrow .sortbtn{right:calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 10px)}
   .hintrow .sortbtn.lastbtn{right:auto;left:calc(max(env(safe-area-inset-left),var(--safe-area-inset-left,0px)) + 10px)}}
+/* 5) Petits écrans (16/11, relevé sur la version du 14/11) : dans Réglages, les trois « Figures » dépassaient de 6 px à
+   droite sur un écran de 360 px ; en paysage, un pseudo long (« Mardochée-Haï ») sortait de l'écran sous son avatar. */
+.faces{grid-template-columns:repeat(2,minmax(0,1fr))}
+.faces.two{grid-template-columns:repeat(3,minmax(0,1fr))}
+.fc{min-width:0}
+@media (max-width:380px){.faces.two .zone{--cw:26px}}
+@media (orientation:landscape) and (max-height:600px){.bottom .me .nm{max-width:64px;overflow-wrap:anywhere}}
 </style>
 </head>
 <body data-theme="cafe">
@@ -702,6 +752,7 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
     <div class="bar">
       <button class="ib" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <button class="ib" id="sndBtn" aria-label="Son"></button>
+      <button class="ib" id="rxBtn" aria-label="Réactions" style="display:none">💬</button>
       <button class="scorepill" id="scoreBtn"><span id="tn0">Toi</span><b id="sc0">0</b><span style="opacity:.5">–</span><b id="sc1">0</b><span id="tn1">Sami</span><small id="tgt">en 21</small></button>
       <div class="deckind" id="deckInd"><div class="mb"></div><span id="deckN">0</span></div>
     </div>
@@ -712,7 +763,7 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
   </div>
   <div class="mid" id="mid">
     <div class="side" id="seatLeft"></div>
-    <div class="mat" id="mat"><div class="wm"><svg viewBox="0 0 100 100"><use href="#su3"/></svg><svg viewBox="0 0 100 100"><use href="#su0"/></svg><svg viewBox="0 0 100 100"><use href="#su1"/></svg><svg viewBox="0 0 100 100"><use href="#su2"/></svg></div><div class="tzone" id="table"></div></div>
+    <div class="mat" id="mat"><div class="wm"><svg viewBox="0 0 100 100"><use href="#su3"/></svg><svg viewBox="0 0 100 100"><use href="#su0"/></svg><svg viewBox="0 0 100 100"><use href="#su1"/></svg><svg viewBox="0 0 100 100"><use href="#su2"/></svg></div><svg class="mframe" id="mframe" aria-hidden="true"></svg><div class="tzone" id="table"></div></div>
     <div class="side" id="seatRight"></div>
   </div>
   <div class="hintrow"><button class="sortbtn lastbtn" id="lastBtn"><small>Revoir le</small>dernier pli</button><div class="hint" id="hint"></div><button class="sortbtn" id="sortBtn"></button></div>
@@ -734,12 +785,13 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
     <div class="modes" id="modeList">
       <button class="mtile" data-m="c2"><div class="mill" id="ill_c2"></div><b>À 2 joueurs</b><small>Toi contre un adversaire</small></button>
       <button class="mtile" data-m="c4"><div class="mill" id="ill_c4"></div><b>À 4 joueurs</b><small>2 contre 2, avec un partenaire</small></button>
-      <button class="mtile" data-m="d10"><div class="mill" id="ill_d10"></div><b>10 cartes</b><small>À 4 · table vide au départ</small></button>
+      <button class="mtile" data-m="d10"><div class="mill" id="ill_d10"></div><b>À 10 cartes</b><small>À 4 · table vide au départ</small></button>
     </div>
   </div>
   <div class="hsec">
     <div class="hlab">Adversaires</div>
-    <div class="seg2" id="oppRow" style="margin-bottom:10px"><button data-o="libre">Ordinateur (IA)</button><button data-o="amis">Mes amis</button></div>
+    <div class="seg2" id="oppRow" style="margin-bottom:10px"><button data-o="libre">Ordinateur (IA)</button><button data-o="amis">Mes amis</button><button data-o="mm">En ligne</button></div>
+    <div id="mmBox" style="display:none"><p class="amsg" id="mmMe"></p><div class="seg2" id="mmPrefRow"><button data-mp="eq">De mon niveau</button><button data-mp="any">Au hasard</button></div><p class="linfo" id="mmInfo"></p></div>
     <div id="circleBox">
       <div id="amisBox"></div>
       <div class="joinrow"><input class="inp" id="joinCode" inputmode="numeric" maxlength="4" placeholder="Code de table"><button class="btn sm" id="joinBtn">Rejoindre</button></div>
@@ -761,9 +813,10 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
     </div>
     <div class="hopts">
       <div class="seg2" id="targetRow"><button data-t="11">11 points</button><button data-t="21">21 points</button></div>
-      <button class="chipt" id="tgNapola"><span class="sw"></span>Napola</button>
+      <button class="chipt" id="tgNapola"><span class="sw"></span><span class="nap">Napola<small>1-2-3 carreaux</small></span></button>
     </div>
   </div>
+  <div id="pendBox"></div>
   <div id="invBox"></div>
   <div class="hplay">
     <button class="btn big" id="startBtn">Jouer</button>
@@ -772,6 +825,7 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
   <nav class="hbar">
     <button class="rb" id="lookBtn"><span>⚙️</span>Réglages</button>
     <button class="rb" id="namesBtn"><span>👥</span>Amis</button>
+    <button class="rb" id="statsBtn"><span>📊</span>Stats</button>
     <button class="rb" id="rulesBtn"><span>📖</span>Règles</button>
   </nav>
 </div></div>
@@ -818,6 +872,11 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 
 <div class="overlay" id="ovFriends"><div class="panel" id="friendsPanel"></div></div>
 <div class="overlay" id="ovLobby"><div class="panel" id="lobbyPanel"></div></div>
+<div class="overlay" id="ovTuto" style="z-index:110"><div class="panel" id="tutoPanel"></div></div>
+<div class="overlay" id="ovSt"><div class="panel" id="stPanel"></div></div>
+<div class="overlay" id="ovRx"><div class="panel"><h2>Réagir</h2><div class="rxtabs" id="rxTabs"></div><div class="rxgrid" id="rxGrid"></div><button class="btn ghost" id="rxClose" style="width:100%;margin-top:10px">Fermer</button></div></div>
+<div class="overlay" id="ovAsk" style="z-index:120"><div class="panel" id="askPanel"></div></div>
+<div class="overlay" id="ovMM"><div class="panel" id="mmPanel"></div></div>
 <div class="overlay" id="ovFPick"><div class="panel" id="fpickPanel"></div></div>
 
 <!-- Joueurs -->
@@ -831,9 +890,12 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 <!-- Règles -->
 <div class="overlay" id="ovRules"><div class="panel">
   <h2>Règles</h2>
+  <button class="tutob" id="tutoBtn"><span>🎓</span><span><b>Tu découvres la Chkobba ?</b><small>Apprends à jouer en 2 minutes, en 6 petits exercices</small></span><i>›</i></button>
   <h3>Comment jouer</h3>
   <ul style="padding-left:18px;margin:0">
-    <li><b>Glisse</b> une carte de ta main sur la table, ou <b>touche-la</b> puis touche la table.</li>
+    <li><b>Touche</b> une carte de ta main : l'action possible s'affiche, avec <b>Annuler</b> à côté. Touche une autre carte pour changer.</li>
+    <li>Plus rapide : <b>double toucher</b> sur ta carte pour la jouer tout de suite, <b>glisse-la</b> sur la table, ou touche directement <b>la carte du milieu</b> à prendre quand il n'y a qu'une façon de le faire.</li>
+    <li>Pastille <b>D</b> sur un avatar : le joueur qui a distribué. Pastille <b>1</b> : celui qui a commencé la manche.</li>
     <li>Les cartes que tu peux prendre <b>s'allument</b>. S'il y a plusieurs prises possibles, touche celles que tu veux.</li>
   </ul>
   <h3>Règles</h3>
@@ -845,13 +907,56 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
     <li>À 4, les partenaires sont face à face ; le joueur à gauche du donneur commence.</li>
     <li><b>Carte de coupe</b> (classique) : le joueur qui commence coupe le jeu et découvre une carte. Il choisit de la <b>garder</b> (elle compte dans ses 3 cartes) ou de la <b>mettre au milieu</b> (elle fait partie des 4 cartes de la table).</li>
     <li>S'il y a <b>3 ou 4 cartes identiques</b> au milieu, on remélange, on recoupe et on redistribue.</li>
-    <li><b>Classique</b> : 4 cartes sur la table, 3 chacun, redonne de 3 cartes, la dernière donne est annoncée. <b>10 cartes</b> : à 4, 10 cartes chacun, table vide.</li>
+    <li><b>Classique</b> : 4 cartes sur la table, 3 chacun, redonne de 3 cartes, la dernière donne est annoncée. <b>À 10 cartes</b> : à 4, 10 cartes chacun, table vide.</li>
+    <li><b>Conseil, table vide</b> : celui qui prend la seule carte du milieu fait Chkobba. Pose plutôt une carte que tu as en double, triple ou carré (l'aide l'indique par ×2, ×3, ×4) : avec un carré, personne ne peut la prendre.</li>
   </ul>
   <h3>Points de manche</h3>
   <ul style="padding-left:18px;margin:0 0 14px">
     <li><b>Karta</b> <i>(les cartes)</i> : plus de 20 cartes</li><li><b>Dinari</b> <i>(les deniers, c'est-à-dire les carreaux)</i> : plus de 5 carreaux</li>
     <li><b>El Haya</b> <i>(le 7 de carreau)</i> : celui qui l'a ramassé</li><li><b>Bermila</b> <i>(la prime)</i> : le plus de 7 (à égalité, le plus de 6)</li>
     <li><b>Chkobba</b> <i>(balayage : table vidée)</i> : 1 pt chacune</li><li><b>Napola</b> <i>(mot italien : la suite de carreau)</i> : As-2-3 de carreau = 3 pts, +1 par carreau qui suit</li>
+  </ul>
+  <h3>Ton niveau (note du joueur)</h3>
+  <p style="margin:0 0 8px">Tout le monde démarre à <b>1000</b>. La note bouge à la fin de chaque <b>partie</b>, contre l'ordinateur (IA) comme contre de vrais joueurs. Elle se mérite : <b>jouer beaucoup ne suffit pas</b>. À niveau égal, gains et pertes s'équilibrent ; on ne monte qu'en gagnant plus souvent que prévu et en jouant bien.</p>
+  <table class="lvtab">
+    <tr><th>Note</th><th>Classement</th></tr>
+    <tr><td>moins de 900</td><td>Débutant</td></tr>
+    <tr><td>900 à 999</td><td>Apprenti</td></tr>
+    <tr><td>1000 à 1074</td><td>Amateur</td></tr>
+    <tr><td>1075 à 1149</td><td>Amateur éclairé</td></tr>
+    <tr><td>1150 à 1224</td><td>Confirmé</td></tr>
+    <tr><td>1225 à 1299</td><td>Avancé</td></tr>
+    <tr><td>1300 à 1399</td><td>Redoutable</td></tr>
+    <tr><td>1400 à 1499</td><td>As</td></tr>
+    <tr><td>1500 à 1599</td><td>Expert</td></tr>
+    <tr><td>1600 et plus</td><td>Maître</td></tr>
+  </table>
+  <p style="margin:0 0 6px"><b>Ce qui compte dans le calcul</b></p>
+  <ul style="padding-left:18px;margin:0 0 8px">
+    <li><b>Tes chances de gagner</b>, d'après l'écart des notes. Battre plus fort rapporte beaucoup, battre plus faible presque rien ; perdre contre plus faible coûte cher.</li>
+    <li><b>Ta qualité de jeu</b> : chaque fois que tu as le choix, ton coup est comparé au meilleur coup possible (ce qu'il rapporte, ce qu'il laisse à l'adversaire, compte tenu des cartes déjà sorties). Une victoire bien jouée vaut jusqu'à 20 % de plus, une victoire chanceuse jusqu'à 20 % de moins. Une défaite bien jouée coûte moins, une défaite mal jouée coûte plus. Le hasard de la distribution n'entre pas dans cette mesure.</li>
+    <li><b>Joueur réel ou IA</b> : une partie contre de vrais joueurs compte à 100 %, contre l'IA à 60 %, en gain comme en perte. L'IA a une note fixe : Facile 850, Moyen 1050, Fort 1300, Expert 1550.</li>
+    <li><b>En équipe</b> : chaque équipe vaut la moyenne de ses deux joueurs. Si tu es le plus fort des deux, la partie pèse plus sur ta note (jusqu'à ×1,3) ; si ton partenaire est bien plus fort, elle pèse moins (jusqu'à ×0,7). On ne grimpe pas en se faisant porter.</li>
+    <li><b>Tes débuts</b> : la note bouge vite pendant tes 20 premières parties, puis se stabilise (base 48, puis 36, puis 28 après 60 parties).</li>
+    <li>L'écart de score (21-20 ou 21-0) ne compte pas : il dépend trop des cartes reçues. La note ne descend jamais sous 600.</li>
+  </ul>
+  <p style="margin:0 0 6px;font-size:13px;opacity:.8">Formule : variation = base × poids réel/IA × part d'équipe × qualité de jeu × (résultat − chances), où résultat vaut 1 pour une victoire et 0 pour une défaite.</p>
+  <p style="margin:0 0 6px"><b>Exemples</b> à 2 joueurs, note 1000, joueur installé (base 28), qualité de jeu moyenne :</p>
+  <table class="lvtab">
+    <tr><th>Adversaire</th><th>IA : gagné / perdu</th><th>Réel : gagné / perdu</th></tr>
+    <tr><td>noté 850</td><td><span class="up">+5</span> / <span class="dn">−12</span></td><td><span class="up">+8</span> / <span class="dn">−20</span></td></tr>
+    <tr><td>noté 1050</td><td><span class="up">+10</span> / <span class="dn">−7</span></td><td><span class="up">+16</span> / <span class="dn">−12</span></td></tr>
+    <tr><td>noté 1300</td><td><span class="up">+14</span> / <span class="dn">−3</span></td><td><span class="up">+24</span> / <span class="dn">−4</span></td></tr>
+    <tr><td>noté 1550</td><td><span class="up">+16</span> / <span class="dn">−1</span></td><td><span class="up">+27</span> / <span class="dn">−1</span></td></tr>
+  </table>
+  <p style="margin:0 0 14px;opacity:.8">Après chaque partie, le détail du calcul s'affiche sous ta nouvelle note.</p>
+  <h3>Jouer en ligne</h3>
+  <ul style="padding-left:18px;margin:0 0 14px">
+    <li><b>Mes amis</b> : ouvre une table, invite 1, 2 ou 3 amis ; les places restantes peuvent être tenues par l'IA.</li>
+    <li><b>En ligne</b> : de vrais joueurs connectés en même temps que toi. « De mon niveau » cherche dans ton classement ou le classement voisin (puis un peu plus large après 30 secondes) ; « Au hasard » prend le premier joueur disponible.</li>
+    <li><b>Classement général</b> (Stats → Général) : les 50 meilleurs joueurs de l'appli, par semaine, mois, trimestre, année ou depuis le début. Ton pseudo, ta note et tes résultats y sont visibles de tous ; un bouton en bas de l'onglet permet de ne plus y apparaître.</li>
+    <li><b>Interruption</b> (appel, appli fermée) : ce n'est pas un abandon. Contre l'IA, ta partie t'attend à la réouverture. En ligne, les autres t'attendent 60 secondes, puis une IA de ton niveau te remplace ; rouvre l'appli et touche « Reprendre » pour retrouver ta place. C'est pareil pour tout le monde, y compris celui qui a ouvert la table.</li>
+    <li><b>Abandon</b> : quitter une partie avec de vrais joueurs, ou ne pas revenir avant la fin, compte comme une défaite majorée de 25 %. Contre l'IA, l'abandon compte comme une défaite simple seulement si tu es mené ; sinon il ne change rien.</li>
   </ul>
   <button class="btn" id="rulesClose" style="width:100%">Fermer</button>
 </div></div>
@@ -869,16 +974,22 @@ const BACKS=[{id:'losanges',name:'Losanges fins'},{id:'encadre',name:'Classique 
 const THEMES=[{id:'pro',name:'Tapis moderne'},{id:'amis',name:'Entre amis'},{id:'moderne',name:'Moderne sombre'},{id:'clair',name:'Moderne clair'},{id:'cafe',name:'Café tunisien'},{id:'tapis',name:'Vrai tapis'},{id:'ludique',name:'Ludique'},{id:'sidi',name:'Sidi Bou Saïd'}];
 const NAMES={
  homme:{
-  'Juifs tunisiens':['Haï','Fradji','Messaoud','Mardochée','Chalom','Nessim','Makhlouf','Rahamim','Mimoun','Sion','Baroukh','Yehouda','Haïm','Moché','Itshak','Eliaou','Yossef','Yaacov','Chimon','Meyer','Hanania','Fortuné','Prosper','Félix','Gilbert','Albert','Victor','Raymond','Maurice','Lucien','Elie','Raphaël','Gabriel','Nathan','Ariel','Yoni','Yoav','Avi','Samuel','David','Salomon','Benjamin','Emmanuel','Jacob'],
-  'Italiens':['Marco','Luca','Giuseppe','Giovanni','Alessandro','Lorenzo','Matteo','Francesco','Paolo','Roberto','Salvatore','Vincenzo','Antonio','Davide','Fabio','Enzo','Bruno','Carlo','Dario','Stefano','Massimo','Gianni','Pietro','Andrea','Nino','Franco','Sergio','Tommaso'],
-  "D'origine arabe":['Karim','Sami','Mehdi','Amine','Rayan','Nabil','Hédi','Slim','Farid','Walid','Tarek','Anis','Hatem','Chokri','Fethi','Mounir','Nizar','Riadh','Sofiane']},
+  'Juifs tunisiens':['Haï','Fradji','Messaoud','Mardochée','Chalom','Nessim','Makhlouf','Rahamim','Mimoun','Sion','Baroukh','Yehouda','Haïm','Moché','Itshak','Eliaou','Yossef','Yaacov','Chimon','Meyer','Hanania','Fortuné','Prosper','Félix','Gilbert','Albert','Victor','Raymond','Maurice','Lucien','Elie','Raphaël','Gabriel','Nathan','Ariel','Yoni','Yoav','Avi','Samuel','David','Salomon','Benjamin','Emmanuel','Jacob','Abraham','Isaac','Aaron','Moïse','Josué','Michaël','Jonathan','Daniel','Ruben','Siméon','Lévi','Joseph','Yohann','Eliezer','Ephraïm','Menahem','Mordekhaï','Nissim','Yehoshoua','Yohanan','Ouriel','Yaniv','Eytan','Gad','Asher','Dan','Néhémie','Ezra','Akiva','Hillel','Shlomo','Gilad','Amos','Elisha','Tsvi','Dov','Zacharie','Yéhiel','Méir','Binyamin','Boaz','Tal','Lior','Noam','Simon','Jérémie','Ilan','Elior','Yossi','Kobi','Shai','Reouven'],
+  'Italiens':['Marco','Luca','Giuseppe','Giovanni','Alessandro','Lorenzo','Matteo','Francesco','Paolo','Roberto','Salvatore','Vincenzo','Antonio','Davide','Fabio','Enzo','Bruno','Carlo','Dario','Stefano','Massimo','Gianni','Pietro','Andrea','Nino','Franco','Sergio','Tommaso','Riccardo','Simone','Federico','Gabriele','Emanuele','Leonardo','Edoardo','Filippo','Giacomo','Mattia','Nicola','Michele','Alberto','Claudio','Luigi','Mario','Renato','Ugo','Valerio','Corrado','Alfredo','Ettore','Raffaele','Domenico','Gennaro','Maurizio','Cesare','Aldo'],
+  'Arabes maghrébins':['Karim','Sami','Mehdi','Amine','Rayan','Nabil','Hédi','Slim','Farid','Walid','Tarek','Anis','Hatem','Chokri','Fethi','Mounir','Nizar','Riadh','Sofiane','Youssef','Hamza','Bilel','Mourad','Skander','Aymen','Mohamed','Ahmed','Ali','Omar','Khaled','Hichem','Lotfi','Moez','Sabri','Wassim','Yassine','Zied','Mehrez','Fares','Haythem','Imed','Kais','Marwen','Nader','Oussama','Raouf','Samir','Taoufik','Habib','Mokhtar','Bechir','Adel','Montassar','Ilyes','Ghassen','Seif','Achraf']},
  femme:{
-  'Juives tunisiennes':['Messaouda','Mazal','Fréha','Zohra','Fortunée','Simha','Tova','Rachel','Esther','Yaël','Sarah','Déborah','Rebecca','Léa','Hanna','Myriam','Hadassa','Avital','Ninette','Juliette','Rosine','Gilda','Huguette','Colette','Odette','Georgette','Mireille','Ilana','Shirel','Tamar','Orly','Noa','Naomi','Judith','Dina','Batsheva','Chochana','Elsa'],
-  'Italiennes':['Giulia','Chiara','Francesca','Alessandra','Elena','Valentina','Sofia','Martina','Federica','Paola','Lucia','Rosa','Serena','Gina','Carla','Bianca','Laura','Silvia','Giovanna','Alba','Teresa','Livia','Gabriella','Antonella','Marisa','Nina'],
-  "D'origine arabe":['Nour','Yasmine','Leïla','Inès','Sarra','Amel','Rym','Salma','Nadia','Samira','Hela','Dorra','Meriem','Sonia','Olfa','Wafa','Asma','Lina']}
+  'Juives tunisiennes':['Messaouda','Mazal','Fréha','Zohra','Fortunée','Simha','Tova','Rachel','Esther','Yaël','Sarah','Déborah','Rebecca','Léa','Hanna','Myriam','Hadassa','Avital','Ninette','Juliette','Rosine','Gilda','Huguette','Colette','Odette','Georgette','Mireille','Ilana','Shirel','Tamar','Orly','Noa','Naomi','Judith','Dina','Batsheva','Chochana','Elsa','Ruth','Rivka','Liora','Shira','Talia','Maayan','Yaëlle','Eden','Noémie','Ayelet','Hila','Michal','Keren','Galit','Efrat','Shoshana','Ora','Tsipora','Bracha','Yocheved','Hava','Elisheva','Abigaïl','Margalit','Tikva','Emouna','Mazaltov','Rina','Liat','Adina','Meïra','Tehila','Hodaya','Nehama','Bella','Yvette','Solange','Ginette','Paulette','Arlette','Josette','Kamouna','Allégria','Benvenida','Shana','Sharon','Oriane','Inbal','Hadar','Nili','Gali','Tamara','Hadas'],
+  'Italiennes':['Giulia','Chiara','Francesca','Alessandra','Elena','Valentina','Sofia','Martina','Federica','Paola','Lucia','Rosa','Serena','Gina','Carla','Bianca','Laura','Silvia','Giovanna','Alba','Teresa','Livia','Gabriella','Antonella','Marisa','Nina','Alessia','Aurora','Beatrice','Camilla','Elisa','Giorgia','Ilaria','Manuela','Michela','Monica','Patrizia','Raffaella','Roberta','Simona','Stefania','Viola','Arianna','Noemi','Graziella','Loredana','Annalisa','Donatella','Ornella','Carlotta','Cristina','Daniela'],
+  'Arabes maghrébines':['Nour','Yasmine','Leïla','Inès','Sarra','Amel','Rym','Salma','Nadia','Samira','Hela','Dorra','Meriem','Sonia','Olfa','Wafa','Asma','Lina','Khadija','Fatma','Rania','Imen','Ons','Aïcha','Hajer','Jihen','Lamia','Mouna','Najet','Rihab','Saïda','Souad','Wiem','Yosra','Zeineb','Houda','Latifa','Sana','Emna','Chaima','Ghada','Fatima','Malek','Nesrine','Sirine','Amira','Khaoula','Hiba','Insaf','Dalila']}
 };
 const G_NAMES={homme:Object.values(NAMES.homme).flat(),femme:Object.values(NAMES.femme).flat()};
 const ALL_NAMES=[...G_NAMES.homme,...G_NAMES.femme];
+/* Tirage équilibré : on choisit d'abord une origine (1 chance sur 3), puis un prénom dedans,
+   pour que la liste la plus longue ne sorte pas plus souvent. */
+function drawName(sex,used){used=used||new Set();
+  const groups=sex?Object.values(NAMES[sex]):[...Object.values(NAMES.homme),...Object.values(NAMES.femme)];
+  for(let t=0;t<40;t++){const g=groups[Math.floor(Math.random()*groups.length)],n=g[Math.floor(Math.random()*g.length)];if(!used.has(n))return n}
+  return ALL_NAMES.find(n=>!used.has(n))||ALL_NAMES[0]}
 const AV_COLORS=['#e07a5f','#3d8bfd','#c75b9b','#2a9d8f','#8e6cc9','#d1495b','#1f8a70','#e09f3e','#5c7cfa','#b5651d'];
 
 const $=id=>document.getElementById(id);
@@ -897,7 +1008,8 @@ if(typeof P.seats.me!=='string')P.seats.me='';
 if(!['losanges','encadre','anneaux','etoile','zellige'].includes(P.back))P.back='encadre';
 if(!P.amis0){P.theme='amis';P.back='encadre';P.color='brun';P.amis0=1}
 if(!P.pro0){P.theme='pro';P.mat=null;P.color='rouge';P.pro0=1}
-const T=ms=>Math.round(ms*({lent:1.5,normal:1,rapide:.55}[P.speed]||1));
+function catchUp(){return !!(S&&S.online&&S.online.rejoin&&S.online.buf[S.online.seq+1]!==undefined)} // on rejoue vite le journal d'une partie reprise
+const T=ms=>catchUp()?Math.min(ms,12):Math.round(ms*({lent:1.5,normal:1,rapide:.55}[P.speed]||1));
 function savePrefs(){try{localStorage.setItem('chkobba-prefs2',JSON.stringify(P))}catch(e){}}
 let S=null;
 
@@ -1127,7 +1239,9 @@ NET.init=function(){
       putIfAbsent:async(p,v)=>(await db.ref(p).transaction(c=>c===null?v:undefined)).committed,
       onValue:(p,cb)=>{const r=db.ref(p),h=s=>cb(s.val());r.on('value',h);return()=>r.off('value',h)},
       onChild:(p,cb)=>{const r=db.ref(p),h=s=>cb(s.key,s.val());r.on('child_added',h);return()=>r.off('child_added',h)},
-      onDisconnectSet:(p,v)=>db.ref(p).onDisconnect().set(v)});
+      onDisconnectSet:(p,v)=>db.ref(p).onDisconnect().set(v),
+      stamp:firebase.database.ServerValue.TIMESTAMP,
+      top:async(p,c,n)=>{const sn=await db.ref(p).orderByChild(c).limitToLast(n).get(),a=[];sn.forEach(x=>{a.push({uid:x.key,...x.val()})});return a.reverse()}});
     return true;
   })().catch(e=>{NET._p=null;NET.ok=false;throw e});
   return NET._p;
@@ -1148,7 +1262,9 @@ function initMock(url){return new Promise((res,rej)=>{
       get:p=>call('get',{path:p}),set:(p,v)=>call('set',{path:p,val:v}),update:(p,v)=>call('update',{path:p,val:v}),
       remove:p=>call('remove',{path:p}),putIfAbsent:(p,v)=>call('putIfAbsent',{path:p,val:v}),
       onValue:(p,cb)=>sub('value',p,cb),onChild:(p,cb)=>sub('child',p,cb),
-      onDisconnectSet:(p,v)=>call('onDisc',{path:p,val:v})});
+      onDisconnectSet:(p,v)=>call('onDisc',{path:p,val:v}),
+      get stamp(){return Date.now()},
+      top:async(p,c,n)=>{const v=await call('get',{path:p})||{};return Object.keys(v).map(u=>({uid:u,...v[u]})).filter(x=>x[c]!==undefined).sort((a,b)=>b[c]-a[c]).slice(0,n)}});
     res(true);
   };
 })}
@@ -1186,6 +1302,10 @@ function ensureCircle(){
   if(!P.opp) P.opp='cercle';
 }
 const LV_NAMES={facile:'Facile',moyen:'Moyen',fort:'Fort',expert:'Expert'};
+/* 10 paliers de classement (affichage + mise en relation). lvlOf (4 niveaux) reste réservé au niveau de l'IA. */
+const LEAGUES=[[0,'Débutant'],[900,'Apprenti'],[1000,'Amateur'],[1075,'Amateur éclairé'],[1150,'Confirmé'],[1225,'Avancé'],[1300,'Redoutable'],[1400,'As'],[1500,'Expert'],[1600,'Maître']];
+function leagueOf(r){let i=0;for(let k=0;k<LEAGUES.length;k++)if(r>=LEAGUES[k][0])i=k;return i}
+function lgName(r){return LEAGUES[leagueOf(r)][1]}
 function lvlOf(r){return r<950?'facile':r<1170?'moyen':r<1400?'fort':'expert'}
 function rp(id){return P.roster.find(x=>x.id===id)}
 function rel(id){return P.rel[id]||(P.rel[id]={wp:0,lp:0,wa:0,la:0})}
@@ -1230,16 +1350,94 @@ function tableWarn(){
   return out.length?out.join('<br>')+' <b>Conseil :</b> joue contre des joueurs de ton niveau pour des parties équilibrées.':'✅ Table équilibrée : des adversaires de ton niveau.';
 }
 const CPU_R={facile:850,moyen:1050,fort:1300,expert:1550};
+/* ===== Note du joueur =====
+   variation = K × W × C × Q × (résultat − chances)
+   K : 48 pendant les 20 premières parties (calibrage), 36 jusqu'à 60, puis 28
+   W : poids des adversaires — joueur réel 1, IA 0,6 (moyenne des adversaires)
+   C : part de responsabilité en équipe — 1 + (ma note − note du partenaire)/1000, borné entre 0,7 et 1,3
+   Q : qualité de jeu (part de bons coups, voir trackQuality), ramenée à q entre 0 et 1 :
+       victoire → 0,8 + 0,4q (bien jouée = vaut plus, chanceuse = vaut moins) ; défaite → 1,2 − 0,4q (bien jouée = coûte moins)
+   chances : 1/(1+10^((eux−nous)/400)), une équipe valant la moyenne de ses deux joueurs.
+   L'écart de score n'entre PAS dans le calcul (trop dépendant de la distribution).
+   Jouer beaucoup ne fait pas monter : à niveau constant, gains et pertes s'équilibrent. */
+const ELO_AI_W=.6;const fr1=x=>(Math.round(x*100)/100).toString().replace('.',',');
+function eloK(g){return g<=20?48:g<=60?36:28}
+function eloCalc(o){ // o:{me,partner|null,opp:[{r,human}],win,g,acc|null}
+  const us=o.partner==null?o.me:(o.me+o.partner)/2,them=o.opp.reduce((a,x)=>a+x.r,0)/o.opp.length;
+  const E=1/(1+Math.pow(10,(them-us)/400));
+  const K=eloK(o.g),W=o.opp.reduce((a,x)=>a+(x.human?1:ELO_AI_W),0)/o.opp.length;
+  const C=o.partner==null?1:Math.min(1.3,Math.max(.7,1+(o.me-o.partner)/1000));
+  const q=o.acc==null?.5:Math.min(1,Math.max(0,(o.acc-Q_LO)/(Q_HI-Q_LO))),Q=o.win?.8+.4*q:1.2-.4*q;
+  return {E,K,W,C,Q,acc:o.acc,d:Math.round(K*W*C*Q*((o.win?1:0)-E))};
+}
 function eloUpdate(win){
   const R=S.seatR;if(!R) return null;
-  const us=S.n===2?P.elo:(P.elo+R[2])/2,them=S.n===2?R[1]:(R[1]+R[3])/2;
-  const E=1/(1+Math.pow(10,(them-us)/400)),sc=win?1:0,before=P.elo,d=Math.round(32*(sc-E));
+  const hum=p=>!!(S.seatUid&&S.seatUid[p]),opp=(S.n===2?[1]:[1,3]).map(p=>({r:R[p],human:hum(p)}));
+  const c=eloCalc({me:P.elo,partner:S.n===2?null:R[2],opp,win,g:(P.stats&&P.stats.g)||1,acc:qualityOf(S.q)});
+  const before=P.elo,d=c.d;
   P.elo=Math.max(600,before+d);
   if(S.seatUid) for(let p=1;p<S.n;p++){const u=S.seatUid[p];if(!u)continue;const X=rel(u);
     if(team(p)===0){win?X.wp++:X.lp++}else{win?X.wa++:X.la++}}
   savePrefs();netSaveProfile();
-  return {before,after:P.elo,d};
+  return {before,after:P.elo,d:P.elo-before,c,team:S.n===4,real:opp.filter(x=>x.human).length,nopp:opp.length};
 }
+/* ===== Reprise après interruption / abandon =====
+   Contre l'IA : la partie est sauvegardée à chaque tour du joueur et reprise à la réouverture de l'appli.
+   En ligne : P.pend garde la table ; à la réouverture on rejoue le journal en accéléré (startOnline(...,true)).
+   Abandon volontaire : défaite majorée (×1,25) s'il y a d'autres joueurs réels ; contre l'IA, défaite simple seulement si l'on est mené. */
+const SAVE_KEY='chkobba-save1';
+function saveGame(between){try{const o=JSON.stringify({between,S},(k,v)=>v instanceof Set?undefined:(k==='sel'||k==='flying'||k==='online')?null:v);localStorage.setItem(SAVE_KEY,o)}catch(e){}}
+function clearSave(){try{localStorage.removeItem(SAVE_KEY)}catch(e){}}
+function loadGame(){try{const o=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');if(!o||!o.S||o.S.over||!o.S.hands)return false;
+  S=o.S;Object.assign(S,{online:null,pick:new Set(),taking:new Set(),ghost:new Set(),sel:null,flying:null,busy:false,dealing:false,dragId:null,justDealt:false,needNew:!!o.between});
+  return true}catch(e){return false}}
+const ABANDON_X=1.25;
+function eloAbandon(info,mult){
+  P.stats=P.stats||{g:0,w:0};P.stats.g++;
+  const c=eloCalc({me:P.elo,partner:info.partner,opp:info.opp,win:false,g:P.stats.g,acc:null}),before=P.elo;
+  P.elo=Math.max(600,before+Math.min(-1,Math.round(c.d*mult)));
+  {const st=stGet(),per=perGet();st.g++;st.quit++;st.streak=0;for(const k of PER_KEYS){per[k].g++;per[k].d+=P.elo-before}}
+  savePrefs();netSaveProfile();return P.elo-before;
+}
+function askBox(html,ok,cancel){return new Promise(res=>{
+  $('askPanel').innerHTML=html+`<div class="stack" style="margin-top:12px">${ok?`<button class="btn" id="askOk">${ok}</button>`:''}<button class="btn ghost" id="askNo">${cancel}</button></div>`;
+  $('ovAsk').classList.add('on');const done=v=>{$('ovAsk').classList.remove('on');res(v)};
+  if(ok)$('askOk').onclick=()=>done(true);$('askNo').onclick=()=>done(false)})}
+/* À appeler avant de lancer une autre partie. Renvoie false si le joueur préfère garder sa partie en cours. */
+async function leaveCurrent(){
+  const live=S&&!S.over&&S.online;
+  if(live||P.pend){
+    const pd=P.pend||{},hum=!!pd.hum,behind=live?S.scores[0]<S.scores[1]:true;
+    const pen=hum||behind;
+    if(!await askBox(`<h2>Quitter la partie en ligne ?</h2><p>${hum?'Tu joues avec de vrais joueurs : abandonner compte comme une <b>défaite majorée</b> sur ta note, et l\'IA termine à ta place.':behind?'Tu es mené : l\'abandon compte comme une défaite.':'Sans conséquence sur ta note.'}</p><p class="amsg small">Une simple interruption (appel, appli fermée) n\'est pas un abandon : rouvre l\'appli et choisis « Reprendre ».</p>`,'Abandonner','Garder ma partie'))return false;
+    let d=0;if(pen&&pd.opp)d=eloAbandon(pd,hum?ABANDON_X:1);
+    if(NET.ok&&pd.code)NET.set(`tables/${pd.code}/quit/${NET.uid}`,true).catch(()=>{});
+    leaveOnline();S=null;P.pend=null;savePrefs();homeProfile();syncStart();if(d)homeToast(`Abandon : ${d} sur ta note`);
+    return true;
+  }
+  if(S&&!S.over&&!S.online&&(S.manche||S.piles&&(S.piles[0].length||S.piles[1].length))){
+    const behind=S.scores[0]<S.scores[1];
+    if(!await askBox(`<h2>Partie en cours</h2><p>Tu as une partie en cours contre l'ordinateur (IA). ${behind?'Tu es mené : l\'abandonner compte comme une <b>défaite</b> sur ta note.':'Tu n\'es pas mené : l\'abandonner ne change pas ta note.'}</p>`,'Abandonner et rejouer','Garder ma partie'))return false;
+    let d=0;if(behind&&S.seatR)d=eloAbandon({partner:S.n===2?null:S.seatR[2],opp:(S.n===2?[1]:[1,3]).map(p=>({r:S.seatR[p],human:false}))},1);
+    S=null;clearSave();homeProfile();if(d)homeToast(`Abandon : ${d} sur ta note`);
+  }
+  return true;
+}
+function homeToast(t){const d=document.createElement('div');d.className='htoast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),3800)}
+async function resumeOnline(){
+  const pd=P.pend;if(!pd)return;
+  if(!await netWait()){homeToast('Pas de connexion : impossible de reprendre pour le moment');return}
+  const t=await NET.get('tables/'+pd.code);
+  const gone=!t||!t.game||t.status==='done'||(t.quit&&t.quit[NET.uid]);
+  if(gone){const d=pd.opp?eloAbandon(pd,pd.hum?ABANDON_X:1):0;P.pend=null;savePrefs();homeProfile();syncStart();
+    await askBox(`<h2>Partie terminée</h2><p>La partie s'est terminée sans toi. Elle compte comme un abandon${d?` : <b>${d}</b> sur ta note`:''}.</p>`,null,'Compris');return}
+  startOnline(t.game,pd.code,true);
+}
+function renderPend(){const b=$('pendBox');if(!b)return;
+  const live=S&&S.online&&!S.over;
+  if(P.pend&&live){b.innerHTML='<button class="btn sm ghost" id="pendQuit" style="width:100%">Abandonner la partie en ligne</button>';return}
+  const show=!!P.pend;
+  b.innerHTML=show?`<div class="invb"><div><b>Partie en ligne en cours</b><br><small>Tu peux la reprendre là où elle en est.</small></div><span><button class="btn sm" id="pendGo">Reprendre</button><button class="btn sm ghost" id="pendQuit">Abandonner</button></span></div>`:'';}
 /* ================= Partie ================= */
 function newGame(){
   const M=MODES[P.mode];
@@ -1249,7 +1447,7 @@ function newGame(){
   const draw=list=>{const l=shuffle(list.filter(n=>!used.has(n)));return l[0]||list[0]};
   const nameFor=k=>{const c=P.seats[k]||{m:'rand'};let n;
     if((c.m==='homme'||c.m==='femme'||c.m==='perso')&&c.v) n=c.v;
-    else n=draw(c.m==='homme'?G_NAMES.homme:c.m==='femme'?G_NAMES.femme:ALL_NAMES);
+    else n=drawName(c.m==='homme'?'homme':c.m==='femme'?'femme':null,used);
     used.add(n);return n};
   S.people=[{n:P.seats.me||'Toi',c:'#e0a526'},...keys.map((k,i)=>({n:nameFor(k),c:cols[i]}))];
   S.seatIds=null;S.seatLvl=null;
@@ -1257,7 +1455,7 @@ function newGame(){
   newManche();
 }
 async function newManche(){
-  const M=MODES[S.mode];
+  const M=MODES[S.mode];S.gm=[];
   Object.assign(S,{deck:newDeck(),hands:Array.from({length:S.n},()=>[]),table:[],piles:[[],[]],chk:[0,0],last:null,lastCap:null,sel:null,pick:new Set(),busy:true,lastDeal:false,flying:null,slot:false,taking:new Set(),ghost:new Set(),dragId:null,justDealt:false});
   S.turn=(S.dealer+1)%S.n;
   if(S.online){render();S.deck=await netDeck()}
@@ -1291,7 +1489,7 @@ async function newManche(){
   S.busy=false;
   render();
   hintFlash(S.dealer===0?'Tu as distribué. '+person(S.turn).n+' commence.':person(S.dealer).n+' a distribué. '+(S.turn===0?'À toi de commencer !':person(S.turn).n+' commence.'));
-  if(S.turn!==0) setTimeout(cpuTurn,T(900));
+  if(S.turn!==0) setTimeout(cpuTurn,T(900));else netMine();
 }
 /* Distribution animée : paquets de cartes qui partent du donneur vers chaque joueur puis vers le milieu */
 function seatRect(p){
@@ -1320,6 +1518,7 @@ async function dealAnim(plan,fast){
 function cpuKeepCut(c){return c.s==='♦'||c.v===7||c.v===6||c.v>=8}
 function askCut(cutter,cut){
   return new Promise(async res=>{
+    if(cutter===0&&S.online&&S.online.buf[S.online.seq+1]&&S.online.buf[S.online.seq+1].t==='cut'){res(!!S.online.buf[S.online.seq+1].k);return}
     const pn=$('cutPanel'),close=()=>$('ovCut').classList.remove('on');
     pn.innerHTML=`<h2 id="cutH">${S.dealer===0?'Tu mélanges':person(S.dealer).n+' mélange'}…</h2>
       <div class="deckanim" id="dk">${Array.from({length:8},(_,i)=>`<div class="card back dk" style="--i:${i}"></div>`).join('')}
@@ -1355,13 +1554,34 @@ function askCut(cutter,cut){
 function sortHand(){S.hands[0].sort(P.sort==='valeur'?(a,b)=>a.v-b.v||SO[a.s]-SO[b.s]:(a,b)=>SO[a.s]-SO[b.s]||a.v-b.v)}
 const handsEmpty=()=>S.hands.every(h=>!h.length);
 const isLastPlay=()=>S.deck.length===0&&handsEmpty();
+/* Qualité de jeu : chaque coup du joueur (quand il a le choix) est comparé au meilleur coup selon l'analyse
+   « Fort » (gain immédiat − risque laissé à l'adversaire, d'après les cartes non vues). Mesure la décision, pas la chance. */
+function moveScore(p,m){
+  const totalLeft=S.hands.reduce((a,h)=>a+h.length,0),isLast=S.deck.length===0&&totalLeft===1;
+  const rem=applyMove(S.table,m);let sc=moveGain(m,S.table,isLast);
+  if(isLast) return sc+endBonus(p,m,rem);
+  const nxt=(p+1)%S.n;let h=S.hands[nxt].length;if(!h&&S.deck.length)h=MODES[S.mode].hand;
+  return sc-expectedReply(rem,unseenFor(p),h,S.deck.length===0&&totalLeft-1===1);
+}
+function trackQuality(p,card,capt){
+  try{const moves=legalMoves(S.hands[p],S.table);if(moves.length<2)return null;
+    const sc=moves.map(m=>moveScore(p,m)),best=Math.max(...sc);
+    const key=o=>o?o.map(c=>c.id).sort().join():'' ,ck=key(capt&&capt.length?capt:null);
+    const i=moves.findIndex(m=>m.c===card&&key(m.o)===ck);if(i<0)return null;
+    if(best-Math.min(...sc)<.05)return null; // tous les coups se valent : pas un vrai choix
+    return best-sc[i]<=.12;
+  }catch(e){return null}
+}
+const Q_LO=.55,Q_HI=.95; // ≈ précision de l'IA Facile → 0, de l'IA Fort/Expert → 1
+function qualityOf(q){if(!q||q.n<8)return null;return q.good/q.n}
 function doPlay(p,card,capt){
+  if(p===0&&S.hands[0].includes(card)){const g=trackQuality(0,card,capt);if(g!==null){S.q=S.q||{n:0,good:0};S.q.n++;if(g)S.q.good++}}
   const h=S.hands[p];h.splice(h.indexOf(card),1);
   let chk=false;
   if(capt&&capt.length){
     S.table=S.table.filter(t=>!capt.includes(t));
-    S.piles[team(p)].push(card,...capt);S.last=team(p);S.lastCap={p,card,capt:[...capt]};
-    if(S.table.length===0&&!isLastPlay()){S.chk[team(p)]++;chk=true}
+    S.piles[team(p)].push(card,...capt);S.last=team(p);S.lastCap={p,card,capt:[...capt]};gsAdd(p,[card,...capt]);
+    if(S.table.length===0&&!isLastPlay()){S.chk[team(p)]++;chk=true;gsOf(p).chk++;gmOf(p).chk++}
   } else S.table.push(card);
   return chk;
 }
@@ -1379,7 +1599,7 @@ async function afterPlay(p){
     else {render();setTimeout(sweepRest,T(700));return}
   }
   render();
-  if(S.turn!==0) setTimeout(cpuTurn,T(300));
+  if(S.turn!==0) setTimeout(cpuTurn,T(300));else netMine();
 }
 
 /* ================= Animation d'un coup ================= */
@@ -1461,6 +1681,16 @@ function endBonus(p,m,tableAfter){ // dernière carte de la manche : le reste de
   if(lastTeam===null) return 0;
   const v=sumW(tableAfter);return lastTeam===team(p)?v:-v;
 }
+/* Table vide : poser la carte la moins « prenable ». Prendre la seule carte du milieu = Chkobba pour l'adversaire.
+   Plus on a d'exemplaires d'une valeur (double, triple, carré), moins les autres peuvent la prendre. */
+function seenCount(v){return S.piles[0].concat(S.piles[1]).filter(c=>c.v===v).length}
+function layRisk(p,c,useSeen){
+  const mine=S.hands[p].filter(x=>x.v===c.v).length;
+  const out=Math.max(0,4-mine-(useSeen?seenCount(c.v):0)); // exemplaires encore chez les autres
+  let r=out*10;
+  if(isHaya(c))r+=8;if(c.v===7)r+=4;if(c.s==='♦')r+=1.5;if(c.v===6)r+=1;
+  return r+cardW(c)*.5;
+}
 function cpuChoose(p){
   const lvl=(S.seatLvl&&S.seatLvl[p])||S.level,hand=S.hands[p],moves=legalMoves(hand,S.table);
   const totalLeft=S.hands.reduce((a,h)=>a+h.length,0),isLast=S.deck.length===0&&totalLeft===1;
@@ -1469,6 +1699,11 @@ function cpuChoose(p){
   if(lvl==='facile'){
     if(Math.random()<.5) return moves[Math.floor(Math.random()*moves.length)];
     return pick(m=>(m.o?1+m.o.length:0)+Math.random()*.8);
+  }
+  // ---------- Table vide : on pose en tenant compte de ses doubles / triples / carrés ----------
+  if(!S.table.length&&!isLast&&lvl!=='facile'){
+    const useSeen=lvl!=='moyen',noise=lvl==='moyen'?6:.5;
+    return pick(m=>-layRisk(p,m.c,useSeen)+Math.random()*noise);
   }
   // ---------- Moyen : bon sens, sans compter les cartes ----------
   if(lvl==='moyen'){
@@ -1558,27 +1793,64 @@ function nextEv(){const O=S.online;return new Promise(res=>{const k=O.seq+1;
   const chk=()=>{if(O.buf[k]!==undefined){O.seq=k;res(O.buf[k]);return true}return false};
   if(!chk())O.waits.push(chk)})}
 function netListen(){const O=S.online;
-  O.unsub=NET.onChild(`tables/${O.code}/ev`,(k,v)=>{O.buf[+k]=v;O.waits=O.waits.filter(f=>!f())})}
+  O.unsub=NET.onChild(`tables/${O.code}/ev`,(k,v)=>{O.buf[+k]=v;O.waits=O.waits.filter(f=>!f());netMine()})}
+/* C'est mon tour mais mon coup est déjà au journal (partie reprise, ou l'hôte a joué pour moi pendant mon absence) */
+function netMine(){const O=S&&S.online;if(!O||S.turn!==0||S.busy||S.netBusy||S.over)return;
+  const ev=O.buf[O.seq+1];if(!ev||ev.t!=='play')return;
+  S.busy=true;nextEv().then(e=>applyPlayEv(e))}
+/* ----- Plus d'hôte unique : n'importe quel téléphone à jour peut publier le prochain événement (paquet, coup de l'IA,
+   remplacement d'un absent). putIfAbsent garantit qu'un seul est retenu. Pour éviter les doublons inutiles, chacun attend
+   selon son rang parmi les joueurs réels présents (l'hôte d'origine d'abord). ----- */
+function netHumans(){const O=S.online,n=O.seats.length,h=Math.max(0,O.seats.findIndex(x=>x.kind==='human'&&x.uid===O.hostUid));
+  return Array.from({length:n},(_,i)=>O.seats[(h+i)%n]).filter(x=>x.kind==='human')}
+function netRank(exclude){const O=S.online;let r=0;
+  for(const x of netHumans()){if(x.uid===NET.uid)return r;if(x.uid!==exclude&&O.pres[x.uid]!==false&&!O.gone[x.uid])r++}return r}
+function netPresence(){const O=S.online;
+  const poll=async()=>{if(!S||S.online!==O){clearInterval(O.presIv);return}
+    try{const q=await NET.get(`tables/${O.code}/quit`)||{};for(const u in q)O.gone[u]=true;
+      for(const x of O.seats)if(x.kind==='human'&&x.uid!==NET.uid){const st=await NET.get('status/'+x.uid);O.pres[x.uid]=!!(st&&st.on)}}catch(e){}};
+  poll();O.presIv=setInterval(poll,5000)}
+function netDuty(fn,step){const O=S.online,k=O.seq,r=netRank();
+  if(r===0) return fn();
+  setTimeout(()=>{if(S&&S.online===O&&O.seq===k&&O.buf[k+1]===undefined)fn()},step*r);}
+const NET_WAIT=60,NET_IDLE=90; // secondes laissées à un absent / à un joueur connecté qui ne joue pas
 function netAwait(p,fallback){
   const O=S.online,a=absSeat(p),seat=O.seats[a],pr=nextEv();
-  if(!O.host||seat.kind!=='human'||a===O.r) return pr;
-  let off=0,done=false;pr.then(()=>{done=true});
+  if(seat.kind!=='human'||a===O.r) return pr;
+  let off=0,idle=0,done=false;pr.then(()=>{done=true;if(S&&S.online===O&&S.waitTxt){S.waitTxt=null;render()}});
+  const replace=async why=>{
+    const lv=lvlOf(S.seatR[p]||1000);
+    if(why!=='again')hintFlash(`${seat.name} ${why==='quit'?'a quitté la partie':why==='idle'?'ne joue pas':'ne revient pas'} : une IA de son niveau (${LV_NAMES[lv]}) le remplace`);
+    O.gone[seat.uid]=true;S.waitTxt=null;
+    const keep=S.seatLvl[p];S.seatLvl[p]=lv;let ev;try{ev=fallback()}finally{S.seatLvl[p]=keep}
+    await netPub(ev)};
   const iv=setInterval(async()=>{if(done||S.online!==O){clearInterval(iv);return}
-    let st=null;try{st=await NET.get('status/'+seat.uid)}catch(e){}
-    if(st&&st.on){off=0;return}
-    off+=2;if(off>=12){clearInterval(iv);if(!done){hintFlash(seat.name+' est déconnecté : l\'ordinateur (IA) joue à sa place');await netPub(fallback())}}},2000);
+    let st=null,qt=null;try{qt=await NET.get(`tables/${O.code}/quit/${seat.uid}`);st=await NET.get('status/'+seat.uid)}catch(e){}
+    if(done||S.online!==O){clearInterval(iv);return}
+    const lag=3*netRank(seat.uid); // les autres téléphones laissent d'abord agir le premier présent
+    if(qt){if(off>=lag){clearInterval(iv);await replace(O.gone[seat.uid]?'again':'quit')}else off+=2;return}
+    if(st&&st.on){off=0;O.pres[seat.uid]=true;
+      if(O.gone[seat.uid]){delete O.gone[seat.uid];hintFlash(seat.name+' est de retour')}
+      if(S.waitTxt){S.waitTxt=null;render()}
+      idle+=2;if(idle>=NET_IDLE+lag){clearInterval(iv);await replace('idle')}
+      return}
+    O.pres[seat.uid]=false;off+=2;
+    const was=O.gone[seat.uid],limit=was?2:NET_WAIT;
+    if(off>=limit+lag){clearInterval(iv);await replace(was?'again':'gone');return}
+    if(!was){S.waitTxt=`${seat.name} s'est absenté. On l'attend encore ${Math.max(1,limit-off)} s…`;render()}
+  },2000);
   return pr;
 }
 async function netDeck(){
-  const O=S.online;
-  if(O.host) await netPub({t:'deck',d:newDeck().map(c=>c.id)});
-  else{S.waitTxt=`En attente de ${O.seats[0].name}…`;render()}
+  const O=S.online,first=netHumans()[0];
+  if(netRank()>0){S.waitTxt=`En attente de ${first?first.name:'la table'}…`;render()}
+  netDuty(()=>netPub({t:'deck',d:newDeck().map(c=>c.id)}),9000);
   const ev=await nextEv();S.waitTxt=null;
   return ev.d.map(cardFromId);
 }
 async function netRemoteCut(cutter,cut){
   const O=S.online,seat=O.seats[absSeat(cutter)];
-  if(seat.kind==='cpu'&&O.host) await netPub({t:'cut',k:cpuKeepCut(cut)});
+  if(seat.kind==='cpu') netDuty(()=>netPub({t:'cut',k:cpuKeepCut(cut)}),4000);
   const ev=await netAwait(cutter,()=>({t:'cut',k:cpuKeepCut(cut)}));
   return !!ev.k;
 }
@@ -1595,7 +1867,7 @@ async function netTurn(){
   S.busy=true;S.justDealt=false;render();
   const O=S.online,p=S.turn,seat=O.seats[absSeat(p)];
   const auto=()=>{const b=cpuChoose(p);return playEv(p,b.c,b.o)};
-  if(seat.kind==='cpu'&&O.host){await sleep(T(450+Math.random()*400));await netPub(auto())}
+  if(seat.kind==='cpu'){await sleep(T(450+Math.random()*400));netDuty(()=>netPub(auto()),4000)}
   const ev=await netAwait(p,auto);
   await applyPlayEv(ev);
 }
@@ -1607,17 +1879,19 @@ async function performPlay(p,card,capt,from){
   const ev=await nextEv();S.netBusy=false;
   return applyPlayEv(ev,ev.c===card.id?from:null);
 }
-function startOnline(g,code){
+function startOnline(g,code,rejoin){
   const n=MODES[g.mode].n,r=g.seats.findIndex(x=>x.kind==='human'&&x.uid===NET.uid);
-  S={online:{code,r,host:g.host===NET.uid,seats:g.seats,seq:0,buf:{},waits:[]},auto:false,level:'moyen',mode:g.mode,n,target:g.target,napola:g.napola,scores:[0,0],over:false};
+  S={online:{code,r,host:g.host===NET.uid,hostUid:g.host,seats:g.seats,seq:0,buf:{},waits:[],rejoin:!!rejoin,pres:{},gone:{}},auto:false,level:'moyen',mode:g.mode,n,target:g.target,napola:g.napola,scores:[0,0],over:false};
   S.dealer=viewSeat(g.dealer);
   S.people=[];S.seatLvl=[];S.seatR=[];S.seatUid=[];
   for(let v=0;v<n;v++){const x=g.seats[absSeat(v)];S.people[v]={n:x.name,c:x.c};S.seatLvl[v]=x.kind==='cpu'?x.lvl:null;S.seatR[v]=x.elo;S.seatUid[v]=x.kind==='human'?x.uid:null}
-  netListen();
+  {const hum=p=>!!S.seatUid[p],opp=(n===2?[1]:[1,3]).map(p=>({r:S.seatR[p],human:hum(p)}));
+   P.pend={code,at:Date.now(),partner:n===2?null:S.seatR[2],opp,hum:S.seatUid.some((u,p)=>p>0&&u)};savePrefs();clearSave()}
+  netListen();netPresence();rxListen();
   $('ovStart').classList.remove('on');['ovLobby','ovFriends'].forEach(id=>$(id)&&$(id).classList.remove('on'));
   newManche();
 }
-function leaveOnline(){if(S&&S.online&&S.online.unsub){S.online.unsub();S.online.unsub=null}}
+function leaveOnline(){if(S&&S.online){clearInterval(S.online.presIv);if(S.online.rmUnsub){S.online.rmUnsub();S.online.rmUnsub=null}if(S.online.rxUnsub){S.online.rxUnsub();S.online.rxUnsub=null}$('rxBtn').style.display='none';if(S.online.unsub){S.online.unsub();S.online.unsub=null}}}
 
 /* ================= Joueur : toucher ================= */
 const canAct=()=>S&&S.turn===0&&!S.busy&&!S.over;
@@ -1625,16 +1899,23 @@ function cardById(list,id){return list.find(x=>x.id===id)}
 function onHandTap(id){
   if(!canAct()) return;
   const c=cardById(S.hands[0],id);if(!c) return;
-  if(S.sel===c){
-    const opts=captures(c,S.table);
-    if(opts.length===0) return performPlay(0,c,null);
-    if(opts.length===1) return performPlay(0,c,opts[0]);
-    return;
-  }
-  S.sel=c;S.pick=new Set();S.justDealt=false;render();
+  const now=Date.now(),dbl=TAP.id===id&&now-TAP.t<380;TAP.id=id;TAP.t=now;
+  if(dbl){ // double toucher rapide = jouer la carte (une seule prise possible : on la fait ; aucune : on pose)
+    TAP.id=null;const opts=captures(c,S.table);
+    if(opts.length<=1){S.sel=null;S.pick=new Set();return performPlay(0,c,opts[0]||null)}
+    S.sel=c;S.pick=new Set();render();hintFlash('Plusieurs prises possibles : choisis laquelle');return}
+  if(S.sel===c){S.sel=null;S.pick=new Set();render();return} // retoucher la carte choisie (sans hâte) = annuler
+  S.sel=c;S.pick=new Set();S.justDealt=false;render(); // toucher une autre carte de sa main la choisit à la place
 }
+const TAP={id:null,t:0};
 function onTableTap(id){
-  if(!canAct()||!S.sel) return;
+  if(!canAct()) return;
+  if(!S.sel){ // carte du milieu touchée sans carte choisie : s'il n'y a qu'une façon de la prendre, on la prend
+    const c=cardById(S.table,id);if(!c)return;
+    const ways=legalMoves(S.hands[0],S.table).filter(m=>m.o&&m.o.includes(c));
+    if(ways.length===1)return performPlay(0,ways[0].c,ways[0].o);
+    if(!ways.length){const el=$('table').querySelector(`[data-id="${id}"]`);if(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}hintFlash('Aucune de tes cartes ne prend celle-ci');return}
+    hintFlash('Plusieurs façons de la prendre : choisis d\'abord ta carte');return}
   const opts=captures(S.sel,S.table);
   if(!opts.length) return performPlay(0,S.sel,null);
   const c=cardById(S.table,id);
@@ -1658,6 +1939,17 @@ function shake(id){const el=$('table').querySelector(`[data-id="${id}"]`);if(!el
 let hintOverride=null;
 function hintFlash(t){hintOverride=t;render();setTimeout(()=>{hintOverride=null;render()},1600)}
 
+/* Cadre du tapis (ambiance « Tapis moderne ») : filet à coins rentrants et les quatre couleurs dans les angles,
+   comme un vrai tapis de cartes. Tracé aux dimensions réelles du tapis, donc jamais déformé. */
+let frameKey='';
+function drawFrame(){const sv=$('mframe'),m=$('mat');if(!sv||!m)return;
+  const w=m.clientWidth,h=m.clientHeight,k=w+'x'+h;if(k===frameKey||w<80||h<80)return;frameKey=k;
+  const r=Math.round(Math.max(24,Math.min(34,w*.085,h*.14))),i=5,g=4,sz=Math.round(r*.66);
+  const path=(o,rr)=>`M${o+rr},${o}H${w-o-rr}A${rr},${rr} 0 0 0 ${w-o},${o+rr}V${h-o-rr}A${rr},${rr} 0 0 0 ${w-o-rr},${h-o}H${o+rr}A${rr},${rr} 0 0 0 ${o},${h-o-rr}V${o+rr}A${rr},${rr} 0 0 0 ${o+rr},${o}Z`;
+  const su=(n,x,y,red)=>`<svg x="${x-sz/2}" y="${y-sz/2}" width="${sz}" height="${sz}" viewBox="0 0 100 100" class="${red?'fr':'fk'}"><use href="#su${n}"/></svg>`;
+  const c=i+r*.36;
+  sv.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  sv.innerHTML=`<path d="${path(i,r)}" class="fl1"/><path d="${path(i+g,r)}" class="fl2"/>${su(0,c,c,1)}${su(2,w-c,c,0)}${su(3,c,h-c,0)}${su(1,w-c,h-c,1)}`}
 /* ================= Joueur : glisser ================= */
 let drag=null;
 $('hand').addEventListener('pointerdown',e=>{
@@ -1737,7 +2029,9 @@ function autoPlay(){
 const FR={list:{},unsubs:[],inv:{},ready:false,err:null};
 function netAvailable(){return !!FB_CONFIG||(()=>{try{return !!localStorage.getItem('chk-mock')}catch(e){return false}})()}
 function myName(){return (P.seats&&P.seats.me)||'Joueur'}
-function netSaveProfile(){if(!NET.ok)return;const st=P.stats||{g:0,w:0};NET.update('users/'+NET.uid,{name:myName(),code:P.myCode||null,elo:P.elo,g:st.g,w:st.w,at:Date.now()}).catch(()=>{})}
+function netSaveProfile(){if(!NET.ok)return;const st=P.stats||{g:0,w:0};NET.update('users/'+NET.uid,{name:myName(),code:P.myCode||null,elo:P.elo,g:st.g,w:st.w,at:Date.now(),st:P.st||null,per:P.per||null}).catch(()=>{});netSaveBoard()}
+/* comme netBoot, mais attend la fin d'une connexion déjà en cours (sinon netBoot répond « pas prêt » trop tôt) */
+async function netWait(){for(let i=0;i<60&&FR.booting;i++)await sleep(150);return netBoot()}
 async function netBoot(){
   if(FR.ready||FR.booting) return FR.ready;
   if(!netAvailable()){FR.err='config';return false}
@@ -1760,7 +2054,7 @@ async function netBoot(){
 function syncFriends(ids){
   for(const u in FR.list) if(!ids[u]){FR.list[u].off.forEach(f=>f());delete FR.list[u]}
   for(const u in ids) if(!FR.list[u]){const F={uid:u,name:'…',elo:1000,on:false,off:[]};FR.list[u]=F;
-    F.off.push(NET.onValue('users/'+u,v=>{if(v){F.name=v.name||'Ami';F.elo=v.elo||1000;F.g=v.g||0;F.w=v.w||0}refreshSocial()}));
+    F.off.push(NET.onValue('users/'+u,v=>{if(v){F.name=v.name||'Ami';F.elo=v.elo||1000;F.g=v.g||0;F.w=v.w||0;F.st=v.st||null;F.per=v.per||null}refreshSocial()}));
     F.off.push(NET.onValue('status/'+u,v=>{F.on=!!(v&&v.on);refreshSocial()}))}
   refreshSocial();
 }
@@ -1807,7 +2101,7 @@ function renderAmisBox(){
 function renderInvites(){
   const box=$('invBox');if(!box) return;
   const now=Date.now(),list=Object.entries(FR.inv||{}).filter(([c,v])=>v&&now-(v.at||0)<3*3600e3);
-  box.innerHTML=list.map(([c,v])=>`<div class="invb"><div><b>${esc(v.from)}</b> t'invite à une table (${v.mode==='c2'?'à 2':v.mode==='c4'?'à 4':'10 cartes'})</div><span><button class="btn sm" data-join="${c}">Rejoindre</button><button class="btn sm ghost" data-ign="${c}">Ignorer</button></span></div>`).join('');
+  box.innerHTML=list.map(([c,v])=>`<div class="invb"><div><b>${esc(v.from)}</b> t'invite à une table (${v.mode==='c2'?'à 2':v.mode==='c4'?'à 4':'à 10 cartes'})</div><span><button class="btn sm" data-join="${c}">Rejoindre</button><button class="btn sm ghost" data-ign="${c}">Ignorer</button></span></div>`).join('');
   if(list.length&&!$('ovStart').classList.contains('on')&&!(S&&S.online)) hintFlash(list[0][1].from+' t\'invite à jouer : retourne à l\'accueil');
 }
 function renderFriends(){
@@ -1815,18 +2109,18 @@ function renderFriends(){
   $('friendsPanel').innerHTML=`<h2>Mes amis</h2>
     ${!FR.ready?offlineMsg():`
     <div class="mecard"><div><div class="mlab2">Ton pseudo</div><input class="inp" id="myNameIn" maxlength="14" value="${esc(myName())}"></div>
-      <div><div class="mlab2">Ton code ami</div><div class="mcode">${P.myCode||'…'} <button class="btn sm ghost" id="copyCode">Copier</button></div></div>
+      <div><div class="mlab2">Ton code ami</div><div class="mcode">${P.myCode||'…'} <button class="btn sm ghost" id="copyCode">Copier</button> <button class="btn sm" id="shareCode">WhatsApp</button></div></div>
       <div class="mlab2">Ton niveau : ${lvBadge(P.elo)}</div></div>
     <h3>Ajouter un ami</h3>
     <div class="addp"><input class="inp" id="addCode" maxlength="6" placeholder="Code de ton ami" style="text-transform:uppercase"><button class="btn sm" id="addFriend">Ajouter</button></div>
     <p class="amsg small" id="addMsg"></p>
     <h3>${fl.length?`Tes amis (${fl.length})`:'Aucun ami pour l\'instant'}</h3>
-    ${fl.map(F=>friendRow(F,`<button class="btn sm ghost" data-rm="${F.uid}">Retirer</button>`)).join('')}
+    ${fl.map(F=>friendRow(F,`<button class="btn sm" data-cmp="${F.uid}">Comparer</button><button class="btn sm ghost" data-rm="${F.uid}">Retirer</button>`)).join('')}
     <p class="phelp">⭐ ami proche · 🎯 adversaire que tu aimes affronter. Les autres étiquettes viennent de vos parties. Ton identité est liée à cet appareil.</p>`}
     <div class="stack"><button class="btn" id="friendsClose">Fermer</button><button class="btn ghost" id="cpuNames">Prénoms des joueurs ordinateur (IA)</button></div>`;
 }
 async function addFriendByCode(code){
-  code=code.trim().toUpperCase();const msg=$('addMsg');
+  code=code.trim().toUpperCase();const el=$('addMsg'),msg={set textContent(t){if(el&&$('ovFriends').classList.contains('on'))el.textContent=t;else homeToast(t)}};
   if(code===P.myCode){msg.textContent='C\'est ton propre code 🙂';return}
   const u=await NET.get('codes/'+code);
   if(!u){msg.textContent='Code introuvable. Vérifie les 6 caractères.';return}
@@ -1834,23 +2128,438 @@ async function addFriendByCode(code){
   msg.textContent='Ami ajouté !';SFX.tap();
 }
 
+/* ================= Mise en relation (joueurs connectés, pas forcément amis) =================
+   Sans liste d'attente côté serveur : des « tables de rendez-vous » à nom fixe  tables/mm-{mode}-{cible}-{0..9}.
+   On rejoint une table compatible (place réservée par putIfAbsent sur claim/{siège}), sinon on en ouvre une.
+   Quand elle est pleine, l'hôte crée la vraie table de jeu (code m……), l'annonce (status 'moved', go) et libère le rendez-vous. */
+const MM={on:false,slot:null,k:-1,host:false,t:null,t0:0,iv:null,unsub:null,busy:false,launching:false};
+const MM_N=10,MM_FRESH=45000;
+const mmKey=k=>`mm-${P.mode}-${P.target}-${k}`;
+const mmMe=()=>({kind:'human',uid:NET.uid,name:myName(),elo:P.elo});
+async function mmStart(){
+  $('ovMM').classList.add('on');$('mmPanel').innerHTML='<h2>Recherche de joueurs…</h2><p class="amsg">Connexion…</p>';
+  if(!await netWait()){$('mmPanel').innerHTML='<h2>En ligne</h2><p class="amsg warn">Connexion impossible. Le jeu en ligne fonctionne dans l\'appli installée, avec internet.</p><div class="stack"><button class="btn" id="mmCancel">Fermer</button></div>';return}
+  Object.assign(MM,{on:true,slot:null,k:-1,host:false,t:null,t0:Date.now(),busy:false,launching:false});
+  MM.iv=setInterval(mmTick,5000);mmRender();mmScan();
+}
+function mmTick(){if(!MM.on)return;
+  if(!MM.host&&MM.slot&&MM.t&&Date.now()-MM.t.at>MM_FRESH&&!MM.launching){const key=MM.slot,i=Object.keys(MM.t.seats||{}).find(i=>MM.t.seats[i].uid===NET.uid);
+    if(MM.unsub){MM.unsub();MM.unsub=null}MM.slot=null;MM.t=null;if(i!=null){NET.set(`tables/${key}/seats/${i}`,{kind:'open'}).catch(()=>{});NET.remove(`tables/${key}/claim/${i}`).catch(()=>{})}}
+  if(MM.host&&MM.slot)NET.update('tables/'+MM.slot,{at:Date.now()}).catch(()=>{});mmRender();mmScan()}
+function mmHumans(t){return Object.values(t&&t.seats||{}).filter(x=>x.kind==='human').length}
+async function mmScan(){
+  if(!MM.on||MM.busy||MM.launching)return;
+  if(MM.slot&&(!MM.host||mmHumans(MM.t)>1))return; // déjà installé avec quelqu'un
+  MM.busy=true;
+  try{
+    const tol=Date.now()-MM.t0>30000?2:1,myL=leagueOf(P.elo),now=Date.now();
+    const slots=await Promise.all(Array.from({length:MM_N},(_,k)=>NET.get('tables/'+mmKey(k))));
+    if(!MM.on)return;
+    for(let k=0;k<MM_N;k++){const t=slots[k];
+      if(!t||t.v!==PROTO||t.status!=='lobby'||!t.mm||now-t.at>MM_FRESH||t.host===NET.uid)continue;
+      if(MM.slot&&k>=MM.k)continue; // un hôte seul ne rejoint qu'une table de rang inférieur (évite les croisements)
+      const d=Math.abs(t.mm.lg-myL);if(!((t.mm.pref==='any'||d<=tol)&&(P.mmPref==='any'||d<=tol)))continue;
+      const idx=Object.keys(t.seats||{}).find(i=>t.seats[i].kind==='open');if(idx==null)continue;
+      if(!await NET.putIfAbsent(`tables/${mmKey(k)}/claim/${idx}`,NET.uid))continue;
+      if(MM.slot){const old=MM.slot;if(MM.unsub){MM.unsub();MM.unsub=null}NET.remove('tables/'+old).catch(()=>{})}
+      await NET.set(`tables/${mmKey(k)}/seats/${idx}`,{...mmMe(),c:AV_COLORS[idx%AV_COLORS.length]});
+      MM.slot=mmKey(k);MM.k=k;MM.host=false;mmWatch();return;
+    }
+    if(MM.slot)return;
+    const n=MODES[P.mode].n;
+    const tab={v:PROTO,host:NET.uid,mode:P.mode,target:P.target,napola:!!P.napola,status:'lobby',at:Date.now(),mm:{pref:P.mmPref,lg:myL},
+      seats:Object.fromEntries(Array.from({length:n},(_,i)=>[i,i===0?{...mmMe(),c:'#e0a526'}:{kind:'open'}]))};
+    for(let k=0;k<MM_N;k++){const t=slots[k];let ok=false;
+      if(!t) ok=await NET.putIfAbsent('tables/'+mmKey(k),tab);
+      else if(t.status==='moved'||now-t.at>(t.status==='lobby'?MM_FRESH:3*3600e3)){await NET.set('tables/'+mmKey(k),tab);const v=await NET.get('tables/'+mmKey(k)+'/host');ok=v===NET.uid}
+      if(ok){MM.slot=mmKey(k);MM.k=k;MM.host=true;mmWatch();return}
+    }
+  }catch(e){}finally{MM.busy=false}
+}
+function mmWatch(){
+  if(MM.unsub)MM.unsub();const key=MM.slot;
+  MM.unsub=NET.onValue('tables/'+key,async t=>{
+    if(!MM.on||MM.slot!==key)return;
+    MM.t=t;
+    if(!t||(MM.host&&t.host!==NET.uid)){if(MM.launching)return;MM.slot=null;MM.host=false;MM.t=null;mmRender();mmScan();return}
+    if(t.status==='moved'&&t.go){if(MM.launching)return;MM.launching=true;const g=await NET.get('tables/'+t.go+'/game');mmStop(true);if(g)startOnline(g,t.go);return}
+    mmRender();
+    if(MM.host){const n=MODES[t.mode].n;if(Array.from({length:n},(_,i)=>t.seats[i]).every(x=>x&&x.kind==='human'))mmLaunch(false)}
+  });
+}
+async function mmLaunch(fillAI){
+  if(MM.launching||!MM.host||!MM.t)return;MM.launching=true;
+  try{
+    const t=MM.t,n=MODES[t.mode].n,key=MM.slot;
+    // un joueur parti sans prévenir ? on libère sa place et on continue d'attendre
+    for(let i=1;i<n;i++){const x=t.seats[i];if(x&&x.kind==='human'){const st=await NET.get('status/'+x.uid);
+      if(!st||!st.on){await NET.set(`tables/${key}/seats/${i}`,{kind:'open'});await NET.remove(`tables/${key}/claim/${i}`);MM.launching=false;return}}}
+    const lv=lvlOf(P.elo),used=new Set(Object.values(t.seats).map(x=>x.name));
+    const seats=Array.from({length:n},(_,i)=>{const x=t.seats[i];
+      if(x.kind==='human')return {kind:'human',uid:x.uid,name:x.name,elo:x.elo||1000,c:x.c||AV_COLORS[i%AV_COLORS.length]};
+      const nm=drawName(null,used);used.add(nm);
+      return {kind:'cpu',name:nm,lvl:lv,c:AV_COLORS[(i+3)%AV_COLORS.length],elo:CPU_R[lv]}});
+    if(!fillAI&&seats.some(x=>x.kind==='cpu')){MM.launching=false;return}
+    const game={host:NET.uid,mode:t.mode,target:t.target,napola:t.napola,dealer:Math.floor(Math.random()*n),seats};
+    let code;for(let i=0;i<8;i++){code='m'+Math.floor(1e5+Math.random()*9e5);if(await NET.putIfAbsent('tables/'+code,{v:PROTO,host:NET.uid,mode:t.mode,target:t.target,napola:t.napola,status:'play',at:Date.now(),game}))break}
+    await NET.update('tables/'+key,{status:'moved',go:code});
+    setTimeout(()=>NET.remove('tables/'+key).catch(()=>{}),8000);
+    mmStop(true);startOnline(game,code);
+  }catch(e){MM.launching=false}
+}
+function mmStop(keep){
+  const key=MM.slot,t=MM.t,host=MM.host;
+  MM.on=false;clearInterval(MM.iv);if(MM.unsub){MM.unsub();MM.unsub=null}MM.slot=null;MM.t=null;
+  $('ovMM').classList.remove('on');
+  if(keep||!key||!NET.ok)return;
+  if(host)NET.remove('tables/'+key).catch(()=>{});
+  else{const i=Object.keys(t&&t.seats||{}).find(i=>t.seats[i].uid===NET.uid);if(i!=null){NET.set(`tables/${key}/seats/${i}`,{kind:'open'});NET.remove(`tables/${key}/claim/${i}`)}}
+}
+function mmRender(){
+  if(!MM.on)return;
+  const n=MODES[P.mode].n,t=MM.t,sec=Math.floor((Date.now()-MM.t0)/1000),hum=mmHumans(t);
+  const seats=Array.from({length:n},(_,i)=>(t&&t.seats&&t.seats[i])||(i===0&&!t?{...mmMe(),c:'#e0a526'}:{kind:'open'}));
+  const row=x=>x.kind==='human'?`<div class="lseat"><div class="lbody"><div class="av" style="--avc:${x.c||'#888'}">${avatarSVG(x.name,x.c||'#888')}</div><div class="sinfo"><b>${esc(x.name)}${x.uid===NET.uid?' (toi)':''}</b><span>${lvBadge(x.elo||1000)}</span></div><span class="sok">✔</span></div></div>`
+    :`<div class="lseat"><div class="lbody"><div class="av cpu mmwait">…</div><div class="sinfo"><b>Recherche d'un joueur…</b></div></div></div>`;
+  $('mmPanel').innerHTML=`<h2>Recherche de joueurs…</h2>
+    <p class="amsg">${P.mode==='c2'?'À 2 joueurs':P.mode==='c4'?'À 4 joueurs':'À 10 cartes, à 4'} · en ${P.target} points · ${P.mmPref==='eq'?'joueurs de ton niveau'+(sec>30?' (recherche élargie)':''):'joueurs au hasard'}</p>
+    ${seats.map(row).join('')}
+    <p class="amsg small">${sec<30?'La partie démarre dès que la table est complète.':'Peu de joueurs connectés pour le moment. Tu peux patienter, ou inviter des amis depuis « Mes amis ».'}</p>
+    <div class="stack">${MM.host&&n===4&&hum>=2&&hum<4&&sec>=20?`<button class="btn" id="mmFill">Lancer maintenant, l'IA complète (${4-hum} place${4-hum>1?'s':''})</button>`:''}
+    <button class="btn ghost" id="mmCancel">Annuler</button></div>`;
+}
+$('mmPanel').addEventListener('click',e=>{if(e.target.id==='mmCancel'){mmStop(false);syncStart()}if(e.target.id==='mmFill')mmLaunch(true)});
+window.addEventListener('pagehide',()=>{if(MM.on)mmStop(false)});
+
+/* ================= Tutoriel (Règles → « Tu découvres la Chkobba ? ») =================
+   6 exercices : on touche la bonne carte de sa main (ou la bonne prise). Aucune incidence sur la note ni les statistiques. */
+const TUTO=[
+ {t:'Prendre une carte',txt:'À ton tour, tu joues une carte de ta main. Si une carte de la table a <b>la même valeur</b>, tu la prends.',q:'Touche la carte de ta main qui prend quelque chose.',
+  table:[[5,'♠'],[2,'♥'],[9,'♣']],hand:[[1,'♠'],[5,'♦'],[7,'♣']],ok:1,yes:'Oui ! Ton 5 prend le 5. Les deux cartes vont dans ton tas.',no:'Pas celle-là : aucune carte de la table n\'a cette valeur. Cherche la même valeur.'},
+ {t:'Prendre plusieurs cartes',txt:'Tu peux aussi prendre <b>plusieurs cartes dont la somme</b> fait la valeur de ta carte.',q:'Quelle carte prend deux cartes d\'un coup ?',
+  table:[[3,'♠'],[4,'♥'],[10,'♣']],hand:[[2,'♣'],[6,'♠'],[7,'♦']],ok:2,yes:'Bien vu : 3 + 4 = 7. Ton 7 ramasse les deux.',no:'Non. Additionne des cartes de la table : laquelle de tes cartes vaut leur somme ?'},
+ {t:'Les figures',txt:'Les figures ont une valeur : <b>Dame = 8</b>, <b>Valet = 9</b>, <b>Roi = 10</b>.',q:'Avec quelle figure peux-tu prendre le 3 et le 5 ?',
+  table:[[3,'♠'],[5,'♥']],hand:[[10,'♣'],[8,'♦'],[9,'♠']],ok:1,yes:'Exact : la Dame vaut 8, et 3 + 5 = 8.',no:'Non. 3 + 5 = 8 : quelle figure vaut 8 ?'},
+ {t:'La même valeur d\'abord',txt:'Règle importante : si une carte de <b>même valeur</b> est sur la table, tu dois prendre celle-là, pas une somme.',q:'Tu joues ton 7. Que prends-tu ?',
+  table:[[7,'♠'],[3,'♥'],[4,'♣']],hand:[[7,'♦']],choices:['Le 7 de pique','Le 3 et le 4'],ok:0,yes:'Oui. Le 7 est là : c\'est lui que tu prends, obligatoirement.',no:'Non : quand la même valeur est sur la table, elle passe avant la somme.'},
+ {t:'La Chkobba',txt:'Si tu ramasses <b>tout ce qu\'il y a sur la table</b>, c\'est une Chkobba : 1 point tout de suite.',q:'Fais une Chkobba !',
+  table:[[2,'♠'],[4,'♥']],hand:[[2,'♦'],[6,'♣'],[4,'♠']],ok:1,yes:'Chkobba ! 2 + 4 = 6, la table est vide : 1 point.',no:'Tu prends une carte, mais il en reste une sur la table. Trouve la carte qui prend tout.'},
+ {t:'Sans prise, on pose',txt:'Si ta carte ne prend rien, elle reste sur la table… et l\'adversaire pourra la prendre. Les <b>7</b> et les <b>carreaux</b> valent cher : ne les offre pas.',q:'Tu ne peux rien prendre. Quelle carte poses-tu ?',
+  table:[[10,'♠'],[9,'♥']],hand:[[7,'♦'],[2,'♣'],[7,'♥']],ok:1,yes:'Bien joué : le 2 de trèfle ne rapporte rien à l\'adversaire. Tu gardes tes 7.',no:'Aïe : tu offres un 7. Le 7 de carreau vaut même 1 point à lui seul. Pose plutôt ta petite carte.'}
+];
+let tutoI=0,tutoDone=false;
+const tmk=([v,su],i)=>({v,s:su,red:su==='♦'||su==='♥',id:'tu'+i+v+su});
+function tutoRender(){
+  if(tutoI>=TUTO.length){
+    $('tutoPanel').innerHTML=`<h2>Tu sais jouer !</h2>
+      <p style="margin:0 0 8px">En fin de manche, on compte les points :</p>
+      <ul style="padding-left:18px;margin:0 0 10px">
+        <li><b>Karta</b> : le plus de cartes (plus de 20)</li><li><b>Dinari</b> : le plus de carreaux (plus de 5)</li>
+        <li><b>El Haya</b> : le 7 de carreau</li><li><b>Bermila</b> : le plus de 7</li><li><b>Chkobba</b> : 1 point à chaque fois</li>
+      </ul>
+      <p class="amsg small">Le premier à 11 ou 21 points gagne la partie. Commence au niveau Facile : l'aide te montre les cartes qui peuvent prendre.</p>
+      <div class="stack"><button class="btn" id="tutoPlay">Jouer ma première partie</button><button class="btn ghost" id="tutoClose">Retour aux règles</button></div>`;return}
+  const st=TUTO[tutoI];
+  $('tutoPanel').innerHTML=`<p class="tustep">Exercice ${tutoI+1} sur ${TUTO.length}</p><h2>${st.t}</h2><p style="margin:0 0 10px">${st.txt}</p>
+    <div class="lp-mat tumat"><div class="lp-table">${st.table.map((c,i)=>cardHTML(tmk(c,'t'+i))).join('')}</div></div>
+    <p class="tuq">${st.q}</p>
+    ${st.choices?`<div class="tuhand one">${st.hand.map((c,i)=>cardHTML(tmk(c,'h'+i))).join('')}</div><div class="stack">${st.choices.map((c,i)=>`<button class="btn ghost" data-tu="${i}">${c}</button>`).join('')}</div>`
+      :`<div class="tuhand">${st.hand.map((c,i)=>`<button class="tuc" data-tu="${i}">${cardHTML(tmk(c,'h'+i))}</button>`).join('')}</div>`}
+    <p class="tufb" id="tuFb"></p>
+    <div class="stack"><button class="btn" id="tutoNext" style="display:none">${tutoI===TUTO.length-1?'Terminer':'Suivant'}</button><button class="btn ghost" id="tutoClose">Quitter le tutoriel</button></div>`;
+  tutoDone=false;
+}
+$('tutoBtn').onclick=()=>{tutoI=0;tutoRender();$('ovTuto').classList.add('on')};
+$('tutoPanel').addEventListener('click',e=>{
+  if(e.target.id==='tutoClose'){$('ovTuto').classList.remove('on');return}
+  if(e.target.id==='tutoNext'){tutoI++;tutoRender();$('tutoPanel').scrollTop=0;return}
+  if(e.target.id==='tutoPlay'){$('ovTuto').classList.remove('on');$('ovRules').classList.remove('on');P.opp='libre';P.level='facile';P.help=true;savePrefs();syncStart();$('ovStart').classList.add('on');return}
+  const b=e.target.closest('[data-tu]');if(!b||tutoDone)return;
+  const st=TUTO[tutoI],good=+b.dataset.tu===st.ok,fb=$('tuFb');
+  fb.textContent=good?st.yes:st.no;fb.className='tufb '+(good?'ok':'ko');
+  $('tutoPanel').querySelectorAll('[data-tu]').forEach(x=>x.classList.remove('ko'));
+  if(good){tutoDone=true;b.classList.add('ok');$('tutoNext').style.display='';SFX.take&&SFX.take()}else b.classList.add('ko');
+});
+
+/* ================= Statistiques =================
+   Pendant la partie : S.gs[siège] (cartes, Chkobba, 7, carreaux, 7♦ ramassés par chaque joueur) et S.ms (manches de mon équipe).
+   Tout est recalculé à partir du journal quand on reprend une partie ; rien n'est enregistré avant la fin de la partie.
+   En fin de partie : commitStats() ajoute à P.st (cumul) et à P.per (semaine / mois en cours), publiés dans le profil. */
+const GS0=()=>({cards:0,chk:0,sev:0,dia:0,haya:0});
+function gsOf(p){S.gs=S.gs||[];return S.gs[p]||(S.gs[p]=GS0())}
+function gmOf(p){S.gm=S.gm||[];return S.gm[p]||(S.gm[p]=GS0())} // même chose, pour la manche en cours seulement
+function gsAdd(p,cards){for(const G of [gsOf(p),gmOf(p)]){G.cards+=cards.length;for(const c of cards){if(c.v===7)G.sev++;if(c.s==='♦')G.dia++;if(isHaya(c))G.haya++}}}
+function msAdd(T){const m=S.ms||(S.ms={man:0,manW:0,pf:0,pa:0,karta:0,dinari:0,haya:0,bermila:0,napola:0,napPts:0}),r=T.r;
+  m.man++;if(T.tot[0]>T.tot[1])m.manW++;m.pf+=T.tot[0];m.pa+=T.tot[1];m.karta+=r.karta[0];m.dinari+=r.dinari[0];m.haya+=r.haya[0];m.bermila+=r.bermila[0];
+  if(r.napola[0]>0){m.napola++;m.napPts+=r.napola[0]}}
+const ST_KEYS=['man','manW','pf','pa','karta','dinari','haya','bermila','napola','napPts'];
+function stGet(){const d={g:0,w:0,mode:{c2:[0,0],c4:[0,0],d10:[0,0]},real:[0,0],ia:[0,0],man:0,manW:0,pf:0,pa:0,karta:0,dinari:0,haya:0,bermila:0,napola:0,napPts:0,
+    chk:0,cards:0,sevens:0,dia:0,myHaya:0,qn:0,qg:0,streak:0,best:0,peak:P.elo||1000,quit:0,bigWin:0,since:Date.now()};
+  P.st=Object.assign(d,P.st||{});P.st.mode=Object.assign({c2:[0,0],c4:[0,0],d10:[0,0]},P.st.mode||{});return P.st}
+function weekId(d){d=d?new Date(d):new Date();const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);
+  const y0=new Date(Date.UTC(t.getUTCFullYear(),0,1));return t.getUTCFullYear()+'-S'+String(Math.ceil(((t-y0)/864e5+1)/7)).padStart(2,'0')}
+function monthId(d){d=d?new Date(d):new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+const PER_KEYS=['wk','mo','qt','yr'];
+function quarterId(d){d=d?new Date(d):new Date();return d.getFullYear()+'-T'+(Math.floor(d.getMonth()/3)+1)}
+function perGet(){P.per=P.per||{};const ids={wk:weekId(),mo:monthId(),qt:quarterId(),yr:String(new Date().getFullYear())};
+  for(const k in ids)if(!P.per[k]||P.per[k].id!==ids[k])P.per[k]={id:ids[k],g:0,w:0,d:0,chk:0};return P.per}
+function commitStats(win){
+  const st=stGet(),m=S.ms||{},G=(S.gs&&S.gs[0])||GS0(),real=!!(S.seatUid&&S.seatUid.some((u,p)=>p>0&&u));
+  st.g++;if(win)st.w++;const md=st.mode[S.mode]||(st.mode[S.mode]=[0,0]);md[0]++;if(win)md[1]++;
+  const rr=real?st.real:st.ia;rr[0]++;if(win)rr[1]++;
+  for(const k of ST_KEYS)st[k]+=m[k]||0;
+  st.chk+=G.chk;st.cards+=G.cards;st.sevens+=G.sev;st.dia+=G.dia;st.myHaya+=G.haya;
+  if(S.q){st.qn+=S.q.n;st.qg+=S.q.good}
+  st.streak=win?st.streak+1:0;st.best=Math.max(st.best,st.streak);st.peak=Math.max(st.peak,P.elo,S.eloRes?S.eloRes.before:0);
+  if(win)st.bigWin=Math.max(st.bigWin,S.scores[0]-S.scores[1]);
+  const per=perGet();for(const k of PER_KEYS){per[k].g++;if(win)per[k].w++;per[k].d+=S.eloRes?S.eloRes.d:0;per[k].chk+=G.chk}
+}
+const pct=(a,b)=>b?Math.round(a/b*100)+' %':'–',avg=(a,b,dg=1)=>b?(a/b).toFixed(dg).replace('.',','):'–';
+/* la partie en chiffres : un joueur par colonne */
+function statsBlock(){const multi=(S.manche||0)>1||(S.gs&&S.gm&&JSON.stringify(S.gs)!==JSON.stringify(S.gm));
+  return `<p class="gscap">Cette manche</p>${gsHTML(S.gm)}${multi?`<p class="gscap">Depuis le début de la partie</p>${gsHTML(S.gs)}`:''}`}
+function gsHTML(src){if(!S||!S.people)return'';src=src||S.gs;const G=p=>(src&&src[p])||GS0(),ps=Array.from({length:S.n},(_,p)=>p);
+  const row=(lab,f)=>{const v=ps.map(f),mx=Math.max(...v);return `<tr><td>${lab}</td>${v.map(x=>`<td class="${x===mx&&mx>0?'bst':''}">${x}</td>`).join('')}</tr>`};
+  return `<table class="gstab"><tr><th></th>${ps.map(p=>`<th>${esc(p===0?'Toi':S.people[p].n)}</th>`).join('')}</tr>
+    ${row('Cartes ramassées',p=>G(p).cards)}${row('Chkobba',p=>G(p).chk)}${row('Sept',p=>G(p).sev)}${row('Carreaux',p=>G(p).dia)}${row('7 de carreau',p=>G(p).haya)}</table>`}
+/* profil comparable : le mien ou celui d'un autre joueur (lu dans users/{uid}) */
+function myCard(){const s=P.stats||{g:0,w:0};return {name:myName(),elo:P.elo,g:s.g,w:s.w,st:stGet(),per:perGet()}}
+function cmpRows(a,b){
+  const A=a.st||{},B=b.st||{},n=x=>x||0;
+  const R=[['Classement',lgName(a.elo)+' · '+a.elo,lgName(b.elo)+' · '+b.elo,a.elo,b.elo],
+    ['Parties jouées',a.g,b.g,a.g,b.g],
+    ['Victoires',pct(a.w,a.g),pct(b.w,b.g),a.g?a.w/a.g:-1,b.g?b.w/b.g:-1],
+    ['Meilleure note',n(A.peak)||a.elo,n(B.peak)||b.elo,n(A.peak)||a.elo,n(B.peak)||b.elo],
+    ['Meilleure série',n(A.best),n(B.best),n(A.best),n(B.best)],
+    ['Manches gagnées',pct(n(A.manW),n(A.man)),pct(n(B.manW),n(B.man)),A.man?A.manW/A.man:-1,B.man?B.manW/B.man:-1],
+    ['Points par manche',avg(n(A.pf),n(A.man)),avg(n(B.pf),n(B.man)),A.man?A.pf/A.man:-1,B.man?B.pf/B.man:-1],
+    ['Chkobba par partie',avg(n(A.chk),n(A.g)),avg(n(B.chk),n(B.g)),A.g?A.chk/A.g:-1,B.g?B.chk/B.g:-1],
+    ['7 de carreau par partie',avg(n(A.myHaya),n(A.g),2),avg(n(B.myHaya),n(B.g),2),A.g?A.myHaya/A.g:-1,B.g?B.myHaya/B.g:-1],
+    ['Qualité de jeu',pct(n(A.qg),n(A.qn)),pct(n(B.qg),n(B.qn)),A.qn?A.qg/A.qn:-1,B.qn?B.qg/B.qn:-1],
+    ['Contre de vrais joueurs',A.real?pct(A.real[1],A.real[0]):'–',B.real?pct(B.real[1],B.real[0]):'–',A.real&&A.real[0]?A.real[1]/A.real[0]:-1,B.real&&B.real[0]?B.real[1]/B.real[0]:-1]];
+  return R.map(r=>`<tr><td>${r[0]}</td><td class="${r[3]>r[4]?'bst':''}">${r[1]}</td><td class="${r[4]>r[3]?'bst':''}">${r[2]}</td></tr>`).join('')}
+async function openCompare(uid){
+  let o=FR.list[uid];
+  if(!o||!o.st){try{const v=await NET.get('users/'+uid);if(v)o={name:v.name||'Joueur',elo:v.elo||1000,g:v.g||0,w:v.w||0,st:v.st||null}}catch(e){}}
+  if(!o){homeToast('Statistiques indisponibles pour ce joueur');return}
+  const R=P.rel&&P.rel[uid],h2h=R&&(R.wa+R.la+R.wp+R.lp)?`<p class="amsg small">${R.wa+R.la?`Face à face : <b>${R.wa}</b> victoire${R.wa>1?'s':''} pour toi, <b>${R.la}</b> pour ${esc(o.name)}. `:''}${R.wp+R.lp?`Ensemble : <b>${R.wp}</b> gagnée${R.wp>1?'s':''} sur ${R.wp+R.lp}.`:''}</p>`:'';
+  askBox(`<h2>Toi et ${esc(o.name)}</h2><table class="gstab cmp"><tr><th></th><th>Toi</th><th>${esc(o.name)}</th></tr>${cmpRows(myCard(),o)}</table>${h2h}${o.st?'':'<p class="amsg small">Ce joueur n\'a pas encore de statistiques détaillées (elles se remplissent à partir de sa prochaine partie).</p>'}`,null,'Fermer');
+}
+const STUI={tab:'me',per:'wk',sort:'w'};
+function renderStats(){
+  const st=stGet(),s=P.stats||{g:0,w:0},per=perGet();
+  const tile=(v,l,sub)=>`<div class="stt"><b>${v}</b><span>${l}</span>${sub?`<small>${sub}</small>`:''}</div>`;
+  let body;
+  if(STUI.tab==='me'){
+    body=`<div class="stgrid">
+      ${tile(P.elo,'Note',lgName(P.elo))}${tile(st.peak,'Meilleure note',lgName(st.peak))}
+      ${tile(s.g,'Parties jouées')}${tile(pct(s.w,s.g),'Victoires',s.w+' gagnée'+(s.w>1?'s':''))}
+      ${tile(st.streak,'Série en cours')}${tile(st.best,'Meilleure série')}
+      ${tile(per.wk.w+' / '+per.wk.g,'Cette semaine',(per.wk.d>=0?'+':'')+per.wk.d+' de note')}${tile(per.mo.w+' / '+per.mo.g,'Ce mois-ci',(per.mo.d>=0?'+':'')+per.mo.d+' de note')}
+      ${tile(per.qt.w+' / '+per.qt.g,'Ce trimestre',(per.qt.d>=0?'+':'')+per.qt.d+' de note')}${tile(per.yr.w+' / '+per.yr.g,'Cette année',(per.yr.d>=0?'+':'')+per.yr.d+' de note')}
+    </div>
+    <h3>Ton jeu</h3><div class="stgrid">
+      ${tile(pct(st.qg,st.qn),'Qualité de jeu','bons coups')}${tile(pct(st.manW,st.man),'Manches gagnées',st.man+' jouée'+(st.man>1?'s':''))}
+      ${tile(avg(st.pf,st.man),'Points par manche','encaissés : '+avg(st.pa,st.man))}${tile(st.chk,'Chkobba',avg(st.chk,st.g)+' par partie')}
+      ${tile(st.myHaya,'7 de carreau ramassés',avg(st.myHaya,st.g,2)+' par partie')}${tile(st.sevens,'Sept ramassés',avg(st.sevens,st.g)+' par partie')}
+      ${tile(avg(st.cards,st.g,0),'Cartes par partie')}${tile(st.napola,'Napola',st.napPts+' point'+(st.napPts>1?'s':''))}
+    </div>
+    <h3>Points de manche gagnés par ton équipe</h3><div class="stgrid four">
+      ${tile(pct(st.karta,st.man),'Karta')}${tile(pct(st.dinari,st.man),'Dinari')}${tile(pct(st.haya,st.man),'El Haya')}${tile(pct(st.bermila,st.man),'Bermila')}
+    </div>
+    <h3>Selon l'adversaire et le mode</h3><div class="stgrid">
+      ${tile(pct(st.ia[1],st.ia[0]),'Contre l\'IA',st.ia[0]+' partie'+(st.ia[0]>1?'s':''))}${tile(pct(st.real[1],st.real[0]),'Contre de vrais joueurs',st.real[0]+' partie'+(st.real[0]>1?'s':''))}
+      ${tile(pct(st.mode.c2[1],st.mode.c2[0]),'À 2 joueurs',st.mode.c2[0]+' partie'+(st.mode.c2[0]>1?'s':''))}${tile(pct(st.mode.c4[1],st.mode.c4[0]),'À 4 joueurs',st.mode.c4[0]+' partie'+(st.mode.c4[0]>1?'s':''))}
+      ${tile(pct(st.mode.d10[1],st.mode.d10[0]),'À 10 cartes',st.mode.d10[0]+' partie'+(st.mode.d10[0]>1?'s':''))}${tile(st.bigWin?'+'+st.bigWin:'–','Plus large victoire','écart de points')}
+      ${tile(st.quit,'Abandons')}
+    </div>
+    <p class="amsg small">Le détail (« Ton jeu » et la suite) est compté depuis le ${new Date(st.since).toLocaleDateString('fr-FR')}${s.g>st.g?' ; tes '+(s.g-st.g)+' parties d\'avant ne comptent que dans les parties et les victoires':''}.</p>`;
+  } else if(STUI.tab==='pub'){
+    const pk=STUI.per,srt=STUI.sort,me=myCard(),mine=pk==='all'?{g:me.g,w:me.w,d:me.elo,chk:me.st.chk||0}:per[pk];
+    const segs=`<div class="seg2 five" id="stPer">${[['wk','Semaine'],['mo','Mois'],['qt','Trimestre'],['yr','Année'],['all','Toujours']].map(x=>`<button data-sp="${x[0]}" class="${pk===x[0]?'on':''}">${x[1]}</button>`).join('')}</div>
+      <div class="seg2 three" id="stSort" style="margin-top:6px"><button data-ss="w" class="${srt==='w'?'on':''}">Victoires</button><button data-ss="d" class="${srt==='d'?'on':''}">${pk==='all'?'Note':'Progression'}</button><button data-ss="chk" class="${srt==='chk'?'on':''}">Chkobba</button></div>`;
+    const show=v=>srt==='w'?`${v.w||0} victoire${v.w>1?'s':''}`:srt==='chk'?`${v.chk||0} Chkobba`:pk==='all'?`note ${v.d}`:`${v.d>=0?'+':''}${v.d||0} de note`;
+    const line=(rank,o,v,isMe)=>`<div class="lbr${isMe?' mine':''}"><i>${rank}</i><div><b>${esc(o.name||'Joueur')}${isMe?' (toi)':''}</b><small>${lgName(o.elo||1000)} · ${v.g||0} partie${v.g>1?'s':''}</small></div><span>${show(v)}</span>${isMe?'':`<button class="btn sm ghost" data-cmp="${o.uid}">Comparer</button>`}</div>`;
+    let list;
+    if(!FR.ready)list=`<p class="amsg">${FR.booting?'Connexion…':'Le classement général demande l\'appli installée (ou le site) et internet.'}</p>`;
+    else{const rows=pubRows(pk,srt);
+      if(!rows)list='<p class="amsg">Chargement…</p>';
+      else{const iMe=rows.findIndex(r=>r.uid===NET.uid);
+        list=(rows.length?rows.map((r,i)=>line(i+1,r,pk==='all'?{g:r.g,w:r.w,d:r.elo,chk:r.chk}:r,r.uid===NET.uid)).join(''):'<p class="amsg">Personne n\'a encore joué sur cette période.</p>')
+          +(iMe<0&&P.pub!==false&&(pk==='all'||mine.g)?`<p class="amsg small" style="margin:10px 0 2px">${rows.length<50?'Ta ligne arrive dans le classement dans un instant.':'Tu es hors des 50 premiers :'}</p>${rows.length<50?'':line('–',me,mine,true)}`:'')}}
+    body=`${segs}<div class="lbd">${list}</div>
+      <p class="amsg small">${P.pub===false?'Tu n\'apparais pas dans le classement général.':'Tous les joueurs de l\'appli, les 50 premiers. '+(pk==='wk'?'Remis à zéro chaque lundi.':pk==='mo'?'Remis à zéro le 1er de chaque mois.':pk==='qt'?'Remis à zéro au début de chaque trimestre.':pk==='yr'?'Remis à zéro le 1er janvier.':'Depuis le début.')}</p>
+      <button class="btn sm ghost" id="pubTg" style="width:100%">${P.pub===false?'Apparaître dans le classement général':'Ne plus apparaître dans le classement général'}</button>`;
+  } else {
+    const id={wk:per.wk.id,mo:per.mo.id,qt:per.qt.id,yr:per.yr.id},pk=STUI.per;
+    const val=o=>{if(pk==='all')return {g:o.g||0,w:o.w||0,d:o.elo||1000,chk:(o.st&&o.st.chk)||0};
+      const x=o.per&&o.per[pk];return x&&x.id===id[pk]?x:{g:0,w:0,d:0,chk:0}};
+    const rows=[{me:true,...myCard()},...Object.values(FR.list)].map(o=>({o,v:val(o)}))
+      .sort((a,b)=>(b.v[STUI.sort]-a.v[STUI.sort])||(b.v.w-a.v.w)||(b.o.elo-a.o.elo));
+    const show=v=>STUI.sort==='w'?`${v.w} victoire${v.w>1?'s':''}`:STUI.sort==='chk'?`${v.chk} Chkobba`:pk==='all'?`note ${v.d}`:`${v.d>=0?'+':''}${v.d} de note`;
+    body=`<div class="seg2 five" id="stPer">${[['wk','Semaine'],['mo','Mois'],['qt','Trimestre'],['yr','Année'],['all','Toujours']].map(x=>`<button data-sp="${x[0]}" class="${pk===x[0]?'on':''}">${x[1]}</button>`).join('')}</div>
+      <div class="seg2 three" id="stSort" style="margin-top:6px"><button data-ss="w" class="${STUI.sort==='w'?'on':''}">Victoires</button><button data-ss="d" class="${STUI.sort==='d'?'on':''}">${pk==='all'?'Note':'Progression'}</button><button data-ss="chk" class="${STUI.sort==='chk'?'on':''}">Chkobba</button></div>
+      <div class="lbd">${rows.map((r,i)=>`<div class="lbr${r.o.me?' mine':''}"><i>${i+1}</i><div><b>${esc(r.o.name)}${r.o.me?' (toi)':''}</b><small>${lgName(r.o.elo)} · ${r.v.g} partie${r.v.g>1?'s':''}</small></div><span>${show(r.v)}</span>${r.o.me?'':`<button class="btn sm ghost" data-cmp="${r.o.uid}">Comparer</button>`}</div>`).join('')}</div>
+      <p class="amsg small">${Object.keys(FR.list).length?(pk==='wk'?'Remis à zéro chaque lundi.':pk==='mo'?'Remis à zéro le 1er de chaque mois.':pk==='qt'?'Remis à zéro au début de chaque trimestre (janvier, avril, juillet, octobre).':pk==='yr'?'Remis à zéro le 1er janvier.':'Depuis le début.'):FR.ready?'Ajoute des amis pour te comparer à eux.':'Connecte-toi (appli installée, avec internet) pour voir tes amis ici.'}</p>`;
+  }
+  $('stPanel').innerHTML=`<h2>Statistiques</h2><div class="seg2 three" id="stTabs"><button data-st="me" class="${STUI.tab==='me'?'on':''}">Moi</button><button data-st="lb" class="${STUI.tab==='lb'?'on':''}">Amis</button><button data-st="pub" class="${STUI.tab==='pub'?'on':''}">Général</button></div>${body}
+    <button class="btn" id="stClose" style="width:100%;margin-top:10px">Fermer</button>`;
+}
+function openStats(){renderStats();$('ovSt').classList.add('on');if(STUI.tab!=='me'&&!FR.ready&&!FR.booting){const w=netWait();renderStats();w.then(()=>{netSaveBoard();if($('ovSt').classList.contains('on'))renderStats()})}}
+
+/* ================= Classement général (public) =================
+   board/{uid} : classement « Toujours ».  lb/{wk|mo|qt|yr}/{id}/{uid} : classements par période.
+   Les règles Firebase refusent une progression impossible : note +48 au plus par écriture et pas deux hausses en moins de
+   60 s, parties +1 par écriture, première inscription à 1250 au plus ; pour une période : parties +1, victoires +1,
+   points +48 par écriture. On publie donc PAR PALIERS jusqu'à rattraper les vraies valeurs (parties jouées hors connexion,
+   première publication d'un joueur déjà avancé). Tout échec est silencieux : le jeu ne doit jamais en dépendre.
+   P.bd / P.bdp gardent ce qui est déjà publié. */
+let BD_GAP=61000;
+const BD={run:false,again:false,timer:null,fails:0};
+async function netSaveBoard(){
+  if(!NET.ok||!NET.top)return;
+  if(BD.run){BD.again=true;return}
+  BD.run=true;BD.again=false;clearTimeout(BD.timer);let wait=0;
+  try{
+    const u=NET.uid,name=String(myName()).slice(0,24),per=perGet();
+    if(P.pub===false){
+      if(P.bd||P.bdp){await NET.remove('board/'+u);for(const k of PER_KEYS)await NET.remove(`lb/${k}/${per[k].id}/${u}`);P.bd=null;P.bdp=null}
+      return}
+    const s=P.stats||{g:0,w:0},t={elo:P.elo,g:s.g,w:Math.min(s.w,s.g),chk:(P.st&&P.st.chk)||0};
+    if(!P.bd||P.bd.uid!==u){const v=await NET.get('board/'+u);P.bd=v?{uid:u,ex:1,elo:v.elo,g:v.g,w:v.w,chk:v.chk,name:v.name,at:0}:{uid:u,ex:0}}
+    for(let i=0;i<200;i++){
+      const b=P.bd;let n;
+      if(!b.ex)n={elo:Math.min(t.elo,1250),g:t.g,w:t.w};
+      else{
+        if(b.elo===t.elo&&b.g===t.g&&b.w===t.w&&b.chk===t.chk&&b.name===name)break;
+        const g=Math.min(t.g,b.g+1);let elo=t.elo;
+        if(t.elo>b.elo){const el=Date.now()-(b.at||0);if(el<BD_GAP){wait=BD_GAP-el;break}elo=Math.min(t.elo,b.elo+48)}
+        n={elo,g,w:Math.min(t.w,g)}}
+      await NET.set('board/'+u,{name,elo:n.elo,g:n.g,w:n.w,chk:t.chk,at:NET.stamp});
+      P.bd={uid:u,ex:1,elo:n.elo,g:n.g,w:n.w,chk:t.chk,name,at:Date.now()};
+    }
+    P.bdp=P.bdp||{};
+    for(const k of PER_KEYS){const T=per[k],path=`lb/${k}/${T.id}/${u}`;let b=P.bdp[k];
+      if(!b||b.id!==T.id||b.uid!==u){const v=await NET.get(path);b=P.bdp[k]=v?{uid:u,id:T.id,ex:1,g:v.g,w:v.w,d:v.d,chk:v.chk,elo:v.elo}:{uid:u,id:T.id,ex:0,g:0,w:0,d:0}}
+      for(let i=0;i<400;i++){
+        if(!b.ex&&!T.g)break;
+        if(b.ex&&b.g===T.g&&b.w===T.w&&b.d===T.d&&b.chk===T.chk&&b.elo===P.elo&&b.name===name)break;
+        const g=Math.min(T.g,b.g+1),w=Math.min(T.w,b.w+1,g),d=Math.min(T.d,b.d+48);
+        await NET.set(path,{name,elo:P.elo,g,w,d,chk:T.chk||0,at:NET.stamp});
+        Object.assign(b,{ex:1,g,w,d,chk:T.chk,elo:P.elo,name});
+      }}
+    BD.fails=0;
+  }catch(e){BD.fails++;P.bd=null;P.bdp=null;wait=BD_GAP+4000}
+  finally{BD.run=false;savePrefs();
+    if(BD.again)setTimeout(netSaveBoard,50);else if(wait&&BD.fails<4)BD.timer=setTimeout(netSaveBoard,wait+400)}
+}
+const PUBC={};
+function pubRows(pk,sort){ // lit (ou relit après 60 s) les 50 premiers ; renvoie null pendant le chargement
+  const per=perGet(),path=pk==='all'?'board':`lb/${pk}/${per[pk].id}`,child=pk==='all'?(sort==='d'?'elo':sort):sort,key=path+'|'+child,c=PUBC[key];
+  if(c&&c.rows&&Date.now()-c.t<60000)return c.rows;
+  if(!c||!c.busy){PUBC[key]={busy:true,rows:c&&c.rows,t:c?c.t:0};
+    NET.top(path,child,50).then(r=>{PUBC[key]={rows:r||[],t:Date.now()}}).catch(()=>{PUBC[key]={rows:[],t:Date.now(),err:true}})
+      .then(()=>{if(STUI.tab==='pub'&&$('ovSt').classList.contains('on'))renderStats()})}
+  return c&&c.rows?c.rows:null}
+
+/* ================= Partage, revanche, réactions ================= */
+const appURL=()=>/^https?:/.test(location.protocol)?location.origin+location.pathname:'';
+function waShare(txt){window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank')}
+document.addEventListener('click',e=>{const id=e.target.id;
+  if(id==='lobbyWA'&&LB.code)waShare(`Viens jouer à la Chkobba avec moi ! Table ${LB.code}${appURL()?' : '+appURL()+'?t='+LB.code:''}`);
+  if(id==='shareCode'&&P.myCode)waShare(`Ajoute-moi sur Chkobba ! Mon code ami : ${P.myCode}${appURL()?' — '+appURL()+'?a='+P.myCode:''}`);
+  if(id==='stClose')$('ovSt').classList.remove('on');
+  if(id==='pubTg'){P.pub=P.pub===false;savePrefs();for(const k in PUBC)delete PUBC[k];netSaveBoard();setTimeout(renderStats,900);renderStats()}
+  const stb=e.target.closest('[data-st],[data-sp],[data-ss]');
+  if(stb&&$('ovSt').contains(stb)){if(stb.dataset.st)STUI.tab=stb.dataset.st;if(stb.dataset.sp)STUI.per=stb.dataset.sp;if(stb.dataset.ss)STUI.sort=stb.dataset.ss;openStats()}
+  const cm=e.target.closest('[data-cmp]');if(cm)openCompare(cm.dataset.cmp);
+  const af=e.target.closest('[data-addf]');
+  if(af&&NET.ok){const u=af.dataset.addf;af.disabled=true;
+    Promise.all([NET.set('users/'+NET.uid+'/friends/'+u,true),NET.set('users/'+u+'/friends/'+NET.uid,true)]).then(()=>{af.textContent='Ami ajouté ✔'}).catch(()=>{af.disabled=false})}
+});
+/* lien d'invitation : ?t=1234 (table) ou ?a=CODE (ami) */
+function handleLink(){try{const q=new URLSearchParams(location.search),t=q.get('t'),a=q.get('a');
+  if(!t&&!a)return;history.replaceState(null,'',location.pathname);
+  if(t&&/^\d{4}$/.test(t)){P.opp='amis';savePrefs();syncStart();joinTable(t)}
+  else if(a&&/^[A-Za-z0-9]{6}$/.test(a))netWait().then(ok=>{if(ok)addFriendByCode(a);else homeToast('Pas de connexion : ami non ajouté')})}catch(e){}}
+/* fin de partie : proposer d'ajouter en ami les joueurs réels qui ne le sont pas encore */
+function endFriendsHTML(){if(!S.online||!S.seatUid)return'';
+  return S.seatUid.map((u,p)=>p>0&&u&&!FR.list[u]?`<button class="btn sm ghost" data-addf="${u}" style="width:100%;margin-bottom:6px">Ajouter ${esc(S.people[p].n)} en ami</button>`:'').join('')}
+/* revanche contre l'IA : mêmes adversaires, même niveau */
+function rematchLocal(){const prev={people:S.people,level:S.level,auto:S.auto};
+  $('ovScore').classList.remove('on');clearSave();newGame();
+  S.people=prev.people;S.level=prev.level;S.auto=prev.auto;for(let p=1;p<S.n;p++)S.seatR[p]=CPU_R[S.level]||1050;render()}
+/* revanche en ligne : le premier qui la propose crée la nouvelle table, les autres la rejoignent d'un geste.
+   Celui qui ne suit pas est remplacé par une IA (règle habituelle des absents), sans pénalité. */
+async function proposeRematch(){
+  const O=S.online,b=$('rematchBtn');if(!O||!NET.ok)return;if(b){b.disabled=true;b.textContent='Création…'}
+  try{
+    const seats=[];for(const x of O.seats){if(x.kind!=='human'){seats.push(x);continue}
+      let elo=x.uid===NET.uid?P.elo:null;if(elo==null){try{elo=await NET.get('users/'+x.uid+'/elo')}catch(e){}}
+      seats.push({...x,elo:elo||x.elo||1000})}
+    const game={host:NET.uid,mode:S.mode,target:S.target,napola:S.napola,dealer:Math.floor(Math.random()*S.n),seats};
+    let code;for(let i=0;i<8;i++){code='m'+Math.floor(1e5+Math.random()*9e5);if(await NET.putIfAbsent('tables/'+code,{v:PROTO,host:NET.uid,mode:S.mode,target:S.target,napola:S.napola,status:'play',at:Date.now(),game}))break}
+    if(!await NET.putIfAbsent(`tables/${O.code}/rematch`,{by:NET.uid,name:myName(),code})){ // quelqu'un l'a proposée juste avant
+      NET.remove('tables/'+code).catch(()=>{});const v=await NET.get(`tables/${O.code}/rematch`);if(v)return joinRematch(v.code);return}
+    leaveOnline();$('ovScore').classList.remove('on');startOnline(game,code);
+  }catch(e){if(b){b.disabled=false;b.textContent='Revanche'}}
+}
+async function joinRematch(code){const g=await NET.get('tables/'+code+'/game');if(!g)return;
+  leaveOnline();$('ovScore').classList.remove('on');startOnline(g,code)}
+function watchRematch(){const O=S.online;if(!O||O.rmUnsub)return;
+  O.rmUnsub=NET.onValue(`tables/${O.code}/rematch`,v=>{if(!v||v.by===NET.uid||!S||S.online!==O)return;
+    S.rmOffer=v;const box=$('rmBox'),b=$('rematchBtn');if(b)b.style.display='none';
+    if(box){box.innerHTML=`<div class="rmoffer"><b>${esc(v.name)}</b> propose une revanche<button class="btn" id="rmJoin">Jouer la revanche</button></div>`;$('rmJoin').onclick=()=>joinRematch(v.code)}})}
+/* réactions rapides (parties avec d'autres joueurs réels) */
+const nb=t=>t.replace(/ ([!?])/g,'\u00a0$1');
+const REACTS=['Chkobbi Chkobba !','Yezzi !','Ya rkik !','T\'y es un gagnant !','Mabrouk !','Sahha !','Yallah, joue !','Aïe aïe aïe !','Bravo khouya','Mazal ! La chance !','Mektoub','Hchouma !','Chouf chouf !','Blaha, ça y est, c\'est mort','Leister cette main !','Maman c\'est pas possible !','Jure que t\'avais pas mieux à faire ?!','T\'y es sûr tu sais jouer ?','La vérité t\'es un crack','Euf ça m\'a soulé !','Atik Chrana !','Tu joues ou tu dors ?','Il a appris hier, lui','Ya weldi, quelle main…','Miskin','Laisse tomber…','Bsahtek !','Et de une !','Fais-moi confiance','Bien vu partenaire !','😡','😄','😂','⏳','😮','🤔','😱','😎','👏','🙏','😭','🤫','Y\'atik bal\'hita !','Atik Feujra !','J\'ai eu khaf !!'];
+/* Les réactions voyagent par leur numéro : ne jamais changer l'ordre de REACTS, ajouter à la fin et ranger ici. */
+const RX_EMO=[30,41]; // numéros des emojis
+const RX_CATS=[['Chambrer',[1,2,6,11,12,16,17,20,42,43,21,22]],['Bravo',[0,3,4,5,8,18,26,27,28,29]],['Pas de chance',[7,9,10,13,14,15,19,23,24,25,44]],['😀',[30,31,32,33,34,35,36,37,38,39,40,41]]];
+let rxTab=0;
+function rxRender(){$('rxTabs').innerHTML=RX_CATS.map((c,i)=>`<button class="${i===rxTab?'on':''}" data-rxt="${i}">${c[0]}</button>`).join('');
+  const emo=rxTab===3;$('rxGrid').className='rxgrid'+(emo?' emo':'');
+  $('rxGrid').innerHTML=RX_CATS[rxTab][1].map(i=>`<button class="btn sm ghost" data-rx="${i}">${esc(nb(REACTS[i]))}</button>`).join('')}
+function rxBubble(p,i){bubble(p,nb(REACTS[i]),2600);if(i>=RX_EMO[0]&&i<=RX_EMO[1]){const b=document.body.lastElementChild;if(b&&b.classList.contains('bubble'))b.classList.add('emo')}}
+let rxLast=0;
+function rxListen(){const O=S.online,others=O.seats.some((x,i)=>x.kind==='human'&&x.uid!==NET.uid);
+  $('rxBtn').style.display=others?'':'none';if(!others)return;
+  const seen={};let first=true;
+  O.rxUnsub=NET.onValue(`tables/${O.code}/rx`,v=>{v=v||{};
+    for(const u in v){const r=v[u];if(!r||seen[u]===r.t)continue;seen[u]=r.t;
+      if(first||u===NET.uid||!REACTS[r.i])continue;
+      const a=O.seats.findIndex(x=>x.uid===u);if(a>=0&&S&&S.online===O)rxBubble(viewSeat(a),r.i)}
+    first=false})}
+$('rxBtn').onclick=()=>{rxRender();$('ovRx').classList.add('on')};
+$('rxTabs').addEventListener('click',e=>{const b=e.target.closest('[data-rxt]');if(b){rxTab=+b.dataset.rxt;rxRender()}});
+$('rxClose').onclick=()=>$('ovRx').classList.remove('on');
+$('rxGrid').addEventListener('click',e=>{const b=e.target.closest('[data-rx]');if(!b)return;$('ovRx').classList.remove('on');
+  if(!S||!S.online||Date.now()-rxLast<2500)return;rxLast=Date.now();const i=+b.dataset.rx;
+  rxBubble(0,i);NET.set(`tables/${S.online.code}/rx/${NET.uid}`,{i,t:Date.now()}).catch(()=>{})});
+
 /* ================= Tables ================= */
 const LB={code:null,unsub:null,pickSeat:null,t:null};
 const SEAT_ROLE=(n,i)=>n===2?'Adversaire':(i===2?'Partenaire':'Adversaire '+(i===1?'1':'2'));
 function seatRating(x){return x.kind==='cpu'?CPU_R[x.lvl]:x.elo||1000}
+/* Version du format des échanges en ligne (journal d'événements, sièges, tables). Toute table la porte (champ v) ;
+   on ne rejoint pas une table d'une autre version : mieux vaut un message clair qu'une partie qui se bloque.
+   À augmenter d'un cran, des deux côtés, à chaque changement du format. */
+const PROTO=2;
 async function createTable(){
-  if(!await netBoot()){P.opp='amis';syncStart();return}
+  if(!await netWait()){P.opp='amis';syncStart();return}
   const M=MODES[P.mode];let code;
   for(let i=0;i<10;i++){code=String(1000+Math.floor(Math.random()*9000));
-    const ok=await NET.putIfAbsent('tables/'+code,{host:NET.uid,mode:P.mode,target:P.target,napola:!!P.napola,status:'lobby',at:Date.now(),
+    const ok=await NET.putIfAbsent('tables/'+code,{v:PROTO,host:NET.uid,mode:P.mode,target:P.target,napola:!!P.napola,status:'lobby',at:Date.now(),
       seats:Object.fromEntries(Array.from({length:M.n},(_,i)=>[i,i===0?{kind:'human',uid:NET.uid,name:myName(),elo:P.elo,c:'#e0a526'}:{kind:'open'}]))});
     if(ok)break}
   openLobby(code);
 }
 async function joinTable(code){
-  if(!await netBoot()) return;
+  if(!await leaveCurrent()) return;
+  if(!await netWait()) return;
   const t=await NET.get('tables/'+code);
   if(!t){homeMsg('Table introuvable');return}
+  if(t.v!==PROTO){homeMsg('Cette table vient d\'une autre version de l\'appli. Fermez et rouvrez l\'appli tous les deux pour la mettre à jour.');return}
   const seats=t.seats||{};
   if(t.status!=='lobby'){homeMsg('La partie a déjà commencé');return}
   let idx=Object.keys(seats).find(i=>seats[i].uid===NET.uid&&seats[i].kind==='human');
@@ -1893,7 +2602,8 @@ function renderLobby(){
     const acts=host&&i!==0&&x.kind!=='human'?`<div class="sacts"><button class="btn sm" data-inv="${i}">Inviter un ami</button><button class="btn sm ghost" data-cpu="${i}">Ordinateur (IA)</button>${x.kind!=='open'?`<button class="btn sm ghost" data-open="${i}">Libérer</button>`:''}</div>`:'';
     return `<div class="lseat"><div class="lrole">${role}</div><div class="lbody">${body}</div>${acts}</div>`};
   el.innerHTML=`<h2>Table ${LB.code}</h2>
-    <p class="amsg">${t.mode==='c2'?'À 2 joueurs':t.mode==='c4'?'À 4 joueurs':'10 cartes, à 4'} · en ${t.target} points${t.napola?' · Napola':''}<br>Donne le code <b>${LB.code}</b> à tes amis, ou invite-les.</p>
+    <p class="amsg">${t.mode==='c2'?'À 2 joueurs':t.mode==='c4'?'À 4 joueurs':'À 10 cartes, à 4'} · en ${t.target} points${t.napola?' · Napola':''}<br>Donne le code <b>${LB.code}</b> à tes amis, ou invite-les.</p>
+    <button class="btn sm wa" id="lobbyWA" style="width:100%;margin-bottom:8px">Inviter par WhatsApp</button>
     ${Array.from({length:n},(_,i)=>row(i)).join('')}
     <p class="twarn dark">${lobbyBalance(t)}</p>
     <div class="stack">${host?`<button class="btn" id="lobbyStart" ${full?'':'disabled'}>${full?'Lancer la partie':'En attente des joueurs…'}</button>`:`<p class="amsg">En attente que ${esc(seats[0]&&seats[0].name||'l\'hôte')} lance la partie…</p>`}
@@ -1951,13 +2661,13 @@ function tableHTML(T,final){
   const cell=(v,det)=>`<td>${v?`<span class="pt">${final?'+'+v:'✓'}</span>`:'–'}${det?`<span class="det">${det}</span>`:''}</td>`;
   return `<table>
     <tr><th></th><th>${teamName(0)}</th><th>${teamName(1)}</th></tr>${final?`<tr class="mtot"><td>Points de la manche</td><td class="${tot[0]>tot[1]?'lead':''}">+${tot[0]}</td><td class="${tot[1]>tot[0]?'lead':''}">+${tot[1]}</td></tr>`:''}
-    <tr><td>Karta<span class="det">le plus de cartes</span></td>${cell(r.karta[0],pl(n[0],'carte'))}${cell(r.karta[1],pl(n[1],'carte'))}</tr>
+    <tbody class="gsp"><tr><td colspan="3"></td></tr></tbody><tbody class="grp gmain"><tr><td>Karta<span class="det">le plus de cartes</span></td>${cell(r.karta[0],pl(n[0],'carte'))}${cell(r.karta[1],pl(n[1],'carte'))}</tr>
     <tr><td>Dinari<span class="det">le plus de carreaux</span></td>${cell(r.dinari[0],n2(d[0]))}${cell(r.dinari[1],n2(d[1]))}</tr>
-    <tr><td>El Haya<span class="det">le 7 de carreau</span></td>${cell(r.haya[0],'7 de carreau')}${cell(r.haya[1],'7 de carreau')}</tr>
-    <tr><td>Bermila<span class="det">le plus de 7</span></td>${cell(r.bermila[0],s7[0]+' sept · '+s6[0]+' six')}${cell(r.bermila[1],s7[1]+' sept · '+s6[1]+' six')}</tr>
-    ${S.napola?`<tr><td>Napola<span class="det">suite As-2-3 de carreau</span></td>${cell(r.napola[0],'')}${cell(r.napola[1],'')}</tr>`:''}
-    <tr><td>Chkobba<span class="det">table vidée</span></td>${cell(r.chk[0],final?'':r.chk[0]+' fois')}${cell(r.chk[1],final?'':r.chk[1]+' fois')}</tr>
-    ${final&&S.rest?`<tr><td colspan="3" class="restnote">Les ${S.rest.cards.length} carte${S.rest.cards.length>1?'s':''} restante${S.rest.cards.length>1?'s':''} (${S.rest.cards.map(lbl).join(' ')}) sont allées à ${teamName(S.rest.t)}, dernier à avoir ramassé.</td></tr>`:''}
+    <tr><td>El Haya<span class="det">le 7 de carreau</span></td>${cell(r.haya[0],r.haya[0]?'7 de carreau':'')}${cell(r.haya[1],r.haya[1]?'7 de carreau':'')}</tr>
+    <tr><td>Bermila<span class="det">le plus de 7</span></td>${cell(r.bermila[0],s7[0]+' sept · '+s6[0]+' six')}${cell(r.bermila[1],s7[1]+' sept · '+s6[1]+' six')}</tr></tbody>
+    ${S.napola?`<tbody class="gsp"><tr><td colspan="3"></td></tr></tbody><tbody class="grp gnap"><tr><td>Napola<span class="det">suite As-2-3 de carreau</span></td>${cell(r.napola[0],'')}${cell(r.napola[1],'')}</tr></tbody>`:''}
+    <tbody class="gsp"><tr><td colspan="3"></td></tr></tbody><tbody class="gchk"><tr><td>Chkobba</td>${cell(r.chk[0],final?'':r.chk[0]+' fois')}${cell(r.chk[1],final?'':r.chk[1]+' fois')}</tr></tbody>
+    
 
   </table>`;
 }
@@ -2001,15 +2711,15 @@ function endManche(){
   const [a,b]=S.scores;
   const winner=(Math.max(a,b)>=S.target&&a!==b)?(a>b?0:1):null;
   S.over=winner!==null;
-  S.manche=(S.manche||0)+1;
+  S.manche=(S.manche||0)+1;msAdd(T);
   S.eloRes=null;
   if(S.over&&S.auto&&S.seatR&&!S.online)for(let p=1;p<S.n;p++)S.seatR[p]=CPU_R[S.level];
-  if(S.over){P.stats=P.stats||{g:0,w:0};P.stats.g++;if(winner===0)P.stats.w++;S.eloRes=eloUpdate(winner===0);savePrefs();if(winner===0){burst(90);SFX.win();vib([40,60,40,60,80])}else SFX.lose()}
+  if(S.over){P.pend=null;clearSave();if(S.online)NET.update('tables/'+S.online.code,{status:'done'}).catch(()=>{});P.stats=P.stats||{g:0,w:0};P.stats.g++;if(winner===0)P.stats.w++;S.eloRes=eloUpdate(winner===0);commitStats(winner===0);savePrefs();netSaveProfile();if(winner===0){burst(90);SFX.win();vib([40,60,40,60,80])}else SFX.lose()}
   else if(T.tot[0]>T.tot[1]){SFX.win()}
   const w0=S.n===2?'Tu as gagné !':'Vous avez gagné !',w1=S.n===2?S.people[1].n+' a gagné':S.people[1].n+' et '+S.people[3].n+' ont gagné';
   $('scorePanel').innerHTML=`<h2>${winner===null?'Fin de la manche':winner===0?w0:w1}</h2><p style="margin:-4px 0 10px;opacity:.65;font-weight:800">Manche ${S.manche}${S.auto?' · niveau '+S.level:''}</p>
     ${tableHTML(T,true)}
-    ${S.eloRes?`<div class="elobox">Ton niveau : <b>${S.eloRes.before}</b> → <b>${S.eloRes.after}</b> <span class="${S.eloRes.d>=0?'up':'dn'}">${S.eloRes.d>=0?'+':''}${S.eloRes.d}</span> · ${LV_NAMES[lvlOf(S.eloRes.after)]}</div>`:''}
+    ${S.eloRes?`<div class="elobox">Ton niveau : <b>${S.eloRes.before}</b> → <b>${S.eloRes.after}</b> <span class="${S.eloRes.d>=0?'up':'dn'}">${S.eloRes.d>=0?'+':''}${S.eloRes.d}</span> · ${lgName(S.eloRes.after)}<small class="elodet">Tes chances étaient de ${Math.round(S.eloRes.c.E*100)} % · ${S.eloRes.real===0?'contre IA':S.eloRes.real===S.eloRes.nopp?'contre joueurs réels':'contre 1 réel + 1 IA'} ×${fr1(S.eloRes.c.W)} · ${S.eloRes.c.acc==null?'qualité de jeu non mesurée':'qualité de jeu '+Math.round(S.eloRes.c.acc*100)+' % de bons coups'} ×${fr1(S.eloRes.c.Q)}${S.eloRes.team?' · ta part en équipe ×'+fr1(S.eloRes.c.C):''}</small></div>`:''}
     <div class="gbox"><div class="glab">Score de la partie <small>· en ${S.target}</small></div>
       <div class="grow"><div class="gcol ${a>b?'lead':''}"><span>${teamName(0)}</span><b>${a}</b></div><div class="gsep">–</div><div class="gcol ${b>a?'lead':''}"><span>${teamName(1)}</span><b>${b}</b></div></div>
       <div class="gbar"><i style="width:${Math.min(100,a/S.target*100)}%"></i></div><div class="gbar them"><i style="width:${Math.min(100,b/S.target*100)}%"></i></div></div>
@@ -2017,16 +2727,27 @@ function endManche(){
       <div class="pv-tabs">${[0,1].map(t=>`<div class="pv-team"><div class="pv-title">${teamName(t)} · ${S.piles[t].length} cartes</div>${pileView(t)}</div>`).join('')}</div>
       <p class="pv-leg"><span class="pv-dot haya"></span>El Haya (7♦) <span class="pv-dot key"></span>7 et 6 (Bermila)</p>
     </details>
-    <button class="btn" id="nextBtn" style="width:100%">${winner===null?'Manche suivante':'Rejouer'}</button>`;
+    ${winner!==null&&S.eloRes&&leagueOf(S.eloRes.after)!==leagueOf(S.eloRes.before)?(S.eloRes.after>S.eloRes.before?`<div class="lgup">🎉 Nouveau classement<b>${lgName(S.eloRes.after)}</b></div>`:`<div class="lgdn">Tu redescends en <b>${lgName(S.eloRes.after)}</b>. À toi de remonter.</div>`):''}
+    ${`<details class="pv" open><summary>Les chiffres, joueur par joueur</summary>${statsBlock()}${winner!==null&&S.online&&S.seatUid?S.seatUid.map((u,p)=>p>0&&u?`<button class="btn sm ghost" data-cmp="${u}" style="width:100%;margin-top:6px">Comparer mes statistiques avec ${esc(S.people[p].n)}</button>`:'').join(''):''}</details>`}
+    ${winner!==null?`<div id="rmBox"></div><div id="addfBox">${endFriendsHTML()}</div>`:''}
+    <div class="stack">${winner!==null?`<button class="btn" id="rematchBtn">Revanche</button>`:''}
+    <button class="btn${winner!==null?' ghost':''}" id="nextBtn" style="width:100%">${winner===null?'Manche suivante':'Accueil'}</button></div>`;
+  if(winner!==null){
+    if(S.eloRes&&leagueOf(S.eloRes.after)>leagueOf(S.eloRes.before))burst(70);
+    $('rematchBtn').onclick=()=>S.online?proposeRematch():rematchLocal();
+    if(S.online)watchRematch();
+  }
   $('nextBtn').onclick=()=>{
     $('ovScore').classList.remove('on');
-    if(S.over){leaveOnline();openStart();return}
+    if(S.over){if(S.online&&S.rmOffer&&NET.ok)NET.set(`tables/${S.rmOffer.code}/quit/${NET.uid}`,true).catch(()=>{});leaveOnline();openStart();return}
     if(S.auto){const L=['facile','moyen','fort','expert'],i=L.indexOf(S.level),d=S.lastTot[0]-S.lastTot[1];
       if(d>=3&&i<3)S.level=L[i+1];else if(d<=-3&&i>0)S.level=L[i-1];}
     S.dealer=(S.dealer+1)%S.n;newManche();
   };
   render();
   $('ovScore').classList.add('on');
+  if(!S.over&&!S.online)saveGame(true);
+  if(!S.over&&catchUp())setTimeout(()=>{const b=$('nextBtn');if(b)b.click()},60);
 }
 
 
@@ -2040,12 +2761,16 @@ function showLastCap(){
 }
 
 /* ================= Affichage ================= */
+function roleBadge(p){if(!S||S.dealer==null)return'';
+  if(p===S.dealer)return'<span class="rbdg d" title="A distribué">D</span>';
+  if(p===(S.dealer+1)%S.n)return'<span class="rbdg f" title="A commencé">1</span>';return''}
+function avW(p,inner){return`<span class="avw">${inner}${roleBadge(p)}</span>`}
 function seatHTML(p,kind){
   const pp=person(p),cnt=S.hands[p].length-(S.flying&&S.hands[p].includes(S.flying)?1:0);
   const role=S.n===4?(p===2?'partenaire':'adversaire'):'';
   const turn=S.turn===p&&!S.over?'turn':'';
-  if(kind==='side') return `<div class="seat ${turn}" data-p="${p}"><div class="av" style="--avc:${pp.c}">${avatarSVG(pp.n,pp.c)}</div><div class="nm">${pp.n}</div><div class="cnt"><span class="mb"></span>${cnt}</div><div class="plis">plis Eux · ${S.piles[1].length}</div></div>`;
-  return `<div class="seat top ${turn}" data-p="${p}"><div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div class="av" style="--avc:${pp.c}">${avatarSVG(pp.n,pp.c)}</div><div class="nm">${pp.n}${role?`<small>${role}</small>`:''}</div></div><div class="cnt tcnt"><span class="mb"></span>${cnt}</div><div class="fan">${Array.from({length:cnt},(_,i)=>'<div class="card back" style="--rot:'+((i-(cnt-1)/2)*(cnt>5?5:8)).toFixed(1)+'deg"></div>').join('')}</div></div>`;
+  if(kind==='side') return `<div class="seat ${turn}" data-p="${p}">${avW(p,`<div class="av" style="--avc:${pp.c}">${avatarSVG(pp.n,pp.c)}</div>`)}<div class="nm">${pp.n}</div><div class="cnt"><span class="mb"></span>${cnt}</div><div class="plis">plis Eux · ${S.piles[1].length}</div></div>`;
+  return `<div class="seat top ${turn}" data-p="${p}"><div style="display:flex;flex-direction:column;align-items:center;gap:3px">${avW(p,`<div class="av" style="--avc:${pp.c}">${avatarSVG(pp.n,pp.c)}</div>`)}<div class="nm">${pp.n}${role?`<small>${role}</small>`:''}</div></div><div class="cnt tcnt"><span class="mb"></span>${cnt}</div><div class="fan">${Array.from({length:cnt},(_,i)=>'<div class="card back" style="--rot:'+((i-(cnt-1)/2)*(cnt>5?5:8)).toFixed(1)+'deg"></div>').join('')}</div></div>`;
 }
 function pileHTML(t){const n=S.piles[t].length;return n?Array.from({length:Math.min(3,Math.ceil(n/4))},backHTML).join(''):'<div class="none"></div>'}
 function sizes(){
@@ -2093,12 +2818,14 @@ function hintText(){
   if(S.turn!==0) return `${person(S.turn).n} réfléchit…`;
   if(S.busy) return '';
   const tc=(P.timer&&canAct())?`<span class="tchip" id="tChip">⏱ ${P.timer} s</span>`:'';
+  if(!S.sel&&P.help&&!S.table.length&&S.hands[0].length>1){const mx=Math.max(...S.hands[0].map(c=>S.hands[0].filter(x=>x.v===c.v).length));return (mx>1?`Table vide : pose plutôt une carte en ${mx===4?'carré':mx===3?'triple':'double'} (×${mx}) : elle risque moins d'être prise en Chkobba.`:'Table vide : celui qui prend ta carte fait Chkobba. Pose une carte déjà beaucoup sortie, évite les 7 et les carreaux.')+((P.timer&&canAct())?`<span class="tchip" id="tChip">⏱ ${P.timer} s</span>`:'')}
   if(!S.sel){const n=P.help?S.hands[0].filter(c=>captures(c,S.table).length).length:0;return (n?`À toi ! ${n===1?'Une carte peut prendre':n+' cartes peuvent prendre'} <span class="dotx"></span>`:'À toi ! Glisse une carte sur la table, ou touche-la.')+tc}
   const opts=captures(S.sel,S.table);
-  if(!opts.length) return `Aucune prise avec ${lbl(S.sel)}. <button class="btn" id="hBtn">Poser la carte</button>`;
-  if(opts.length===1) return `<button class="btn" id="hBtn">Prendre ${opts[0].map(lbl).join(' + ')}</button>`;
-  if(opts.length<=4) return `<span class="optrow">${opts.map((o,i)=>`<button class="btn sm" data-o="${i}">${o.map(lbl).join(' + ')}</button>`).join('')}</span>`;
-  return 'Plusieurs prises possibles : touche les cartes à prendre.';
+  const cx=' <button class="btn sm ghost hcx" id="hCancel">Annuler</button>';
+  if(!opts.length) return `<span class="optrow"><button class="btn" id="hBtn">Poser ${lbl(S.sel)}</button>${cx}</span>`;
+  if(opts.length===1) return `<span class="optrow"><button class="btn" id="hBtn">Prendre ${opts[0].map(lbl).join(' + ')}</button>${cx}</span>`;
+  if(opts.length<=4) return `<span class="optrow">${opts.map((o,i)=>`<button class="btn sm" data-o="${i}">${o.map(lbl).join(' + ')}</button>`).join('')}${cx}</span>`;
+  return 'Plusieurs prises possibles : touche les cartes à prendre.'+cx;
 }
 function render(){
   if(!S) return;
@@ -2112,7 +2839,7 @@ function render(){
   $('seatTop').innerHTML=seatHTML(four?2:1,'top');
   $('seatLeft').innerHTML=four?seatHTML(1,'side'):'';
   $('seatRight').innerHTML=four?seatHTML(3,'side'):'';
-  $('meSeat').innerHTML=`<div class="me ${S.turn===0&&!S.over?'turn':''}"><div class="av" style="--avc:${person(0).c}">${avatarSVG(person(0).n,person(0).c)}${P.timer&&canAct()?'<span class="tring"></span>':''}</div><div class="nm">${person(0).n}</div></div>`;
+  $('meSeat').innerHTML=`<div class="me ${S.turn===0&&!S.over?'turn':''}">${avW(0,`<div class="av" style="--avc:${person(0).c}">${avatarSVG(person(0).n,person(0).c)}${P.timer&&canAct()?'<span class="tring"></span>':''}</div>`)}<div class="nm">${person(0).n}</div></div>`;
   $('pile0').innerHTML=pileHTML(0);$('pile1').innerHTML=pileHTML(1);
   $('pc0').textContent=(four?'Nous · ':'')+S.piles[0].length;$('pc1').textContent=S.piles[1].length;$('pileBox1').style.display=four?'none':'flex';
   // table
@@ -2128,7 +2855,7 @@ function render(){
   const hcw=sizes();
   const hh=S.hands[0].filter(c=>c!==S.flying),oneRow=$('hand').classList.contains('fan1')||hh.length<=5,mid=(hh.length-1)/2;
   $('hand').innerHTML=hh.map((c,i)=>{const lnd=innerWidth>innerHeight&&innerHeight<600,t=mid?(i-mid)/mid:0,rot=oneRow?t*(hh.length>5?(lnd?5:9):5):0,dy=oneRow?t*t*(hh.length>5?(lnd?5:14):(lnd?3:6)):0;
-    let help='';if(P.help&&S.turn===0&&!S.busy&&!S.over){const o=captures(c,S.table);if(o.length){help=o.some(x=>x.length===S.table.length&&!(S.deck.length===0&&S.hands.reduce((a,h)=>a+h.length,0)===1))?'sweep ':'cap '}}
+    let help='';if(P.help&&S.turn===0&&!S.busy&&!S.over){const o=captures(c,S.table);if(o.length){help=o.some(x=>x.length===S.table.length&&!(S.deck.length===0&&S.hands.reduce((a,h)=>a+h.length,0)===1))?'sweep ':'cap '}else if(!S.table.length){const k=hh.filter(x=>x.v===c.v).length;if(k>1)help='m'+k+' '}}
     return cardHTML(c,help+(S.sel===c?'sel ':'')+(S.dragId===c.id?'ghost ':'')+(S.justDealt?'deal':'')).replace('style="color:','style="--rot:'+rot.toFixed(1)+'deg;--dy:'+dy.toFixed(1)+'px;color:')}).join('');
   if(S.justDealt){const dk=rect($('deckInd').style.display==='none'?$('seatTop'):$('deckInd'));[...$('hand').children].forEach((el,i)=>{const r=rect(el);el.style.setProperty('--fx',(dk.left+dk.width/2-r.left-r.width/2)+'px');el.style.setProperty('--fy',(dk.top-r.top)+'px');el.style.animationDelay=T(i*70)+'ms';el.style.animationDuration=T(420)+'ms';if(i<10)SFX.deal(i)})}
   S.justDealt=false;
@@ -2138,15 +2865,19 @@ function render(){
   armTimer();if(TM.iv)tickTimer();
   $('sortBtn').innerHTML=P.sort==='valeur'?'<small>Trié par</small>1 2 3…':'<small>Trié par</small>♦ ♥ ♠ ♣';
   const hb=$('hBtn');if(hb) hb.onclick=onMatTap;
+  const hc=$('hCancel');if(hc) hc.onclick=()=>{S.sel=null;S.pick=new Set();render()};
   $('hint').querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const o=captures(S.sel,S.table)[+b.dataset.o];if(o)performPlay(0,S.sel,o)});
-  fitTable(hcw);
+  fitTable(hcw);drawFrame();
+  if(!S.online&&!S.busy&&!S.dealing&&S.turn===0&&!S.over&&!S.sel)saveGame(false);
 }
-function bubble(p,t){
-  const av=document.querySelector(`[data-p="${p}"] .av`);if(!av) return;
+function bubble(p,t,ms){
+  const av=p===0?document.querySelector('#meSeat .av'):document.querySelector(`[data-p="${p}"] .av`);if(!av) return;
   const r=rect(av),b=document.createElement('div');b.className='bubble';b.textContent=t;
   b.style.left=Math.min(innerWidth-80,Math.max(80,r.left+r.width/2))+'px';
-  if(S.n===4&&p!==2){b.classList.add('up');b.style.top=(r.top-50)+'px'} else {const sr=rect(av.closest('.seat'));b.style.top=(sr.bottom+8)+'px'}
-  document.body.appendChild(b);setTimeout(()=>b.remove(),1700);
+  if(p===0||(S.n===4&&p!==2)){b.classList.add('up');b.style.top=(r.top-50)+'px'} else {const sr=rect(av.closest('.seat'));b.style.top=(sr.bottom+8)+'px'}
+  if(ms)b.classList.add('rx');
+  document.body.appendChild(b);
+  {const w=b.offsetWidth/2+6,c=r.left+r.width/2;b.style.left=Math.min(innerWidth-w,Math.max(w,c))+'px'}setTimeout(()=>b.remove(),ms||1700);
 }
 
 function burst(n){
@@ -2161,7 +2892,7 @@ function banner(t){bq=bq.then(()=>new Promise(res=>{const b=document.createEleme
 
 /* ================= Écrans ================= */
 
-function lvBadge(r){const l=lvlOf(r);return `<span class="lvb ${l}">${LV_NAMES[l]} · ${r}</span>`}
+function lvBadge(r){const l=lvlOf(r);return `<span class="lvb ${l}">${lgName(r)} · ${r}</span>`}
 function recTxt(id){const R=rel(id),a=[];if(R.wp+R.lp)a.push(`Avec toi ${R.wp}V-${R.lp}D`);if(R.wa+R.la)a.push(`Contre toi ${R.wa}V-${R.la}D`);return a.join(' · ')||'Jamais joué ensemble'}
 function playerRow(x,act){const c=cmpTxt(x.r),tg=tagsOf(x);
   return `<div class="prow" data-id="${x.id}">
@@ -2221,11 +2952,14 @@ function syncStart(){
   $('levelInfo').textContent={facile:"Débutants : ils connaissent les règles mais font souvent des erreurs.",moyen:"Joueurs du dimanche : du bon sens, mais ils ne comptent pas les cartes.",fort:"Bons joueurs : ils comptent les cartes sorties et évitent de t'offrir des Chkobba.",expert:"Experts : ils comptent tout et anticipent ta réponse avant de jouer.",auto:"Ça commence au niveau que tu choisis ci-dessous. Si tu gagnes nettement une manche, ça monte d'un niveau ; si tu perds nettement, ça descend. Pour des parties toujours serrées."}[P.level];
   $('resumeBtn').style.display=(S&&!S.over)?'block':'none';
   [...$('oppRow').children].forEach(b=>b.classList.toggle('on',b.dataset.o===P.opp));
-  if(P.opp!=='amis')P.opp='libre';
-  $('circleBox').style.display=P.opp==='amis'?'block':'none';$('libreBox').style.display=P.opp==='amis'?'none':'block';
-  $('startBtn').textContent=P.opp==='amis'?'Ouvrir une table':'Jouer';
+  if(P.opp!=='amis'&&P.opp!=='mm')P.opp='libre';
+  $('circleBox').style.display=P.opp==='amis'?'block':'none';$('libreBox').style.display=P.opp==='libre'?'block':'none';$('mmBox').style.display=P.opp==='mm'?'block':'none';
+  $('startBtn').textContent=P.opp==='amis'?'Ouvrir une table':P.opp==='mm'?'Chercher des joueurs':'Jouer';
   if(P.opp==='amis'){renderAmisBox();if(!FR.ready&&!FR.booting)netBoot()}
-  renderInvites();
+  if(P.opp==='mm'){if(P.mmPref!=='any')P.mmPref='eq';[...$('mmPrefRow').children].forEach(b=>b.classList.toggle('on',b.dataset.mp===P.mmPref));
+    $('mmMe').innerHTML='De vrais joueurs connectés en même temps que toi. Ton classement : '+lvBadge(P.elo);
+    $('mmInfo').textContent=P.mmPref==='eq'?'Des joueurs de ton palier ou du palier voisin, pour des parties équilibrées. Si personne ne vient, la recherche s\'élargit un peu.':'Le premier joueur disponible, quel que soit son niveau. Plus rapide, parfois déséquilibré.'}
+  renderInvites();renderPend();
 }
 
 function homeIll(){
@@ -2244,7 +2978,7 @@ function homeProfile(){
   const n=P.seats.me||'Toi';
   $('homeAv').innerHTML=avatarSVG(n,'#e0a526');$('homeName').textContent=n==='Toi'?'Joueur':n;
   const st=P.stats||{g:0,w:0};
-  $('homeStats').textContent=`${LV_NAMES[lvlOf(P.elo)]} · ${P.elo}`+(st.g?` · ${st.w} victoire${st.w>1?'s':''} sur ${st.g}`:'');
+  $('homeStats').textContent=`${lgName(P.elo)} · ${P.elo}`+(st.g?` · ${st.w} victoire${st.w>1?'s':''} sur ${st.g}`:'');
 }
 
 function openStart(){homeIll();homeProfile();syncStart();$('ovStart').classList.add('on')}
@@ -2275,10 +3009,11 @@ $('autoStartRow').addEventListener('click',e=>{const b=e.target.closest('[data-a
 $('levelRow').addEventListener('click',e=>{const b=e.target.closest('[data-l]');if(!b)return;P.level=b.dataset.l;savePrefs();syncStart()});
 $('targetRow').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;P.target=+b.dataset.t;savePrefs();syncStart()});
 $('tgNapola').onclick=()=>{P.napola=!P.napola;savePrefs();syncStart()};
-$('startBtn').onclick=()=>{ac();SFX.tap();if(P.opp==='amis'){createTable();return}leaveOnline();$('ovStart').classList.remove('on');newGame()};
-$('resumeBtn').onclick=()=>$('ovStart').classList.remove('on');
+$('startBtn').onclick=async()=>{ac();SFX.tap();if(!await leaveCurrent())return;if(P.opp==='amis'){createTable();return}if(P.opp==='mm'){mmStart();return}leaveOnline();clearSave();$('ovStart').classList.remove('on');newGame()};
+$('resumeBtn').onclick=()=>{$('ovStart').classList.remove('on');if(S&&S.needNew){S.needNew=false;S.dealer=(S.dealer+1)%S.n;newManche()}else if(S)render()};
+$('pendBox').addEventListener('click',e=>{if(e.target.id==='pendGo')resumeOnline();if(e.target.id==='pendQuit')leaveCurrent()});
 $('menuBtn').onclick=openStart;
-$('scoreBtn').onclick=()=>{if(!S)return;$('statsPanel').innerHTML=`<h2>Manche en cours</h2><p style="margin:0 0 6px;opacity:.7">Niveau des adversaires : ${S.level}${S.auto?' (adaptatif)':''}</p>${tableHTML(tally(),false)}<button class="btn" style="width:100%" onclick="document.getElementById('ovStats').classList.remove('on')">Fermer</button>`;$('ovStats').classList.add('on')};
+$('scoreBtn').onclick=()=>{if(!S)return;$('statsPanel').innerHTML=`<h2>Manche en cours</h2><p style="margin:0 0 6px;opacity:.7">Niveau des adversaires : ${S.level}${S.auto?' (adaptatif)':''}</p>${tableHTML(tally(),false)}<h3>Les chiffres, joueur par joueur</h3>${statsBlock()}<button class="btn" style="width:100%;margin-top:10px" onclick="document.getElementById('ovStats').classList.remove('on')">Fermer</button>`;$('ovStats').classList.add('on')};
 $('lookBtn').onclick=()=>{buildLook();$('ovLook').classList.add('on')};
 $('themeGrid').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;P.theme=b.dataset.t;P.mat=null;savePrefs();applyLook();buildLook();render()});
 $('backGrid').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;P.back=b.dataset.b;savePrefs();applyLook();buildLook()});
@@ -2296,6 +3031,7 @@ $('tgHelp').onclick=()=>{P.help=!P.help;savePrefs();buildLook();render()};
 $('tgAvs').onclick=()=>{P.figInit=!P.figInit;savePrefs();buildLook();render()};
 $('lookClose').onclick=()=>{$('ovLook').classList.remove('on');render();homeIll();homeProfile()};
 $('rulesBtn').onclick=()=>$('ovRules').classList.add('on');
+$('statsBtn').onclick=()=>openStats();
 $('rulesClose').onclick=()=>$('ovRules').classList.remove('on');
 window.addEventListener('resize',()=>render());
 ['pileBox0','pileBox1'].forEach(id=>$(id).onclick=showLastCap);
@@ -2356,6 +3092,7 @@ $('fpickPanel').addEventListener('click',e=>{if(onToggle(e))return;if(e.target.i
   const b=e.target.closest('[data-pickf]');if(b)inviteFriend(b.dataset.pickf,LB.pickSeat)});
 
 $('oppRow').addEventListener('click',e=>{const b=e.target.closest('[data-o]');if(!b)return;P.opp=b.dataset.o;savePrefs();syncStart()});
+$('mmPrefRow').addEventListener('click',e=>{const b=e.target.closest('[data-mp]');if(!b)return;P.mmPref=b.dataset.mp;savePrefs();syncStart()});
 $('pickPanel').addEventListener('click',e=>{
   if(onToggle(e))return;
   if(e.target.id==='pickClose'){$('ovPick').classList.remove('on');syncStart();return}
@@ -2380,17 +3117,19 @@ $('seatPick').addEventListener('change',e=>{const t=e.target;
 $('namesHome').onclick=()=>{buildNames();$('ovNames').classList.add('on')};
 $('namesClose').onclick=()=>{$('ovNames').classList.remove('on');homeProfile()};
 
-applyLook();syncStart();homeIll();homeProfile();
+applyLook();stGet();if(!P.pend)loadGame();syncStart();homeIll();homeProfile();handleLink();
 /* Installation & hors ligne (uniquement quand l'appli est sur son propre site) */
 try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===window.self)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}catch(e){}
 
 </script>
 <script id="correctifs-jeu">
-/* Correctif du jeu entre amis (12/11/2026). Ce bloc n'est PAS dans le zip d'origine : le garder si le jeu est remplacé.
-   Présence : le jeu ne marquait le joueur « en ligne » qu'une fois, au démarrage. Dès que la connexion coupait (téléphone
-   en veille, passage sur WhatsApp pour envoyer son code…), Firebase le passait « hors ligne » et il le restait jusqu'au
-   redémarrage du jeu : ses amis le voyaient hors ligne et, en partie, l'hôte faisait jouer l'ordinateur à sa place dès
-   qu'il réfléchissait plus de 12 s. Il est désormais remis en ligne à chaque reconnexion (.info/connected de Firebase). */
+/* Ajouts de 770lab (Ishay), reportés le 16/11/2026 sur la version de Laurent du 14/11 à 22 h 30. Ces blocs
+   (correctifs-affichage, correctifs-jeu, ajouts-amis) ne sont PAS dans le fichier de Laurent : les garder si le jeu est
+   remplacé. Ils ne touchent ni au journal d'événements, ni au schéma Firebase, ni à PROTO.
+   Présence : le jeu ne marque le joueur « en ligne » qu'une fois, dans netBoot. Dès que la connexion coupe (téléphone
+   en veille, passage sur WhatsApp pour envoyer son code…), Firebase le passe « hors ligne » et il le reste jusqu'au
+   redémarrage : ses amis le voient hors ligne et, en partie, les autres le croient absent (netPresence lit status/{uid}).
+   Il est remis en ligne à chaque reconnexion (.info/connected de Firebase). Même forme {on, at} que netBoot. */
 (function(){
   var iv=setInterval(function(){
     if(!(typeof NET!=='undefined'&&NET.ok&&NET.kind==='firebase'&&window.firebase&&firebase.database)) return;
@@ -2403,14 +3142,15 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
   },1000);
 })();
 
-/* Accueil : le milieu (parties, adversaires, invitations) dans un conteneur qui défile seul (CSS « 3) Accueil » du bloc
-   correctifs-affichage). En paysage, ce conteneur s'efface (display:contents) et la grille d'origine reprend la main.
-   Le niveau et les victoires passent sur deux lignes au lieu de trois (« Moyen · 1027 » / « 2 victoires sur 2 »). */
+/* Accueil : le milieu (parties, adversaires, partie en cours, invitations) dans un conteneur qui défile seul (CSS
+   « 3) Accueil » du bloc correctifs-affichage). En paysage, ce conteneur s'efface (display:contents) et la grille
+   d'origine reprend la main. Le classement et les victoires passent sur deux lignes au lieu de trois
+   (« Amateur · 1027 » / « 2 victoires sur 2 »). */
 (function(){
-  var w=document.querySelector('#ovStart .hwrap'),f=w&&w.querySelector('.hfelt'),sec=w&&w.querySelector('.hsec'),inv=document.getElementById('invBox');
+  var w=document.querySelector('#ovStart .hwrap'),f=w&&w.querySelector('.hfelt'),sec=w&&w.querySelector('.hsec');
   if(w&&f&&sec&&!w.querySelector('.hmilieu')){
     var m=document.createElement('div');m.className='hmilieu';f.parentNode.insertBefore(m,f);m.appendChild(f);m.appendChild(sec);
-    if(inv&&inv.parentNode===w)m.appendChild(inv);
+    ['pendBox','invBox'].forEach(function(id){var b=document.getElementById(id);if(b&&b.parentNode===w)m.appendChild(b)});
     m.addEventListener('scroll',function(){m.classList.toggle('defile',m.scrollTop>4)},{passive:true});
     // Fondu seulement quand le milieu déborde (sinon, pas de calque de masque : le texte reste net partout).
     var mesurer=function(){m.classList.toggle('deborde',m.scrollHeight>m.clientHeight+1)};
@@ -2425,42 +3165,43 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
 })();
 </script>
 <script id="ajouts-amis">
-/* Ajouts « jeu entre amis » (12/11/2026). Ce bloc n'est PAS dans le zip d'origine : le garder si le jeu est remplacé.
-   Il ne modifie pas le code du jeu : il enveloppe quelques-unes de ses fonctions (renderFriends, renderLobby,
-   renderInvites, addFriendByCode, endManche, leaveOnline) et ajoute ses boutons après coup.
-   1) « Partager mon code » (Mes amis) et « Envoyer le lien de la table » (table) : feuille de partage du téléphone
-      (WhatsApp, SMS…). Dans l'appli, navigator.share vient de natif.js (plugin Share) ; sans partage, le message est copié.
-   2) Liens : 770lab.com/chkobba/?ami=CODE ajoute l'ami, ?table=1234 fait rejoindre la table.
-   3) Revanche en fin de partie en ligne : le premier qui la demande ouvre une table avec les mêmes joueurs (places
-      tournées : les équipes ne changent pas) et l'annonce dans le journal de l'ancienne table (putIfAbsent : un seul
-      gagnant si deux joueurs appuient en même temps) ; les autres voient « Rejoindre la revanche ».
-   4) Pseudo à choisir dans la table quand on s'appelle encore « Joueur » ; son + vibration à l'arrivée d'une invitation ;
-      le message « … est maintenant dans tes amis » ne disparaît plus aussitôt. */
+/* Ajouts « jeu entre amis » de 770lab, adaptés le 16/11/2026 à la version de Laurent. Ce bloc n'est PAS dans son fichier.
+   Il ne modifie pas le code du jeu : il enveloppe waShare, renderFriends, renderLobby, renderInvites et addFriendByCode.
+   Abandonnés au profit de la façon de Laurent : notre revanche (elle écrivait {t:'revanche'} dans ev/), nos boutons
+   « Partager mon code » et « Envoyer le lien de la table » (remplacés par ses boutons WhatsApp), nos liens ?ami= et
+   ?table= (les siens sont ?a= et ?t= ; les anciens restent acceptés, des messages déjà envoyés les contiennent).
+   1) Dans l'appli iPhone / Android : les boutons WhatsApp ouvrent la feuille de partage du téléphone (navigator.share
+      vient de natif.js, plugin Share), et le lien envoyé est celui du site (l'appli n'a pas d'adresse : appURL() y vaut
+      « https://localhost/ » sur Android et rien sur iPhone).
+   2) Anciens liens : 770lab.com/chkobba/?ami=CODE ajoute l'ami, ?table=1234 fait rejoindre la table.
+   3) Pseudo à choisir dans la table quand on s'appelle encore « Joueur » ; son + vibration à l'arrivée d'une invitation ;
+      le message « … est maintenant dans tes amis » donne le nom et ne disparaît plus aussitôt. */
 (function(){
   var SITE='https://770lab.com/chkobba/';
   function el(h){var d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild}
   function sonnerie(){try{tone(880,.12,'sine',.12);tone(1320,.2,'sine',.12,.14)}catch(e){}try{vib([30,40,30])}catch(e){}}
-  function partager(texte,bouton){
-    if(navigator.share) return navigator.share({text:texte}).catch(function(){});
-    var dire=function(t){if(!bouton)return;var a=bouton.textContent;bouton.textContent=t;setTimeout(function(){bouton.textContent=a},2500)};
-    try{navigator.clipboard.writeText(texte).then(function(){dire('Message copié : colle-le à ton ami')},function(){dire('Copie impossible')})}
-    catch(e){dire('Copie impossible')}
-  }
-  function texteCode(c){return 'On se fait une Chkobba ? Ajoute-moi en ami avec mon code '+c+' :\n'+SITE+'?ami='+c}
-  function texteTable(n){return 'Je t\'attends à la table '+n+' pour une Chkobba ! Rejoins-moi : '+SITE+'?table='+n+
-    '\n(Dans l\'appli : Mes amis, puis code de table '+n+'.)'}
 
-  /* ---------- Mes amis : bouton Partager, aide au pseudo, message d'ajout ---------- */
+  /* ---------- Partage dans l'appli ---------- */
+  var natif=document.documentElement.classList.contains('natif');
+  var _waShare=waShare;
+  waShare=function(txt){
+    if(!natif) return _waShare.apply(this,arguments);
+    var u=appURL();
+    if(u) txt=txt.split(u).join(SITE);
+    else txt=txt.replace(/(Table (\d{4}))$/,'$1 : '+SITE+'?t=$2').replace(/(code ami : ([A-Za-z0-9]{6}))$/,'$1 — '+SITE+'?a=$2');
+    if(navigator.share) return navigator.share({text:txt}).catch(function(){});
+    return _waShare.call(this,txt);
+  };
+
+  /* ---------- Mes amis : aide au pseudo, message d'ajout ---------- */
   var msgAmi=null;
   var _renderFriends=renderFriends;
   renderFriends=function(){
     _renderFriends.apply(this,arguments);
     try{
-      if(!FR.ready||!P.myCode) return;
-      var carte=document.querySelector('#friendsPanel .mecard');
-      if(carte&&!$('shareCode')) carte.parentNode.insertBefore(el('<button class="btn" id="shareCode" style="width:100%;margin:10px 0 4px">📲 Partager mon code</button>'),carte.nextSibling);
-      if(!P.seats.me&&!$('pseudoAide')&&$('myNameIn')){$('myNameIn').value='';$('myNameIn').placeholder='Ton pseudo'}
-      if(!P.seats.me&&!$('pseudoAide')&&$('myNameIn')) $('myNameIn').parentNode.appendChild(el('<p class="amsg small" id="pseudoAide" style="margin:6px 0 0">Choisis ton pseudo : c\'est le nom que tes amis verront.</p>'));
+      if(!FR.ready) return;
+      if(!P.seats.me&&!$('pseudoAide')&&$('myNameIn')){$('myNameIn').value='';$('myNameIn').placeholder='Ton pseudo';
+        $('myNameIn').parentNode.appendChild(el('<p class="amsg small" id="pseudoAide" style="margin:6px 0 0">Choisis ton pseudo : c\'est le nom que tes amis verront.</p>'))}
       if(msgAmi&&Date.now()-msgAmi.at<6000&&$('addMsg')) $('addMsg').textContent=msgAmi.t;
     }catch(e){}
   };
@@ -2474,17 +3215,14 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
       if($('addMsg'))$('addMsg').textContent=msgAmi.t;if($('addCode'))$('addCode').value=''}
   };
 
-  /* ---------- Table : lien à envoyer, pseudo ---------- */
+  /* ---------- Table : pseudo ---------- */
   function maPlace(t){var s=t&&t.seats||{};for(var k in s)if(s[k]&&s[k].kind==='human'&&s[k].uid===NET.uid)return k;return null}
   var _renderLobby=renderLobby;
   renderLobby=function(){
     var saisie=$('pseudoIn')?$('pseudoIn').value:null,focus=document.activeElement&&document.activeElement.id==='pseudoIn';
     _renderLobby.apply(this,arguments);
     try{
-      var t=LB.t,quitter=$('lobbyLeave');if(!t||!LB.code||!quitter)return;
-      var n=MODES[t.mode].n,s=t.seats||{},place=false;
-      for(var i=0;i<n;i++){var x=s[i];if(!x||x.kind==='open'||x.kind==='invited')place=true}
-      if(place) quitter.parentNode.insertBefore(el('<button class="btn" id="shareTable">📲 Envoyer le lien de la table</button>'),quitter);
+      var t=LB.t;if(!t||!LB.code)return;
       if(maPlace(t)!==null&&!P.seats.me){
         var h=document.querySelector('#lobbyPanel h2');
         var bloc=el('<div id="pseudoRow"><p class="amsg small" style="margin:0 0 6px">Choisis ton pseudo : les autres joueurs le verront.</p>'+
@@ -2500,6 +3238,8 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
     var k=maPlace(LB.t);if(k!==null&&LB.code)NET.update('tables/'+LB.code+'/seats/'+k,{name:nm}).catch(function(){});
     renderLobby();
   }
+  document.addEventListener('click',function(e){if(e.target&&e.target.id==='pseudoOk')validerPseudo()});
+  document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='pseudoIn')validerPseudo()});
 
   /* ---------- Invitation reçue : son + vibration (seulement les nouvelles, de moins d'une minute) ---------- */
   var vues={};
@@ -2512,84 +3252,15 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
     }catch(e){}
   };
 
-  /* ---------- Revanche ---------- */
-  var rev={unsub:null,info:null,enCours:false};
-  function finRevanche(){if(rev.unsub){try{rev.unsub()}catch(e){}}rev.unsub=null;rev.info=null;rev.enCours=false}
-  var _leaveOnline=leaveOnline;
-  leaveOnline=function(){finRevanche();return _leaveOnline.apply(this,arguments)};
-  var _endManche=endManche;
-  endManche=function(){
-    var r=_endManche.apply(this,arguments);
-    try{if(S&&S.over&&S.online)preparerRevanche()}catch(e){}
-    return r;
-  };
-  function preparerRevanche(){
-    var suivant=$('nextBtn');if(!suivant||$('revBtn'))return;
-    suivant.textContent='Retour à l\'accueil';suivant.classList.add('ghost');suivant.style.marginTop='8px';
-    suivant.parentNode.insertBefore(el('<p class="amsg" id="revMsg" style="text-align:center;margin:12px 0 6px;font-weight:800"></p>'),suivant);
-    suivant.parentNode.insertBefore(el('<button class="btn" id="revBtn" style="width:100%">🔁 Revanche</button>'),suivant);
-    finRevanche();
-    rev.unsub=NET.onChild('tables/'+S.online.code+'/ev',function(k,v){
-      if(!v||v.t!=='revanche'||rev.info)return;
-      rev.info=v;
-      if(v.uid===NET.uid||rev.enCours)return;
-      if($('revBtn'))$('revBtn').textContent='Rejoindre la revanche';
-      if($('revMsg'))$('revMsg').textContent=v.by+' propose une revanche !';
-      sonnerie();
-      try{$('revBtn').scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}
-    });
-  }
-  function rejoindre(code){$('ovScore').classList.remove('on');leaveOnline();joinTable(code)}
-  async function lancerRevanche(){
-    if(rev.info&&rev.info.uid!==NET.uid){rejoindre(rev.info.code);return}
-    if(rev.enCours||!S||!S.online||!S.over||!$('ovScore').classList.contains('on'))return;
-    rev.enCours=true;
-    var b=$('revBtn');if(b){b.disabled=true;b.textContent='Revanche…'}
-    var O=S.online,n=S.n,ancien=O.code,seats={},code=null;
-    for(var i=0;i<n;i++){var x=O.seats[(O.r+i)%n];
-      seats[i]=i===0?{kind:'human',uid:NET.uid,name:myName(),elo:P.elo,c:'#e0a526'}
-        :x.kind==='cpu'?{kind:'cpu',name:x.name,lvl:x.lvl,c:x.c}
-        :{kind:'invited',uid:x.uid,name:x.name,elo:x.elo||1000}}
-    try{
-      for(var j=0;j<10&&!code;j++){var c=String(1000+Math.floor(Math.random()*9000));
-        if(await NET.putIfAbsent('tables/'+c,{host:NET.uid,mode:S.mode,target:S.target,napola:!!S.napola,status:'lobby',at:Date.now(),seats:seats}))code=c}
-    }catch(e){}
-    if(!code){rev.enCours=false;if(b){b.disabled=false;b.textContent='🔁 Revanche'}if($('revMsg'))$('revMsg').textContent='Pas de connexion, réessaie.';return}
-    // Annonce dans le journal de l'ancienne table, à la suite du dernier coup : le premier arrivé l'emporte.
-    try{
-      for(var cle=O.seq+1,t=0;t<6;t++,cle++){
-        if(await NET.putIfAbsent('tables/'+ancien+'/ev/'+evKey(cle),{t:'revanche',code:code,by:myName(),uid:NET.uid}))break;
-        var deja=await NET.get('tables/'+ancien+'/ev/'+evKey(cle));
-        if(deja&&deja.t==='revanche'&&deja.uid!==NET.uid){NET.remove('tables/'+code).catch(function(){});rejoindre(deja.code);return}
-      }
-    }catch(e){}
-    for(var k=1;k<n;k++)if(seats[k].kind==='invited')
-      NET.set('users/'+seats[k].uid+'/invites/'+code,{from:myName(),fromUid:NET.uid,mode:S.mode,seat:k,at:Date.now()}).catch(function(){});
-    $('ovScore').classList.remove('on');leaveOnline();openLobby(code);
-  }
-
-  /* ---------- Clics sur les boutons ajoutés ---------- */
-  document.addEventListener('click',function(e){
-    var b=e.target.closest&&e.target.closest('#shareCode,#shareTable,#revBtn,#pseudoOk');if(!b)return;
-    if(b.id==='shareCode'&&P.myCode)partager(texteCode(P.myCode),b);
-    else if(b.id==='shareTable'&&LB.code)partager(texteTable(LB.code),b);
-    else if(b.id==='revBtn')lancerRevanche();
-    else if(b.id==='pseudoOk')validerPseudo();
-  });
-  document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='pseudoIn')validerPseudo()});
-
-  /* ---------- Liens ?ami=CODE et ?table=1234 (site seulement : l'appli n'a pas d'adresse) ---------- */
-  var q=new URLSearchParams(location.search),ami=(q.get('ami')||'').toUpperCase().replace(/[^A-Z0-9]/g,''),table=(q.get('table')||'').replace(/\D/g,'');
-  if(ami.length===6||table.length===4){
-    try{q.delete('ami');q.delete('table');history.replaceState(null,'',location.pathname+(String(q)?'?'+q:'')+location.hash)}catch(e){}
-    var essais=0,iv=setInterval(function(){
-      if(++essais>60){clearInterval(iv);return}
-      if(!FR.ready){if(!FR.booting&&essais%10===1)netBoot();return}
-      clearInterval(iv);
-      if(table.length===4)joinTable(table);
-      else{$('ovFriends').classList.add('on');renderFriends();if($('addCode'))$('addCode').value=ami;addFriendByCode(ami)}
-    },500);
-  }
+  /* ---------- Anciens liens ?ami=CODE et ?table=1234 : même traitement que ?a= et ?t= (handleLink) ---------- */
+  try{
+    var q=new URLSearchParams(location.search),ami=(q.get('ami')||'').toUpperCase().replace(/[^A-Z0-9]/g,''),table=(q.get('table')||'').replace(/\D/g,'');
+    if(ami.length===6||table.length===4){
+      history.replaceState(null,'',location.pathname);
+      if(table.length===4){P.opp='amis';savePrefs();syncStart();joinTable(table)}
+      else netWait().then(function(ok){if(ok)addFriendByCode(ami);else homeToast('Pas de connexion : ami non ajouté')});
+    }
+  }catch(e){}
 })();
 </script>
 </body>
