@@ -20,7 +20,7 @@ Nos ajouts sont dans trois blocs posés après coup, **absents de son fichier** 
 `<style id="correctifs-affichage">` (avant `</head>`), `<script id="correctifs-jeu">` et `<script id="ajouts-amis">`
 (avant `</body>`). Ils enveloppent ses fonctions sans les modifier.
 
-Sur la branche `claude/suivi-direct` (pas encore en ligne) : un 4e ajout, `<style id="suivi-direct-style">` + `<script id="suivi-direct">`,
+Un 4e ajout (16/11) : `<style id="suivi-direct-style">` + `<script id="suivi-direct">`,
 le volet « En direct » à droite sur écran large (iPhone Duo ouvert, tablette, ordinateur).
 
 Reprendre une nouvelle version de Laurent :
