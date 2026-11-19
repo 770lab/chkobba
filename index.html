@@ -3651,6 +3651,21 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
 
 </script>
 <script id="correctifs-jeu">
+/* « Manche suivante » ne peut lancer la manche qu'une fois (770lab, 19/11/2026). En partie en ligne reprise, le jeu valide
+   seul la fin de manche (clic programmé 60 ms après l'affichage) ; si le joueur touche le bouton dans ce court délai, la
+   manche suivante était lancée deux fois : donneur avancé deux fois, deux distributions qui se disputent le journal, et le
+   téléphone se figeait (les autres attendaient 90 s à chacun de ses tours). Le gestionnaire du jeu n'est pas modifié :
+   il est seulement enveloppé pour ne s'exécuter qu'une fois par fin de manche. */
+(function(){
+  var _endManche=endManche;
+  endManche=function(){
+    var r=_endManche.apply(this,arguments);
+    try{var b=document.getElementById('nextBtn'),f=b&&b.onclick;
+      if(f&&!f.__uneFois){var fait=false;var g=function(){if(fait)return;fait=true;return f.apply(this,arguments)};g.__uneFois=true;b.onclick=g}}catch(e){}
+    return r;
+  };
+})();
+
 /* Ajouts de 770lab (Ishay), reportés le 16/11/2026 sur la version de Laurent du 14/11 à 22 h 30. Ces blocs
    (correctifs-affichage, correctifs-jeu, ajouts-amis) ne sont PAS dans le fichier de Laurent : les garder si le jeu est
    remplacé. Ils ne touchent ni au journal d'événements, ni au schéma Firebase, ni à PROTO.
