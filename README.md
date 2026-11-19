@@ -12,7 +12,7 @@ Site statique servi par GitHub Pages (mode legacy, `.nojekyll`), ex-chkobba-5555
 ## Version commune avec Laurent (depuis le 16/11/2026)
 
 Le jeu est développé à deux : Laurent (sa copie d'essai : chkobba-55555.netlify.app) et 770lab. **La base est le fichier de
-Laurent** (dernière reprise : sa livraison finale du 18/11/2026, `PROTO = 2`). Tout ce qui touche au jeu en ligne (journal
+Laurent** (dernière reprise : sa version de lancement du 19/11/2026, `PROTO = 3`). Tout ce qui touche au jeu en ligne (journal
 `ev/`, tables, sièges, schéma et règles Firebase, note, classements, ordre de `REACTS`, `PROTO`) vient de lui et ne se
 change pas seul.
 
@@ -25,7 +25,7 @@ le volet « En direct » à droite sur écran large (iPhone Duo ouvert, tablette
 
 Volet « En direct » : depuis la livraison finale (18/11), réservé au mode Entraînement contre l'IA, quand le joueur a
 demandé l'aide au comptage (`aideComptage()`), règle de Laurent acceptée par Ishay le 19/11. La page
-`confidentialite.html` de Laurent n'est pas publiée tant qu'il manque l'adresse de contact.
+`confidentialite.html` est publiée avec contact@770lab.com (choix d'Ishay, 19/11) et l'hébergeur GitHub Pages.
 
 Reprendre une nouvelle version de Laurent :
 1. garder nos trois blocs (les copier depuis l'`index.html` actuel), remplacer le reste par son fichier, reposer les blocs ;
