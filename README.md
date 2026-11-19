@@ -12,7 +12,7 @@ Site statique servi par GitHub Pages (mode legacy, `.nojekyll`), ex-chkobba-5555
 ## Version commune avec Laurent (depuis le 16/11/2026)
 
 Le jeu est développé à deux : Laurent (sa copie d'essai : chkobba-55555.netlify.app) et 770lab. **La base est le fichier de
-Laurent** (dernière reprise : sa livraison 2 du 17/11/2026, `PROTO = 2` ; avant, sa version du 14/11 à 22 h 30). Tout ce qui touche au jeu en ligne (journal
+Laurent** (dernière reprise : sa livraison finale du 18/11/2026, `PROTO = 2`). Tout ce qui touche au jeu en ligne (journal
 `ev/`, tables, sièges, schéma et règles Firebase, note, classements, ordre de `REACTS`, `PROTO`) vient de lui et ne se
 change pas seul.
 
@@ -23,9 +23,9 @@ Nos ajouts sont dans trois blocs posés après coup, **absents de son fichier** 
 Un 4e ajout (16/11) : `<style id="suivi-direct-style">` + `<script id="suivi-direct">`,
 le volet « En direct » à droite sur écran large (iPhone Duo ouvert, tablette, ordinateur).
 
-Désaccord connu, tranché par Ishay le 17/11/2026 : la livraison 2 de Laurent pose « aucun décompte pendant la manche » (plus
-de nombre à côté des tas). Le volet « En direct » (bloc `suivi-direct`, grand écran seulement) montre pourtant cartes,
-carreaux et sept pendant la manche : Ishay a choisi de le garder.
+Volet « En direct » : depuis la livraison finale (18/11), réservé au mode Entraînement contre l'IA, quand le joueur a
+demandé l'aide au comptage (`aideComptage()`), règle de Laurent acceptée par Ishay le 19/11. La page
+`confidentialite.html` de Laurent n'est pas publiée tant qu'il manque l'adresse de contact.
 
 Reprendre une nouvelle version de Laurent :
 1. garder nos trois blocs (les copier depuis l'`index.html` actuel), remplacer le reste par son fichier, reposer les blocs ;
