@@ -292,6 +292,7 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 .shake{animation:shake .35s}
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 #tutoNext{scroll-margin-bottom:16px}
+.pfmail{display:flex;flex-direction:column;gap:8px;margin:2px 0 8px}.pfmail .inp{width:100%;box-sizing:border-box}.pfmail .amsg{margin:0}
 .turecap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}.turecap div{background:rgba(0,0,0,.06);border-radius:12px;padding:8px 10px;display:flex;flex-direction:column;gap:3px;font-size:.9rem}.turecap b{font-size:1rem;margin-bottom:2px}
 .flyer{position:fixed;z-index:50;transform-origin:0 0;pointer-events:none}
 .flyer.dragging .card{box-shadow:0 14px 26px rgba(0,0,0,.45)}
@@ -778,41 +779,6 @@ body:not(.aide) #direct{display:none!important}
 .fc{min-width:0}
 @media (max-width:380px){.faces.two .zone{--cw:26px}}
 @media (orientation:landscape) and (max-height:600px){.bottom .me .nm{max-width:64px;overflow-wrap:anywhere}}
-</style>
-<style id="suivi-direct-style">
-/* Suivi en direct (770lab, 16/11/2026) : sur un écran large (iPhone Duo ouvert, tablette, ordinateur), un volet à droite
-   montre l'état de la manche pendant qu'on joue. Bloc absent du fichier de Laurent, comme les trois autres. */
-#direct{display:none}
-html.direct #app{width:calc(100% - var(--dw));margin:0}
-html.direct .banner{left:calc((100vw - var(--dw))/2)}
-html.direct #direct{display:flex;flex-direction:column;gap:10px;position:fixed;top:0;right:0;bottom:0;width:var(--dw);z-index:5;
-  box-sizing:border-box;overflow-y:auto;scrollbar-width:none;color:#fff;font-weight:700;
-  padding:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 10px) calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 12px) calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 10px) 12px;
-  background:rgba(0,0,0,.22);border-left:1px solid rgba(255,255,255,.14)}
-#direct::-webkit-scrollbar{display:none}
-#direct h4{margin:0;font-family:var(--fd);font-size:17px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-#direct h4 small{font-family:inherit;font-size:12px;font-weight:700;opacity:.7}
-#direct .dq{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:9px 11px}
-#direct .dq.ok{background:rgba(255,207,90,.2);border-color:rgba(255,207,90,.6)}
-#direct .dq.ko{opacity:.72}
-#direct .dt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14.5px;font-weight:900}
-#direct .dt i{font-style:normal;font-size:12px;font-weight:800;opacity:.85;text-align:right}
-#direct .dq.ok .dt i{color:#ffcf5a;opacity:1}
-#direct .db{position:relative;height:9px;border-radius:9px;background:rgba(255,255,255,.14);margin:7px 0 5px;overflow:hidden}
-#direct .db b{position:absolute;top:0;bottom:0;left:0;background:#ffcf5a;border-radius:9px 0 0 9px}
-#direct .db u{position:absolute;top:0;bottom:0;right:0;background:rgba(255,255,255,.55);border-radius:0 9px 9px 0}
-#direct .db s{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.9}
-#direct .dl{display:flex;justify-content:space-between;font-size:12px;font-weight:700;opacity:.85}
-#direct .dl b{font-weight:900;opacity:1}
-#direct .dp{display:flex;gap:8px}
-#direct .dp>div{flex:1;text-align:center;background:rgba(255,255,255,.1);border-radius:14px;padding:8px 4px}
-#direct .dp b{display:block;font-family:var(--fd);font-size:26px;line-height:1}
-#direct .dp span{font-size:11.5px;opacity:.8}
-#direct .dnote{font-size:11.5px;font-weight:600;opacity:.65;line-height:1.3;margin:0}
-#direct table{width:100%;border-collapse:collapse;font-size:12px}
-#direct th,#direct td{padding:3px 2px;text-align:center;font-weight:700}
-#direct td:first-child,#direct th:first-child{text-align:left;opacity:.8}
-#direct th{font-size:11px;opacity:.75;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 <body data-theme="cafe">
@@ -1333,11 +1299,23 @@ function avatarSVG(name,bg,av){
 const OAUTH={google:'788892842642-f470kjbk1udf3b725eimtb36masackls.apps.googleusercontent.com',facebook:'1458044300724505',
   hosts:{'770lab.com':'/chkobba/','www.770lab.com':'/chkobba/','chkobba-55555.netlify.app':'/'},key:'chkobba-oauth'};
 /* adresse de retour de ce site, ou null si le site n'est pas déclaré (alors on garde la fenêtre) */
-function oauthReturn(){try{const p=OAUTH.hosts[location.hostname];return location.protocol==='https:'&&p&&location.pathname.replace(/index\.html$/,'')===p?location.origin+p:null}catch(e){return null}}
+const APP_V='20/11-D';
+function oauthReturn(){try{const p=OAUTH.hosts[String(location.hostname).toLowerCase().replace(/\.$/,'')];return location.protocol==='https:'&&p?location.origin+p:null}catch(e){return null}}
+/* petite mémoire de l'aller-retour : trois endroits possibles, pour ne jamais échouer si l'un est plein ou refusé */
+function oauthPut(v){const t=JSON.stringify(v);let ok=false;
+  try{localStorage.setItem(OAUTH.key,t);ok=true}catch(e){}
+  try{sessionStorage.setItem(OAUTH.key,t);ok=true}catch(e){}
+  try{document.cookie=OAUTH.key+'='+encodeURIComponent(t)+';path=/;max-age=900;secure;samesite=lax';ok=true}catch(e){}
+  return ok}
+function oauthTake(){let m=null;
+  try{m=JSON.parse(localStorage.getItem(OAUTH.key)||'null');localStorage.removeItem(OAUTH.key)}catch(e){}
+  try{const x=JSON.parse(sessionStorage.getItem(OAUTH.key)||'null');sessionStorage.removeItem(OAUTH.key);m=m||x}catch(e){}
+  try{const c=document.cookie.split('; ').find(x=>x.indexOf(OAUTH.key+'=')===0);if(c){document.cookie=OAUTH.key+'=;path=/;max-age=0';m=m||JSON.parse(decodeURIComponent(c.slice(OAUTH.key.length+1)))}}catch(e){}
+  return m}
 const oauthMobile=()=>{try{return navigator.standalone===true||matchMedia('(display-mode: standalone)').matches||/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)}catch(e){return false}};
-function oauthGo(kind){const ru=oauthReturn();if(!ru)return false;
+function oauthGo(kind){OAUTH.why='';const ru=oauthReturn();if(!ru){OAUTH.why='A';return false}
   const rnd=()=>Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('');
-  const st=rnd(),nonce=rnd();try{localStorage.setItem(OAUTH.key,JSON.stringify({k:kind,st,t:Date.now()}))}catch(e){return false}
+  const st=(kind==='facebook'?'f':'g')+rnd(),nonce=rnd();if(!oauthPut({k:kind,st,t:Date.now()})){OAUTH.why='M';return false}
   const q=o=>Object.entries(o).map(([a,b])=>a+'='+encodeURIComponent(b)).join('&');
   location.assign(kind==='facebook'
     ?'https://www.facebook.com/v19.0/dialog/oauth?'+q({client_id:OAUTH.facebook,redirect_uri:ru,response_type:'token',scope:'public_profile,email',state:st})
@@ -1347,9 +1325,11 @@ function oauthGo(kind){const ru=oauthReturn();if(!ru)return false;
 const OAUTH_BACK=(()=>{try{const h=location.hash||'',qs=location.search||'';
   if(!/(id_token|access_token|error)=/.test(h)&&!/[?&]error=/.test(qs))return null;
   const g=new URLSearchParams(h.replace(/^#/,'')),e=new URLSearchParams(qs.replace(/^\?/,''));
-  let m=null;try{m=JSON.parse(localStorage.getItem(OAUTH.key)||'null');localStorage.removeItem(OAUTH.key)}catch(x){}
+  const m0=oauthTake();let m=m0&&Date.now()-m0.t<=15*60*1000?m0:null;
   try{history.replaceState(null,'',location.pathname)}catch(x){}
-  if(!m||Date.now()-m.t>15*60*1000)return null;
+  /* mémoire introuvable (l'appli installée et la page de retour ne partagent pas toujours leur mémoire sur iPhone) : on demandera confirmation au joueur */
+  if(!m){const s0=g.get('state')||e.get('state')||'',k=s0[0]==='f'?'facebook':s0[0]==='g'?'google':null,tk=k&&(k==='facebook'?g.get('access_token'):g.get('id_token'));
+    return tk?{k,tok:tk,ask:true}:null}
   if((g.get('state')||e.get('state'))!==m.st)return{k:m.k,err:'state'};
   if(g.get('error')||e.get('error'))return{k:m.k,err:'cancel'};
   const tok=m.k==='facebook'?g.get('access_token'):g.get('id_token');
@@ -1359,6 +1339,8 @@ if(OAUTH_BACK)addEventListener('load',()=>setTimeout(async()=>{let ok=false;try{
   openProf();
   if(OAUTH_BACK.err){PF.msg=OAUTH_BACK.err==='cancel'?'Connexion annulée.':'La connexion n\'a pas abouti. Réessaie.';renderProf();return}
   if(!ok||!NET.linkCred){PF.msg='Pas de connexion au serveur : réessaie.';renderProf();return}
+  if(OAUTH_BACK.ask){const yes=await askYesNo('Terminer la connexion ?','Tu viens de te connecter avec '+(OAUTH_BACK.k==='facebook'?'Facebook':'Google')+'. Si ce n\'est pas toi qui l\'as demandé, annule.','Terminer','Annuler');
+    if(!yes){PF.msg='Connexion annulée.';renderProf();return}}
   profLink(OAUTH_BACK.k,OAUTH_BACK.tok)},400));
 const FB_CONFIG={apiKey:"AIzaSyA4RkZ3Q7sS8pQmOjNajNKR73Wn02_vEmk",authDomain:"chkobba-55555.firebaseapp.com",databaseURL:"https://chkobba-55555-default-rtdb.europe-west1.firebasedatabase.app",projectId:"chkobba-55555",storageBucket:"chkobba-55555.firebasestorage.app",messagingSenderId:"788892842642",appId:"1:788892842642:web:3d3a8e8f24944c62dc844b"};
 const NET={ok:false,uid:null,kind:null,_p:null};
@@ -1392,6 +1374,15 @@ NET.init=function(){
       linkCred:async(k,tok)=>{const cred=k==='facebook'?firebase.auth.FacebookAuthProvider.credential(tok):firebase.auth.GoogleAuthProvider.credential(tok);
         try{const r=await auth.currentUser.linkWithCredential(cred);NET.prov=provOf(r.user);NET.provs=provsOf(r.user);return{ok:true}}
         catch(e){if(e.code==='auth/credential-already-in-use'||e.code==='auth/email-already-in-use'||e.code==='auth/provider-already-linked')return{exists:true,cred:e.credential||cred};return{err:e.code||String(e)}}},
+      /* connexion par e-mail et mot de passe. Première fois : le compte est créé et rattaché au profil invité.
+         Adresse déjà inscrite : on vérifie d'abord le mot de passe dans une session à part, sans toucher au profil en cours. */
+      linkEmail:async(em,pw)=>{const cred=firebase.auth.EmailAuthProvider.credential(em,pw);
+        try{const r=await auth.currentUser.linkWithCredential(cred);NET.prov=provOf(r.user);NET.provs=provsOf(r.user);return{ok:true}}
+        catch(e){if(!['auth/email-already-in-use','auth/credential-already-in-use','auth/provider-already-linked'].includes(e.code))return{err:e.code||String(e)};
+          try{const a2=(firebase.apps.find(a=>a.name==='verif')||firebase.initializeApp(FB_CONFIG,'verif')).auth();await a2.setPersistence(firebase.auth.Auth.Persistence.NONE).catch(()=>{});
+            await a2.signInWithEmailAndPassword(em,pw);await a2.signOut().catch(()=>{});return{exists:true,cred}}
+          catch(x){return{err:x.code||String(x)}}}},
+      resetPw:em=>auth.sendPasswordResetEmail(em),
       useCred:async c=>{const r=await auth.signInWithCredential(c);NET.uid=r.user.uid;NET.prov=provOf(r.user);NET.provs=provsOf(r.user)},
       signOut:async()=>{await auth.signOut();const r=await auth.signInAnonymously();NET.uid=r.user.uid;NET.prov=null;NET.provs=[]}});
     Object.assign(NET,{kind:'firebase',uid:user.uid,ok:true,
@@ -2410,22 +2401,32 @@ function photoToAv(file){return new Promise((res,rej)=>{const img=new Image(),ur
     let d=c.toDataURL('image/jpeg',.72);if(d.length>15000)d=c.toDataURL('image/jpeg',.5);AV_RE.test(d)?res(d):rej(new Error('format'))}catch(e){rej(e)}};
   img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('image'))};img.src=url})}
 function setAv(av){P.av=avOk(av)?av:null;savePrefs();netSaveProfile();homeProfile();if(S&&S.people){S.people[0].av=P.av;render()}renderProf()}
-const PROV_LAB={'google.com':'Google','facebook.com':'Facebook'},PROV_KEY={'google.com':'google','facebook.com':'facebook'};
+const PROV_LAB={'google.com':'Google','facebook.com':'Facebook','password':'ton e-mail'},PROV_KEY={'google.com':'google','facebook.com':'facebook','password':'email'};
 /* comptes reliés à ce profil : un profil peut avoir Google et Facebook à la fois (double accès) */
 const myProvs=()=>{const l=(NET.provs&&NET.provs.length?NET.provs:(NET.prov?[NET.prov]:[])).filter(p=>PROV_LAB[p]);return l.length?l:(NET.prov?[NET.prov]:[])};
 const provText=()=>myProvs().map(p=>PROV_LAB[p]||'un compte').join(' et ');
 const AUTH_ERR={'auth/popup-blocked':'Ton navigateur a bloqué la fenêtre de connexion. Autorise les fenêtres pour ce site, puis réessaie.','auth/popup-closed-by-user':'Connexion annulée.','auth/cancelled-popup-request':'Connexion annulée.',
-  'auth/operation-not-allowed':'Cette connexion n\'est pas encore activée.','auth/unauthorized-domain':'Cette adresse n\'est pas encore autorisée pour la connexion.','auth/network-request-failed':'Pas de connexion à Internet.',
+  'auth/operation-not-allowed':'Cette connexion n\'est pas encore activée.','auth/wrong-password':'Mot de passe incorrect.','auth/invalid-credential':'E-mail ou mot de passe incorrect.','auth/invalid-login-credentials':'E-mail ou mot de passe incorrect.','auth/user-not-found':'E-mail ou mot de passe incorrect.',
+  'auth/weak-password':'Mot de passe trop court : 6 caractères au minimum.','auth/missing-password':'Écris un mot de passe (6 caractères au minimum).','auth/invalid-email':'Cette adresse e-mail n\'est pas valable.','auth/missing-email':'Écris ton adresse e-mail.','auth/too-many-requests':'Trop d\'essais. Réessaie dans quelques minutes.','auth/unauthorized-domain':'Cette adresse n\'est pas encore autorisée pour la connexion.','auth/network-request-failed':'Pas de connexion à Internet.',
   'auth/operation-not-supported-in-this-environment':'La connexion n\'a pas pu s\'ouvrir ici. Réessaie, ou ouvre le jeu dans Safari ou Chrome.','auth/account-exists-with-different-credential':'Cette adresse e-mail est déjà liée à un autre mode de connexion. Utilise celui-là.'};
-const PF={msg:'',busy:false,gal:false};
+const PF={msg:'',busy:false,gal:false,mail:false,em:''};
 function renderProf(){const n=myName(),busyGame=!!(S&&S.online&&!S.over)||(typeof MM!=='undefined'&&MM.slot);
   let acct;
   if(!NET.ok)acct=`<p class="amsg small">Connecte-toi à Internet pour gérer ton compte.</p>`;
   else if(!NET.link)acct=`<p class="amsg small">La connexion à un compte n'est pas disponible ici.</p>`;
-  else if(NET.prov)acct=`<p class="amsg">Connecté avec <b>${provText()}</b> ✔</p><p class="amsg small">Tu retrouves ce profil sur tous tes appareils en te connectant avec ${myProvs().length>1?'l\'un ou l\'autre de ces comptes':'le même compte'}.</p>${Object.keys(PROV_LAB).filter(p=>!myProvs().includes(p)).map(p=>`<button class="btn sm" data-pf="${PROV_KEY[p]}" style="width:100%;margin-bottom:8px" ${busyGame||PF.busy?'disabled':''}>Ajouter aussi ${PROV_LAB[p]}</button>`).join('')}<button class="btn sm ghost" data-pf="out" style="width:100%" ${busyGame?'disabled':''}>Se déconnecter</button>`;
+  else if(NET.prov)acct=`<p class="amsg">Connecté avec <b>${provText()}</b> ✔</p><p class="amsg small">Tu retrouves ce profil sur tous tes appareils en te connectant avec ${myProvs().length>1?'l\'un ou l\'autre de ces comptes':'le même compte'}.</p>${Object.keys(PROV_LAB).filter(p=>!myProvs().includes(p)&&(p!=='password'||NET.linkEmail)).map(p=>`<button class="btn sm" data-pf="${PROV_KEY[p]}" style="width:100%;margin-bottom:8px" ${busyGame||PF.busy?'disabled':''}>Ajouter aussi ${PROV_LAB[p]}</button>`).join('')}${PF.mail?`<div class="pfmail"><input class="inp" id="pfEm" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="Ton adresse e-mail" value="${esc(PF.em||'')}">
+      <input class="inp" id="pfPw" type="password" autocomplete="current-password" placeholder="Mot de passe (6 caractères au minimum)">
+      <button class="btn" data-pf="emailgo" style="width:100%" ${busyGame||PF.busy?'disabled':''}>Continuer</button>
+      <p class="amsg small">Première fois ? Ton compte est créé avec ce mot de passe. Déjà inscrit ? Tu retrouves ton profil.</p>
+      <button class="btn sm ghost" data-pf="emailpw" style="width:100%" ${PF.busy?'disabled':''}>Mot de passe oublié ?</button></div>`:''}${PF.msg?`<p class="amsg small" id="pfMsg2" style="margin-top:8px;font-weight:700">${esc(PF.msg)}</p>`:''}<button class="btn sm ghost" data-pf="out" style="width:100%" ${busyGame?'disabled':''}>Se déconnecter</button>`;
   else acct=`<p class="amsg small">Tu joues en invité : ton profil n'existe que sur cet appareil. Connecte-toi pour le garder et le retrouver partout.</p>
     <button class="btn" data-pf="google" style="width:100%;margin-bottom:8px" ${busyGame||PF.busy?'disabled':''}>Continuer avec Google</button>
-    <button class="btn ghost" data-pf="facebook" style="width:100%" ${busyGame||PF.busy?'disabled':''}>Continuer avec Facebook</button>${busyGame?'<p class="amsg small">Termine ta partie en ligne avant de te connecter.</p>':''}`;
+    <button class="btn ghost" data-pf="facebook" style="width:100%;margin-bottom:8px" ${busyGame||PF.busy?'disabled':''}>Continuer avec Facebook</button>
+    ${NET.linkEmail?`<button class="btn ghost" data-pf="email" style="width:100%;margin-bottom:8px" ${busyGame||PF.busy?'disabled':''}>✉ Continuer avec un e-mail</button>`:''}${PF.mail?`<div class="pfmail"><input class="inp" id="pfEm" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="Ton adresse e-mail" value="${esc(PF.em||'')}">
+      <input class="inp" id="pfPw" type="password" autocomplete="current-password" placeholder="Mot de passe (6 caractères au minimum)">
+      <button class="btn" data-pf="emailgo" style="width:100%" ${busyGame||PF.busy?'disabled':''}>Continuer</button>
+      <p class="amsg small">Première fois ? Ton compte est créé avec ce mot de passe. Déjà inscrit ? Tu retrouves ton profil.</p>
+      <button class="btn sm ghost" data-pf="emailpw" style="width:100%" ${PF.busy?'disabled':''}>Mot de passe oublié ?</button></div>`:''}${PF.msg?`<p class="amsg small" id="pfMsg2" style="margin-top:8px;font-weight:700">${esc(PF.msg)}</p>`:''}${busyGame?'<p class="amsg small">Termine ta partie en ligne avant de te connecter.</p>':''}`;
   const st=stGet(),sx=P.stats||{g:0,w:0},tile=(v,l,sub)=>`<div class="stt"><b>${v}</b><span>${l}</span>${sub?`<small>${sub}</small>`:''}</div>`;
   $('profPanel').innerHTML=`<h2>Mon profil</h2>
     <div class="pfhead"><div class="av pfav" style="--avc:#e0a526">${avatarSVG(n,'#e0a526',P.av)}</div>
@@ -2442,9 +2443,9 @@ function renderProf(){const n=myName(),busyGame=!!(S&&S.online&&!S.over)||(typeo
     <div class="pfname"><input class="inp" id="pfName" maxlength="14" value="${esc(P.seats.me||'')}" placeholder="Ton pseudo" autocomplete="off"><button class="btn sm" data-pf="name">Enregistrer</button></div>
     <p class="amsg small" id="pfMsg" style="margin-top:10px">${esc(PF.msg||'De 3 à 14 caractères. Chaque pseudo est unique.')}</p>
     ${TESTER?`<h3>Joueur test</h3><p class="amsg small">Ce profil sert aux essais : il n'apparaît dans aucun classement.</p><button class="btn" data-pf="untest" style="width:100%">Revenir à mon profil</button>`:`<h3>Compte</h3>${acct}`}
-    <p class="amsg small" style="margin-top:12px"><a href="confidentialite.html" target="_blank" rel="noopener" style="color:inherit">Règles de confidentialité et mentions légales</a></p>
+    <p class="amsg small" style="margin-top:12px"><a href="confidentialite.html" target="_blank" rel="noopener" style="color:inherit">Règles de confidentialité et mentions légales</a><br><span style="opacity:.6">Version ${APP_V}${(()=>{try{return navigator.standalone===true||matchMedia('(display-mode: standalone)').matches?' · appli installée':' · navigateur'}catch(e){return ''}})()}</span></p>
     ${ADMIN&&!TESTER?'<button class="btn ghost" data-pf="admin" style="width:100%;margin-top:14px">⚙ Administration</button>':''}`}
-function openProf(){PF.msg='';PF.gal=false;renderProf();$('ovProf').classList.add('on');if(NET.ok)adminCheck().then(()=>{if($('ovProf').classList.contains('on'))renderProf()});if(netAvailable()&&!FR.ready)netWait().then(()=>{if($('ovProf').classList.contains('on'))renderProf()})}
+function openProf(){PF.msg='';PF.gal=false;PF.mail=false;renderProf();$('ovProf').classList.add('on');if(NET.ok)adminCheck().then(()=>{if($('ovProf').classList.contains('on'))renderProf()});if(netAvailable()&&!FR.ready)netWait().then(()=>{if($('ovProf').classList.contains('on'))renderProf()})}
 /* après un changement de compte : tout ce qui écoute l'ancien identifiant est coupé, puis on repart */
 async function netRestart(){FR.unsubs.forEach(f=>{try{f()}catch(e){}});FR.unsubs=[];for(const u in FR.list){FR.list[u].off.forEach(f=>f());delete FR.list[u]}FR.inv={};FR.ready=false;FR.booting=false;
   P.bd=null;P.bdp=null;for(const k in PUBC)delete PUBC[k];await netBoot()}
@@ -2453,7 +2454,8 @@ function profFromCloud(v){P.seats.me=typeof v.name==='string'?v.name.slice(0,14)
   P.elo=v.elo||1000;P.stats={g:v.g||0,w:Math.min(v.w||0,v.g||0)};P.st=v.st||null;P.per=v.per||null;P.myCode=v.code||null;P.myUid=v.code?NET.uid:null;P.peak=null;savePrefs()}
 function profReset(){P.seats.me='';P.av=null;P.nameKey=null;P.nameUid=null;P.nameClash=false;P.elo=1000;P.stats={g:0,w:0};P.st=null;P.per=null;P.myCode=null;P.myUid=null;P.peak=null;savePrefs()}
 async function profLink(kind,tok){if(PF.busy)return;const add=!!NET.prov;PF.busy=true;PF.msg='';renderProf();
-  try{const r=tok?await NET.linkCred(kind,tok):await NET.link(kind);
+  try{const r=kind==='email'?await NET.linkEmail(tok.em,tok.pw):tok?await NET.linkCred(kind,tok):await NET.link(kind);
+    if(r.ok||r.exists)PF.mail=false;
     if(r.ok){PF.msg=add?'Compte ajouté ✔ Tu peux maintenant te connecter avec l\'un ou l\'autre.':'Connecté ✔ Ton profil est maintenant gardé.';netSaveProfile()}
     else if(r.exists&&add)PF.msg='Ce compte a déjà un autre profil Chkobba : on ne peut pas réunir deux profils. Rien n\'a changé.';
     else if(r.exists){
@@ -2466,8 +2468,8 @@ async function profLink(kind,tok){if(PF.busy)return;const add=!!NET.prov;PF.busy
       await NET.useCred(r.cred);try{v=await NET.get('users/'+NET.uid)}catch(e){}
       if(v)profFromCloud(v);else profReset();
       await netRestart();PF.msg='Connecté ✔ Ton profil est chargé.';homeProfile()}
-    else PF.msg=AUTH_ERR[r.err]||'La connexion n\'a pas abouti ('+r.err+').'}
-  catch(e){PF.msg='La connexion n\'a pas abouti.'}
+    else PF.msg=(OAUTH.why==='A'?'La connexion ne marche que depuis l\'adresse officielle du jeu. Ici : '+location.host+location.pathname+'.':AUTH_ERR[r.err]||'La connexion n\'a pas abouti ('+r.err+').')+(OAUTH.why||!AUTH_ERR[r.err]||/not-supported|unauthorized|not-allowed/.test(r.err)?' [code '+(OAUTH.why||'-')+' · '+String(r.err||'').replace('auth/','')+']':'')}
+  catch(e){PF.msg='La connexion n\'a pas abouti. [code X · '+String(e&&e.message||e).slice(0,60)+']'}
   PF.busy=false;renderProf()}
 async function profOut(){const yes=await askYesNo('Se déconnecter ?','Cet appareil repart avec un profil invité tout neuf. Ton profil reste gardé sur ton compte : reconnecte-toi pour le retrouver.','Se déconnecter','Annuler');if(!yes)return;
   PF.busy=true;renderProf();try{NET.set('status/'+NET.uid,{on:false,at:Date.now()}).catch(()=>{});await NET.signOut();profReset();await netRestart();PF.msg='Déconnecté.';homeProfile()}catch(e){PF.msg='La déconnexion n\'a pas abouti.'}PF.busy=false;renderProf()}
@@ -3837,6 +3839,12 @@ $('profPanel').addEventListener('click',async e=>{const a=e.target.closest('[dat
   else if(k==='untest')testerLeave();
   else if(k==='name'){b.disabled=true;const err=await setMyName($('pfName').value);PF.msg=err||'Pseudo enregistré ✔';renderProf()}
   else if(k==='google'||k==='facebook')profLink(k);
+  else if(k==='email'){PF.mail=!PF.mail;PF.msg='';renderProf();if(PF.mail)setTimeout(()=>{const i=$('pfEm');if(i){i.scrollIntoView({block:'center'});i.focus()}},60)}
+  else if(k==='emailgo'||k==='emailpw'){const em=($('pfEm').value||'').trim(),pw=$('pfPw').value||'';PF.em=em;
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){PF.msg=AUTH_ERR['auth/invalid-email'];renderProf();return}
+    if(k==='emailpw'){PF.busy=true;renderProf();try{await NET.resetPw(em);PF.msg='Si cette adresse a un compte, un e-mail vient de partir pour choisir un nouveau mot de passe. Regarde aussi dans les indésirables.'}catch(x){PF.msg=AUTH_ERR[x.code]||'L\'envoi n\'a pas abouti. Réessaie.'}PF.busy=false;renderProf();return}
+    if(pw.length<6){PF.msg=AUTH_ERR['auth/weak-password'];renderProf();return}
+    profLink('email',{em,pw})}
   else if(k==='out')profOut()});
 $('profPanel').addEventListener('change',async e=>{if(e.target.id!=='pfFile'||!e.target.files[0])return;
   try{setAv(await photoToAv(e.target.files[0]));PF.msg='Photo enregistrée ✔'}catch(x){PF.msg='Cette image ne peut pas être utilisée.'}renderProf()});
@@ -4053,6 +4061,41 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
   }catch(e){}
 })();
 </script>
+<style id="suivi-direct-style">
+/* Suivi en direct (770lab, 16/11/2026) : sur un écran large (iPhone Duo ouvert, tablette, ordinateur), un volet à droite
+   montre l'état de la manche pendant qu'on joue. Bloc absent du fichier de Laurent, comme les trois autres. */
+#direct{display:none}
+html.direct #app{width:calc(100% - var(--dw));margin:0}
+html.direct .banner{left:calc((100vw - var(--dw))/2)}
+html.direct #direct{display:flex;flex-direction:column;gap:10px;position:fixed;top:0;right:0;bottom:0;width:var(--dw);z-index:5;
+  box-sizing:border-box;overflow-y:auto;scrollbar-width:none;color:#fff;font-weight:700;
+  padding:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 10px) calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 12px) calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 10px) 12px;
+  background:rgba(0,0,0,.22);border-left:1px solid rgba(255,255,255,.14)}
+#direct::-webkit-scrollbar{display:none}
+#direct h4{margin:0;font-family:var(--fd);font-size:17px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+#direct h4 small{font-family:inherit;font-size:12px;font-weight:700;opacity:.7}
+#direct .dq{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:9px 11px}
+#direct .dq.ok{background:rgba(255,207,90,.2);border-color:rgba(255,207,90,.6)}
+#direct .dq.ko{opacity:.72}
+#direct .dt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14.5px;font-weight:900}
+#direct .dt i{font-style:normal;font-size:12px;font-weight:800;opacity:.85;text-align:right}
+#direct .dq.ok .dt i{color:#ffcf5a;opacity:1}
+#direct .db{position:relative;height:9px;border-radius:9px;background:rgba(255,255,255,.14);margin:7px 0 5px;overflow:hidden}
+#direct .db b{position:absolute;top:0;bottom:0;left:0;background:#ffcf5a;border-radius:9px 0 0 9px}
+#direct .db u{position:absolute;top:0;bottom:0;right:0;background:rgba(255,255,255,.55);border-radius:0 9px 9px 0}
+#direct .db s{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.9}
+#direct .dl{display:flex;justify-content:space-between;font-size:12px;font-weight:700;opacity:.85}
+#direct .dl b{font-weight:900;opacity:1}
+#direct .dp{display:flex;gap:8px}
+#direct .dp>div{flex:1;text-align:center;background:rgba(255,255,255,.1);border-radius:14px;padding:8px 4px}
+#direct .dp b{display:block;font-family:var(--fd);font-size:26px;line-height:1}
+#direct .dp span{font-size:11.5px;opacity:.8}
+#direct .dnote{font-size:11.5px;font-weight:600;opacity:.65;line-height:1.3;margin:0}
+#direct table{width:100%;border-collapse:collapse;font-size:12px}
+#direct th,#direct td{padding:3px 2px;text-align:center;font-weight:700}
+#direct td:first-child,#direct th:first-child{text-align:left;opacity:.8}
+#direct th{font-size:11px;opacity:.75;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+</style>
 <script id="suivi-direct">
 /* Suivi en direct de la manche (770lab, 16/11/2026). N'écrit rien, ne change aucune règle : il relit S.piles, S.chk, S.gm
    et tally() après chaque render(). Affiché seulement en entraînement contre l'IA quand le joueur a demandé l'aide au comptage (aideComptage(), règle de Laurent du 18/11), sur un écran d'au moins 700 × 480 (iPhone Duo ouvert,
