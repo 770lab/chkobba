@@ -216,7 +216,8 @@ button{font-family:inherit}
 .bottom.many .me{grid-area:me;flex-direction:row;width:auto;gap:8px}
 .bottom.many .me .av{width:32px;height:32px;font-size:14px;border-width:2px}
 .hand{flex:1;display:flex;flex-wrap:wrap;gap:8px 6px;justify-content:center;align-content:flex-end;--cw:var(--hcw);min-height:calc(var(--hcw)*1.45 + 16px);padding-top:16px;max-width:calc(var(--handw) + 4px);margin:0 auto}
-.hand .card{touch-action:none;transform:translateY(var(--dy,0px)) rotate(var(--rot,0deg));transform-origin:50% 100%}
+/* will-change : chaque carte de la main a sa propre couche. Sans cela, les animations voisines (halo des cartes prenables, tour de jeu) font redessiner à chaque image les cartes inclinées de la main, qui « tremblent » sur téléphone. */
+.hand .card{touch-action:none;transform:translateY(var(--dy,0px)) rotate(var(--rot,0deg));transform-origin:50% 100%;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .hand .card.sel{transform:translateY(calc(var(--dy,0px) - 18px)) rotate(var(--rot,0deg))}
 .hand.fan1{flex-wrap:nowrap;gap:0}
 .hand.fan1 .card{margin-left:var(--ov)}
@@ -290,6 +291,8 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 @keyframes deal{from{translate:var(--fx,0px) var(--fy,-60px);scale:.5;opacity:0}60%{opacity:1}to{translate:0 0;scale:1;opacity:1}}
 .shake{animation:shake .35s}
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#tutoNext{scroll-margin-bottom:16px}
+.turecap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}.turecap div{background:rgba(0,0,0,.06);border-radius:12px;padding:8px 10px;display:flex;flex-direction:column;gap:3px;font-size:.9rem}.turecap b{font-size:1rem;margin-bottom:2px}
 .flyer{position:fixed;z-index:50;transform-origin:0 0;pointer-events:none}
 .flyer.dragging .card{box-shadow:0 14px 26px rgba(0,0,0,.45)}
 
@@ -565,7 +568,7 @@ body[data-theme="sidi"] .pile .none{border-color:rgba(20,63,107,.3)}
 .hopts.infelt{margin:12px 14px 0}
 /* trois réglages : la durée sur toute la largeur, puis Napola et 2 points d'écart côte à côte ; sur écran large tout tient sur une ligne */
 .hopts.infelt{flex-wrap:wrap}.hopts.infelt #targetRow{flex:1 0 100%}.hopts.infelt .chipt{flex:1 1 0;min-width:0}
-@media(min-width:700px){.hopts.infelt #targetRow{flex:0 0 auto}.hopts.infelt .chipt{flex:0 1 auto}}
+@media(min-width:900px) and (min-height:601px){.hopts.infelt #targetRow{flex:0 0 auto}.hopts.infelt .chipt{flex:0 1 auto}}
 .chipt.train{}
 body:not(.aide) #direct{display:none!important}
 .chipt.train{width:100%;margin:10px 0 2px;justify-content:flex-start}
@@ -578,6 +581,8 @@ body:not(.aide) #direct{display:none!important}
 .chipt.on .sw{background:#1b8a4c}
 .chipt.on .sw::after{left:17px}
 .hplay{display:flex;flex-direction:column;gap:8px}
+/* « Jouer » reste visible en bas de l'écran pendant qu'on fait défiler les réglages de la partie */
+.hplay{position:sticky;bottom:calc(6px + env(safe-area-inset-bottom));z-index:5}.hplay #startBtn{box-shadow:0 8px 22px rgba(0,0,0,.45)}
 .btn.big{font-size:24px;padding:14px;border-radius:18px}
 .hbar{display:flex;justify-content:center;gap:18px;margin-top:auto;padding-top:4px}
 .rb{display:flex;flex-direction:column;align-items:center;gap:4px;border:none;background:transparent;color:var(--ink);font-weight:900;font-size:12px;cursor:pointer;font-family:var(--fb)}
@@ -638,19 +643,19 @@ body:not(.aide) #direct{display:none!important}
 /* ===== Paysage : jeu en grand, la main dépasse du bas ===== */
 @media (orientation:landscape) and (max-height:600px){
   #app{position:relative;grid-template-rows:auto 1fr auto;padding-bottom:0}
-  .hintrow{position:absolute;left:0;right:0;bottom:calc(var(--hcw)*0.95 + 26px);z-index:6;display:flex;justify-content:center;pointer-events:none}
+  .hintrow{position:absolute;left:0;right:0;bottom:calc(var(--hcw)*(1.45 - var(--hcrop,.5)) + 26px);z-index:6;display:flex;justify-content:center;pointer-events:none}
   .hintrow .hint{flex:0 1 auto;pointer-events:auto;background:rgba(0,0,0,.32);border-radius:999px;padding:4px 6px 4px 14px;min-height:0;font-size:13px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
   .tzone{padding-top:4px!important;padding-bottom:40px!important}
   .toprow .pile,.toprow .pile .none{width:24px;height:35px}.toprow .pile .card{--cw:24px}
   .toprow .pilebox{flex-direction:row;width:auto;gap:5px}
   .hintrow .hint:empty{display:none}
-  .hintrow .sortbtn{position:fixed;right:calc(env(safe-area-inset-right) + 10px);bottom:calc(var(--hcw)*0.95 + 4px);pointer-events:auto}
+  .hintrow .sortbtn{position:fixed;right:calc(env(safe-area-inset-right) + 10px);bottom:calc(var(--hcw)*(1.45 - var(--hcrop,.5)) + 4px);pointer-events:auto}
   .hintrow .sortbtn.lastbtn{right:auto;left:calc(env(safe-area-inset-left) + 10px)}
-  .bottom{margin-bottom:calc(var(--hcw)*-0.5)}
+  .bottom{margin-bottom:calc(var(--hcw)*-1*var(--hcrop,.5))}
   .bottom .pilebox,.bottom .me{align-self:flex-start;margin-top:calc(var(--hcw)*0.1)}
   .hand{padding-top:22px}
   .hand .card.sel{transform:translateY(calc(var(--dy,0px) - var(--hcw)*0.42)) rotate(var(--rot,0deg))}
-  .hand .card:not(.sel):hover{transform:translateY(calc(var(--dy,0px) - 8px)) rotate(var(--rot,0deg))}
+  @media(hover:hover) and (pointer:fine){.hand .card:not(.sel):hover{transform:translateY(calc(var(--dy,0px) - 8px)) rotate(var(--rot,0deg))}}
 }
 
 .namesl{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:6px;padding:12px 14px;border-radius:14px;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font:800 15px Nunito,sans-serif;cursor:pointer}.namesl span{font-size:20px;opacity:.8}
@@ -683,6 +688,7 @@ body:not(.aide) #direct{display:none!important}
 .gstab.cmp td:first-child{width:44%}.gstab.cmp td{white-space:normal}
 .seg2.three{display:grid;grid-template-columns:repeat(3,1fr)}
 .lbd{margin:10px 0}.lbr{display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:1px solid var(--panel-line)}.lbr.mine{background:rgba(255,207,90,.18);border-radius:10px}.lbr i{font-style:normal;font-family:var(--fd);font-size:18px;width:22px;text-align:center;flex:none}.lbr div{flex:1;min-width:0}.lbr b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lbr small{display:block;font-size:11px;opacity:.65}.lbr span{font-weight:900;font-size:13px;white-space:nowrap}
+#homeTuto,#quickBtn{width:auto;margin:0 14px 10px;color:#fff;border-color:rgba(255,226,166,.6);background:rgba(255,207,90,.22)}#quickBtn{background:rgba(255,207,90,.34);border-color:#ffd978}#quickBtn small{opacity:.9}
 .tutob{display:flex;align-items:center;gap:10px;width:100%;text-align:left;margin:0 0 6px;padding:10px 12px;border-radius:14px;border:1.5px solid var(--panel-line);background:rgba(255,207,90,.16);color:var(--panel-ink);cursor:pointer;font-family:inherit}.tutob>span:first-child{font-size:24px}.tutob b{display:block;font-size:14.5px}.tutob small{display:block;font-size:12px;opacity:.7;font-weight:700}.tutob i{margin-left:auto;font-style:normal;font-size:22px;opacity:.6}
 .tustep{margin:0 0 2px;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;opacity:.6}
 .tumat{height:108px;background:#1f7f48!important;border:none!important;border-radius:16px;display:flex;align-items:center;justify-content:center}.tumat .lp-table{display:flex}.tumat .lp-table{--cw:50px;gap:8px}
@@ -773,6 +779,41 @@ body:not(.aide) #direct{display:none!important}
 @media (max-width:380px){.faces.two .zone{--cw:26px}}
 @media (orientation:landscape) and (max-height:600px){.bottom .me .nm{max-width:64px;overflow-wrap:anywhere}}
 </style>
+<style id="suivi-direct-style">
+/* Suivi en direct (770lab, 16/11/2026) : sur un écran large (iPhone Duo ouvert, tablette, ordinateur), un volet à droite
+   montre l'état de la manche pendant qu'on joue. Bloc absent du fichier de Laurent, comme les trois autres. */
+#direct{display:none}
+html.direct #app{width:calc(100% - var(--dw));margin:0}
+html.direct .banner{left:calc((100vw - var(--dw))/2)}
+html.direct #direct{display:flex;flex-direction:column;gap:10px;position:fixed;top:0;right:0;bottom:0;width:var(--dw);z-index:5;
+  box-sizing:border-box;overflow-y:auto;scrollbar-width:none;color:#fff;font-weight:700;
+  padding:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 10px) calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 12px) calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 10px) 12px;
+  background:rgba(0,0,0,.22);border-left:1px solid rgba(255,255,255,.14)}
+#direct::-webkit-scrollbar{display:none}
+#direct h4{margin:0;font-family:var(--fd);font-size:17px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+#direct h4 small{font-family:inherit;font-size:12px;font-weight:700;opacity:.7}
+#direct .dq{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:9px 11px}
+#direct .dq.ok{background:rgba(255,207,90,.2);border-color:rgba(255,207,90,.6)}
+#direct .dq.ko{opacity:.72}
+#direct .dt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14.5px;font-weight:900}
+#direct .dt i{font-style:normal;font-size:12px;font-weight:800;opacity:.85;text-align:right}
+#direct .dq.ok .dt i{color:#ffcf5a;opacity:1}
+#direct .db{position:relative;height:9px;border-radius:9px;background:rgba(255,255,255,.14);margin:7px 0 5px;overflow:hidden}
+#direct .db b{position:absolute;top:0;bottom:0;left:0;background:#ffcf5a;border-radius:9px 0 0 9px}
+#direct .db u{position:absolute;top:0;bottom:0;right:0;background:rgba(255,255,255,.55);border-radius:0 9px 9px 0}
+#direct .db s{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.9}
+#direct .dl{display:flex;justify-content:space-between;font-size:12px;font-weight:700;opacity:.85}
+#direct .dl b{font-weight:900;opacity:1}
+#direct .dp{display:flex;gap:8px}
+#direct .dp>div{flex:1;text-align:center;background:rgba(255,255,255,.1);border-radius:14px;padding:8px 4px}
+#direct .dp b{display:block;font-family:var(--fd);font-size:26px;line-height:1}
+#direct .dp span{font-size:11.5px;opacity:.8}
+#direct .dnote{font-size:11.5px;font-weight:600;opacity:.65;line-height:1.3;margin:0}
+#direct table{width:100%;border-collapse:collapse;font-size:12px}
+#direct th,#direct td{padding:3px 2px;text-align:center;font-weight:700}
+#direct td:first-child,#direct th:first-child{text-align:left;opacity:.8}
+#direct th{font-size:11px;opacity:.75;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+</style>
 </head>
 <body data-theme="cafe">
 
@@ -820,7 +861,9 @@ body:not(.aide) #direct{display:none!important}
     <div class="hlogo">Chkobba</div>
   </header>
   <div class="hfelt">
-    <div class="htitle">Choisis ta partie</div>
+    <button class="tutob" id="homeTuto" style="display:none"><span>🎓</span><span><b>Tu découvres la Chkobba ?</b><small>Apprends à jouer en 2 minutes</small></span><i>›</i></button>
+    <button class="tutob quick" id="quickBtn"><span>⚡</span><span><b>Partie rapide</b><small>À 2 contre l'ordinateur · 11 points</small></span><i>›</i></button>
+    <div class="htitle">Ou choisis ta partie</div>
     <div class="modes" id="modeList">
       <button class="mtile" data-m="c2"><div class="mill" id="ill_c2"></div><b>À 2 joueurs</b><small>Toi contre un adversaire</small></button>
       <button class="mtile" data-m="c4"><div class="mill" id="ill_c4"></div><b>À 4 joueurs</b><small>2 contre 2, avec un partenaire</small></button>
@@ -936,7 +979,7 @@ body:not(.aide) #direct{display:none!important}
 <!-- Règles -->
 <div class="overlay" id="ovRules"><div class="panel">
   <h2>Règles</h2>
-  <button class="tutob" id="tutoBtn"><span>🎓</span><span><b>Tu découvres la Chkobba ?</b><small>Apprends à jouer en 2 minutes, en 6 petits exercices</small></span><i>›</i></button>
+  <button class="tutob" id="tutoBtn"><span>🎓</span><span><b>Tu découvres la Chkobba ?</b><small>Apprends à jouer en 2 minutes, en 7 petits exercices</small></span><i>›</i></button>
   <h3>Comment jouer</h3>
   <ul style="padding-left:18px;margin:0">
     <li><b>Touche</b> une carte de ta main : l'action possible s'affiche, avec <b>Annuler</b> à côté. Touche une autre carte pour changer.</li>
@@ -953,6 +996,7 @@ body:not(.aide) #direct{display:none!important}
     <li>À 4, les partenaires sont face à face ; le joueur à gauche du donneur commence.</li>
     <li><b>Carte de coupe</b> (classique) : le joueur qui commence coupe le jeu et découvre une carte. Il choisit de la <b>garder</b> (elle compte dans ses 3 cartes) ou de la <b>mettre au milieu</b> (elle fait partie des 4 cartes de la table).</li>
     <li>S'il y a <b>3 ou 4 cartes identiques</b> au milieu, on remélange, on recoupe et on redistribue.</li>
+    <li><b>Gagner la partie</b> : le premier à <b>11 ou 21 points</b>, avec <b>2 points d'écart</b> (à 21-20 la partie continue). Ce réglage se désactive à l'accueil.</li>
     <li><b>Classique</b> : 4 cartes sur la table, 3 chacun, redonne de 3 cartes, la dernière donne est annoncée. <b>À 10 cartes</b> : à 4, 10 cartes chacun, table vide.</li>
     <li><b>Conseil, table vide</b> : celui qui prend la seule carte du milieu fait Chkobba. Pose plutôt une carte que tu as en double, triple ou carré (l'aide l'indique par ×2, ×3, ×4) : avec un carré, personne ne peut la prendre.</li>
   </ul>
@@ -1042,6 +1086,13 @@ const AV_COLORS=['#e07a5f','#3d8bfd','#c75b9b','#2a9d8f','#8e6cc9','#d1495b','#1
 const $=id=>document.getElementById(id);
 const rect=el=>el.getBoundingClientRect();
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+/* Attentes du déroulement d'une partie. Si le joueur quitte ou relance une partie pendant une animation (S change),
+   l'ancienne suite d'actions ne doit jamais reprendre : sinon elle distribuerait ou jouerait des cartes dans la nouvelle partie.
+   gsleep ne répond donc jamais quand la partie a changé, et later n'exécute rien. */
+const gsleep=ms=>{const g=S;return new Promise(r=>setTimeout(()=>{if(S===g)r()},ms))};
+const later=(fn,ms)=>{const g=S;return setTimeout(()=>{if(S===g)fn()},ms)};
+/* à chaque changement de partie : on retire les cartes restées en vol */
+function flyersClear(){document.querySelectorAll('.flyer').forEach(d=>d.remove())}
 let P={opp:'libre',timer:0,speed:'normal',sound:true,vibe:true,help:true,mat:null,paper:'ivoire',sort:'famille',face:'classique',fig:'dessin',level:'moyen',autoStart:'moyen',seats:{me:'',opp:{m:'rand',v:''},left:{m:'rand',v:''},partner:{m:'rand',v:''},right:{m:'rand',v:''}},mode:'c2',target:21,napola:true,ecart:true,back:'encadre',color:'bleu',idx:true,theme:'cafe'};
 /* Joueur test (pour l'administrateur) : un deuxième profil complet sur le même appareil, avec son propre compte
    Firebase anonyme, ses réglages et sa partie sauvegardée. Il n'apparaît jamais dans les classements. */
@@ -1275,6 +1326,40 @@ function avatarSVG(name,bg,av){
 
 /* ================= Réseau (jeu en ligne) =================
    Firebase en production. FB_CONFIG est à remplir avec la configuration du projet. */
+/* ── Connexion par aller-retour (sans fenêtre) ─────────────────────────────────────────────
+   Sur téléphone, et surtout dans l'appli installée sur l'écran d'accueil de l'iPhone, les fenêtres de connexion
+   sont refusées. On envoie donc le joueur sur la page de Google ou de Facebook dans la même page, et il revient
+   ici avec un jeton dans l'adresse (après le #). Les adresses de retour doivent être déclarées chez Google et Meta. */
+const OAUTH={google:'788892842642-f470kjbk1udf3b725eimtb36masackls.apps.googleusercontent.com',facebook:'1458044300724505',
+  hosts:{'770lab.com':'/chkobba/','www.770lab.com':'/chkobba/','chkobba-55555.netlify.app':'/'},key:'chkobba-oauth'};
+/* adresse de retour de ce site, ou null si le site n'est pas déclaré (alors on garde la fenêtre) */
+function oauthReturn(){try{const p=OAUTH.hosts[location.hostname];return location.protocol==='https:'&&p&&location.pathname.replace(/index\.html$/,'')===p?location.origin+p:null}catch(e){return null}}
+const oauthMobile=()=>{try{return navigator.standalone===true||matchMedia('(display-mode: standalone)').matches||/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)}catch(e){return false}};
+function oauthGo(kind){const ru=oauthReturn();if(!ru)return false;
+  const rnd=()=>Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('');
+  const st=rnd(),nonce=rnd();try{localStorage.setItem(OAUTH.key,JSON.stringify({k:kind,st,t:Date.now()}))}catch(e){return false}
+  const q=o=>Object.entries(o).map(([a,b])=>a+'='+encodeURIComponent(b)).join('&');
+  location.assign(kind==='facebook'
+    ?'https://www.facebook.com/v19.0/dialog/oauth?'+q({client_id:OAUTH.facebook,redirect_uri:ru,response_type:'token',scope:'public_profile,email',state:st})
+    :'https://accounts.google.com/o/oauth2/v2/auth?'+q({client_id:OAUTH.google,redirect_uri:ru,response_type:'id_token',scope:'openid email profile',nonce,state:st,prompt:'select_account'}));
+  return true}
+/* au chargement : si l'adresse contient un retour de connexion, on le lit puis on nettoie l'adresse */
+const OAUTH_BACK=(()=>{try{const h=location.hash||'',qs=location.search||'';
+  if(!/(id_token|access_token|error)=/.test(h)&&!/[?&]error=/.test(qs))return null;
+  const g=new URLSearchParams(h.replace(/^#/,'')),e=new URLSearchParams(qs.replace(/^\?/,''));
+  let m=null;try{m=JSON.parse(localStorage.getItem(OAUTH.key)||'null');localStorage.removeItem(OAUTH.key)}catch(x){}
+  try{history.replaceState(null,'',location.pathname)}catch(x){}
+  if(!m||Date.now()-m.t>15*60*1000)return null;
+  if((g.get('state')||e.get('state'))!==m.st)return{k:m.k,err:'state'};
+  if(g.get('error')||e.get('error'))return{k:m.k,err:'cancel'};
+  const tok=m.k==='facebook'?g.get('access_token'):g.get('id_token');
+  return tok?{k:m.k,tok}:{k:m.k,err:'vide'}}catch(e){return null}})();
+/* le retour est traité une fois l'appli prête : on ouvre « Mon profil » et on termine la connexion */
+if(OAUTH_BACK)addEventListener('load',()=>setTimeout(async()=>{let ok=false;try{ok=await netWait()}catch(e){}
+  openProf();
+  if(OAUTH_BACK.err){PF.msg=OAUTH_BACK.err==='cancel'?'Connexion annulée.':'La connexion n\'a pas abouti. Réessaie.';renderProf();return}
+  if(!ok||!NET.linkCred){PF.msg='Pas de connexion au serveur : réessaie.';renderProf();return}
+  profLink(OAUTH_BACK.k,OAUTH_BACK.tok)},400));
 const FB_CONFIG={apiKey:"AIzaSyA4RkZ3Q7sS8pQmOjNajNKR73Wn02_vEmk",authDomain:"chkobba-55555.firebaseapp.com",databaseURL:"https://chkobba-55555-default-rtdb.europe-west1.firebasedatabase.app",projectId:"chkobba-55555",storageBucket:"chkobba-55555.firebasestorage.app",messagingSenderId:"788892842642",appId:"1:788892842642:web:3d3a8e8f24944c62dc844b"};
 const NET={ok:false,uid:null,kind:null,_p:null};
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
@@ -1298,8 +1383,15 @@ NET.init=function(){
     const provsOf=u=>u&&!u.isAnonymous&&u.providerData?u.providerData.map(p=>p.providerId):[];
     Object.assign(NET,{prov:provOf(user),provs:provsOf(user),
       /* rattache le profil invité à un compte : même identifiant, rien n'est perdu. Si ce compte a déjà un profil, on le signale. */
-      link:async k=>{try{const r=await auth.currentUser.linkWithPopup(mk(k));NET.prov=provOf(r.user);NET.provs=provsOf(r.user);return{ok:true}}
-        catch(e){if((e.code==='auth/credential-already-in-use'||e.code==='auth/email-already-in-use')&&e.credential)return{exists:true,cred:e.credential};return{err:e.code||String(e)}}},
+      link:async k=>{if(oauthMobile()&&oauthGo(k))return new Promise(()=>{}); /* la page s'en va : on ne répond pas */
+        try{const r=await auth.currentUser.linkWithPopup(mk(k));NET.prov=provOf(r.user);NET.provs=provsOf(r.user);return{ok:true}}
+        catch(e){if((e.code==='auth/credential-already-in-use'||e.code==='auth/email-already-in-use')&&e.credential)return{exists:true,cred:e.credential};
+          if(['auth/operation-not-supported-in-this-environment','auth/popup-blocked','auth/web-storage-unsupported'].includes(e.code)&&oauthGo(k))return new Promise(()=>{});
+          return{err:e.code||String(e)}}},
+      /* retour d'un aller-retour : même résultat que link, à partir du jeton reçu */
+      linkCred:async(k,tok)=>{const cred=k==='facebook'?firebase.auth.FacebookAuthProvider.credential(tok):firebase.auth.GoogleAuthProvider.credential(tok);
+        try{const r=await auth.currentUser.linkWithCredential(cred);NET.prov=provOf(r.user);NET.provs=provsOf(r.user);return{ok:true}}
+        catch(e){if(e.code==='auth/credential-already-in-use'||e.code==='auth/email-already-in-use'||e.code==='auth/provider-already-linked')return{exists:true,cred:e.credential||cred};return{err:e.code||String(e)}}},
       useCred:async c=>{const r=await auth.signInWithCredential(c);NET.uid=r.user.uid;NET.prov=provOf(r.user);NET.provs=provsOf(r.user)},
       signOut:async()=>{await auth.signOut();const r=await auth.signInAnonymously();NET.uid=r.user.uid;NET.prov=null;NET.provs=[]}});
     Object.assign(NET,{kind:'firebase',uid:user.uid,ok:true,
@@ -1594,6 +1686,7 @@ function renderPend(){const b=$('pendBox');if(!b)return;
   b.innerHTML=show?`<div class="invb"><div><b>Partie en ligne en cours</b><br><small>Tu peux la reprendre là où elle en est.</small></div><span><button class="btn sm" id="pendGo">Reprendre</button><button class="btn sm ghost" id="pendQuit">Abandonner</button></span></div>`:'';}
 /* ================= Partie ================= */
 function newGame(){
+  flyersClear();
   const M=MODES[P.mode];
   S={train:!!P.train,auto:P.level==='auto',level:P.level==='auto'?(P.autoStart||'moyen'):P.level,mode:P.mode,n:M.n,target:P.target,napola:P.napola,ecart:!!P.ecart,scores:[0,0],dealer:Math.floor(Math.random()*M.n),over:false};
   const keys=M.n===2?['opp']:['opp','partner','right'];
@@ -1634,16 +1727,16 @@ async function newManche(){
     // 3 ou 4 cartes identiques au milieu : on remélange, on recoupe et on redistribue
     const cnt={};S.table.forEach(c=>cnt[c.v]=(cnt[c.v]||0)+1);
     if(Object.values(cnt).some(x=>x>=3)){
-      await sleep(T(500));
+      await gsleep(T(500));
       $('cutPanel').innerHTML=`<h2>On recommence</h2><p style="margin:0 0 12px;opacity:.75">3 cartes identiques ou plus au milieu : on remélange, on recoupe et on redistribue.</p><div style="display:flex;justify-content:center;gap:6px;--cw:62px">${S.table.map(c=>cardHTML(c)).join('')}</div>`;
-      $('ovCut').classList.add('on');await sleep(T(2600));$('ovCut').classList.remove('on');
+      $('ovCut').classList.add('on');await gsleep(T(2600));$('ovCut').classList.remove('on');
       return newManche();
     }
   }
   S.busy=false;
   render();
   hintFlash(S.dealer===0?'Tu as distribué. '+person(S.turn).n+' commence.':person(S.dealer).n+' a distribué. '+(S.turn===0?'À toi de commencer !':person(S.turn).n+' commence.'));
-  if(S.turn!==0) setTimeout(cpuTurn,T(900));else netMine();
+  if(S.turn!==0) later(cpuTurn,T(900));else netMine();
 }
 /* Distribution animée : paquets de cartes qui partent du donneur vers chaque joueur puis vers le milieu */
 function seatRect(p){
@@ -1661,11 +1754,11 @@ async function dealAnim(plan,fast){
   for(const pk of plan){
     const dst=seatRect(pk.to);
     const fl=pk.cards.map((c,i)=>{const d=makeFlyer(c,{left:src.left-w/2,top:src.top-h/2,width:w,height:h},true);d.style.zIndex=40+i;return d});
-    await Promise.all(fl.map((d,i)=>sleep(i*stag).then(()=>{SFX.deal(0);return moveFlyer(d,{left:dst.left-w/2+(i-(fl.length-1)/2)*w*.28,top:dst.top-h/2,width:w,height:h},dur)})));
+    await Promise.all(fl.map((d,i)=>gsleep(i*stag).then(()=>{SFX.deal(0);return moveFlyer(d,{left:dst.left-w/2+(i-(fl.length-1)/2)*w*.28,top:dst.top-h/2,width:w,height:h},dur)})));
     fl.forEach(d=>d.remove());
     if(pk.to==='table') S.table.push(...pk.cards); else {S.hands[pk.to].push(...pk.cards);if(pk.to===0)sortHand()}
     render();
-    await sleep(gap);
+    await gsleep(gap);
   }
   S.dealing=false;
 }
@@ -1679,19 +1772,19 @@ function askCut(cutter,cut){
         <div class="flip" id="flipc"><div class="face">${backHTML()}</div><div class="face front">${cardHTML(cut)}</div></div></div>
       <p id="cutTxt" class="cuttxt"></p><div id="cutBtns" class="stack" style="margin-top:6px"></div>`;
     $('ovCut').classList.add('on');
-    const dk=$('dk');dk.classList.add('shuf');SFX.shuffle();await sleep(T(1550));dk.classList.remove('shuf');
+    const dk=$('dk');dk.classList.add('shuf');SFX.shuffle();await gsleep(T(1550));dk.classList.remove('shuf');
     $('cutH').textContent=cutter===0?'À toi de couper':person(cutter).n+' coupe le jeu';
     if(cutter===0){
       $('cutBtns').innerHTML='<button class="btn" id="cutGo">Couper le jeu</button>';
       $('cutTxt').textContent='Touche le paquet ou le bouton.';
       await new Promise(r=>{$('cutGo').onclick=r;dk.onclick=r});
       dk.onclick=null;$('cutBtns').innerHTML='';$('cutTxt').textContent='';
-    } else {if(S.online)S.cutKeep=await netRemoteCut(cutter,cut);await sleep(T(650))}
-    dk.classList.add('cut');SFX.cut();await sleep(T(500));
-    $('flipc').classList.add('show');await sleep(T(250));
+    } else {if(S.online)S.cutKeep=await netRemoteCut(cutter,cut);await gsleep(T(650))}
+    dk.classList.add('cut');SFX.cut();await gsleep(T(500));
+    $('flipc').classList.add('show');await gsleep(T(250));
     // l'ordinateur regarde sa carte en privé : on ne la retourne que s'il la met au milieu
     const cpuKeep=cutter!==0&&(S.online?S.cutKeep:cpuKeepCut(cut));
-    if(!cpuKeep){$('flipc').classList.add('on');SFX.flip();await sleep(T(700))}
+    if(!cpuKeep){$('flipc').classList.add('on');SFX.flip();await gsleep(T(700))}
     if(cutter===0){
       $('cutH').textContent='Carte de coupe';
       $('cutTxt').textContent='Tu tombes sur '+lbl(cut)+'. Tu la gardes ?';
@@ -1700,8 +1793,8 @@ function askCut(cutter,cut){
     } else {
       const keep=cpuKeep;
       $('cutTxt').textContent=keep?`${person(cutter).n} regarde la carte de coupe et la garde.`:`${person(cutter).n} met la carte de coupe au milieu : ${lbl(cut)}.`;
-      if(keep){$('flipc').style.transition=`transform ${T(450)}ms ease,opacity ${T(450)}ms ease`;await sleep(T(700));$('flipc').style.transform='translate(-62px,40px) scale(.6)';$('flipc').style.opacity='0'}
-      await sleep(T(keep?1300:1900));close();res(keep);
+      if(keep){$('flipc').style.transition=`transform ${T(450)}ms ease,opacity ${T(450)}ms ease`;await gsleep(T(700));$('flipc').style.transform='translate(-62px,40px) scale(.6)';$('flipc').style.opacity='0'}
+      await gsleep(T(keep?1300:1900));close();res(keep);
     }
   });
 }
@@ -1744,16 +1837,16 @@ async function afterPlay(p){
   if(handsEmpty()){
     if(S.deck.length){
       S.turn=(S.dealer+1)%S.n;S.busy=true;render();
-      await sleep(T(450));
+      await gsleep(T(450));
       const order=Array.from({length:S.n},(_,i)=>(S.dealer+1+i)%S.n);
       await dealAnim(order.map(q=>({to:q,cards:S.deck.splice(S.deck.length-3,3).reverse()})),false);
       S.busy=false;
-      if(S.mode!=='d10'&&S.deck.length===0){S.lastDeal=true;banner(esc(tx('lastDeal')));render();if(S.turn!==0){setTimeout(cpuTurn,T(1500));return}}
+      if(S.mode!=='d10'&&S.deck.length===0){S.lastDeal=true;banner(esc(tx('lastDeal')));render();if(S.turn!==0){later(cpuTurn,T(1500));return}}
     }
-    else {render();setTimeout(sweepRest,T(700));return}
+    else {render();later(sweepRest,T(700));return}
   }
   render();
-  if(S.turn!==0) setTimeout(cpuTurn,T(300));else netMine();
+  if(S.turn!==0) later(cpuTurn,T(300));else netMine();
 }
 
 /* ================= Animation d'un coup ================= */
@@ -1763,7 +1856,7 @@ function makeFlyer(c,r,back){
   d.innerHTML=back?backHTML():cardHTML(c);document.body.appendChild(d);d._r=r;return d;
 }
 function moveFlyer(d,to,dur){
-  return new Promise(res=>{
+  const g=S;return new Promise(res0=>{const res=v=>{if(S===g)res0(v);else d.remove()};
     const r=d._r,s=to.width/r.width;
     d.style.transition=`transform ${dur}ms cubic-bezier(.25,.8,.3,1)`;
     requestAnimationFrame(()=>requestAnimationFrame(()=>{d.style.transform=`translate(${to.left-r.left}px,${to.top-r.top}px) scale(${s})`}));
@@ -1791,13 +1884,13 @@ async function doPerformPlay(p,card,capt,fromRect){
     const f=makeFlyer(card,from);
     await moveFlyer(f,{left:tr.left+tr.width*.22,top:tr.top+tr.height*.14,width:tr.width,height:tr.height},T(380));SFX.take();vib(12);
     S.taking=new Set(capt.map(c=>c.id));render();
-    await sleep(T(520));
+    await gsleep(T(520));
     let tgt=team(p)===0?$('pile0'):(S.n===2?$('pile1'):($('pileS')||document.querySelector(`[data-p="${p}"] .av`)));
     const pr=rect(tgt),tw=Math.min(pr.width,38),to={left:pr.left+pr.width/2-tw/2,top:pr.top+pr.height/2-tw*.725,width:tw,height:tw*1.45};
     const fl=[f];
     for(const c of capt){const el=$('table').querySelector(`[data-id="${c.id}"]`);if(el)fl.push(makeFlyer(c,rect(el)))}
     S.ghost=new Set(capt.map(c=>c.id));S.taking=new Set();render();
-    await Promise.all(fl.map((d,i)=>sleep(T(i*60)).then(()=>moveFlyer(d,to,T(420)))));
+    await Promise.all(fl.map((d,i)=>gsleep(T(i*60)).then(()=>moveFlyer(d,to,T(420)))));
     fl.forEach(d=>d.remove());
   }
   const chk=doPlay(p,card,capt);
@@ -1848,7 +1941,8 @@ function layRisk(p,c,useSeen){
   return r+cardW(c)*.5;
 }
 function cpuChoose(p){
-  const lvl=(S.seatLvl&&S.seatLvl[p])||S.level,hand=S.hands[p],moves=legalMoves(hand,S.table);
+  const lvl0=(S.seatLvl&&S.seatLvl[p])||S.level,lvl=lvl0==='expert0'?'expert':lvl0,hand=S.hands[p],moves=legalMoves(hand,S.table);
+  if(lvl0==='expert'){try{const m=xChoose(p);if(m)return m}catch(e){}}
   const totalLeft=S.hands.reduce((a,h)=>a+h.length,0),isLast=S.deck.length===0&&totalLeft===1;
   const pick=f=>{let best=null,bs=-1e9;for(const m of moves){const sc=f(m);if(sc>bs){bs=sc;best=m}}return best};
   // ---------- Facile : connaît les règles mais se trompe souvent ----------
@@ -1927,11 +2021,107 @@ function cpuChoose(p){
     return g-tot/worlds.length+Math.random()*.005;
   });
 }
+/* ================= Expert (version 2) =================
+   1. Poids des cartes recalculés à chaque coup selon l'état des courses (cartes, carreaux, 7, 6, Napola) : une course déjà jouée ne vaut plus rien, une course serrée vaut cher.
+   2. Mains adverses simulées (tirées parmi les cartes non vues) et recherche jusqu'à la fin de la donne en cours ; les partenaires jouent ensemble.
+   3. Dernière donne : le score exact de la manche est calculé (à 2, la main adverse est connue par le comptage des cartes).
+   'expert0' = ancienne version, gardée comme secours et pour les mesures. */
+function xWeights(){
+  const Pl=S.piles,cnt=f=>[Pl[0].filter(f).length,Pl[1].filter(f).length];
+  const n=[Pl[0].length,Pl[1].length],d=cnt(c=>c.s==='♦'),s7=cnt(c=>c.v===7),s6=cnt(c=>c.v===6);
+  const race=(a,b,total,need,base,cap)=>{if(a>=need||b>=need)return 0;const m=Math.min(need-a,need-b);if(m>total-a-b)return 0;return Math.min(cap,base*need/m)};
+  const wK=race(n[0],n[1],40,21,.06,.5),wD=race(d[0],d[1],10,6,.15,.5);
+  let w7=0,pt=0;const a=s7[0],b=s7[1];
+  if(a>=3||b>=3){}else if(a===2&&b===2)pt=1;else{w7=Math.min(.5,.3+.1*(a+b));pt=a===b?(a?.5:.375):(Math.abs(a-b)===2?.25:(a+b===1?.375:.5))}
+  let w6=0;{const x=s6[0],y=s6[1];if(!(x>=3||y>=3||(x===2&&y===2)))w6=pt*Math.min(.5,.3+.1*(x+y))}
+  const nap={};
+  if(S.napola){
+    const has=t=>v=>Pl[t].some(c=>c.s==='♦'&&c.v===v),h=[has(0),has(1)],k=[0,1].map(t=>[1,2,3].filter(h[t]).length);
+    if(!(k[0]&&k[1])){
+      const km=Math.max(k[0],k[1]),w=km===0?.25:km===1?.5:1.5;
+      for(const v of [1,2,3])if(!h[0](v)&&!h[1](v))nap[v]=w;
+      for(const t of [0,1])if(k[t]===3){let q=3;while(q<10&&h[t](q+1))q++;if(q<10&&!h[1-t](q+1))nap[q+1]=.5}
+      if(km<3)nap[4]=.08;
+    }
+  }
+  return c=>{let w=wK;if(c.s==='♦'){w+=wD+(nap[c.v]||0);if(c.v===7)w+=1}if(c.v===7)w+=w7;if(c.v===6)w+=w6;return w};
+}
+function xExact(A,B){ /* points de manche de A moins ceux de B, hors Chkobba */
+  let v=0;const c=(P,f)=>{let k=0;for(const x of P)if(f(x))k++;return k};
+  if(A.length>20)v++;else if(B.length>20)v--;
+  const dA=c(A,x=>x.s==='♦'),dB=c(B,x=>x.s==='♦');if(dA>5)v++;else if(dB>5)v--;
+  if(A.some(isHaya))v++;else if(B.some(isHaya))v--;
+  const a7=c(A,x=>x.v===7),b7=c(B,x=>x.v===7);
+  if(a7!==b7)v+=a7>b7?1:-1;else{const a6=c(A,x=>x.v===6),b6=c(B,x=>x.v===6);if(a6!==b6)v+=a6>b6?1:-1}
+  if(S.napola)v+=napolaPts(A)-napolaPts(B);
+  return v;
+}
+function xChoose(p){
+  const n=S.n,my=team(p),hand=S.hands[p],root=legalMoves(hand,S.table);
+  if(root.length<2)return root[0];
+  const W=xWeights(),deckEmpty=S.deck.length===0,pool=unseenFor(p),sizes=S.hands.map(h=>h.length);
+  const totalLeft=sizes.reduce((a,b)=>a+b,0),known=deckEmpty&&n===2,b=hand.length;
+  const X=(S.xp&&S.xp[p])||{},RK=X.rk||1.4,maxPl=S.table.length>=11?2:b>=5?4:b===4?8:totalLeft;
+  const starter=(S.dealer+1)%n;
+  const risk=t=>{if(!t.length)return -.12*RK;let sm=0,w=0;for(const c of t){sm+=c.v;w+=W(c)}return RK*(.25*w+(sm<=10?.3:.05))};
+  let st=null;const t0=Date.now();
+  const leaf=q=>{
+    if(st.left===0&&deckEmpty){
+      const A=S.piles[my].concat(st.cap[my]),B=S.piles[1-my].concat(st.cap[1-my]);
+      if(st.last===my)A.push(...st.table);else if(st.last===1-my)B.push(...st.table);
+      return xExact(A,B)+st.ck+.02*st.g;
+    }
+    let v=st.g+st.ck;
+    if(st.left===0)v+=(team(starter)===my?1:-1)*risk(st.table);
+    else v+=(team(q)===my?1:-1)*risk(st.table)*.6;
+    return v;
+  };
+  let nodes=0,stop=false;
+  const rec=(q,pl,al,be)=>{
+    if(st.left===0||pl<=0||stop)return leaf(q);
+    if((++nodes&15)===0&&Date.now()-t0>hard)stop=true;
+    const h=st.hands[q];if(!h.length)return rec((q+1)%n,pl,al,be);
+    const mv=legalMoves(h,st.table),mx=team(q)===my;
+    if(mv.length>1)mv.sort((x,y)=>(y.o?y.o.length:0)-(x.o?x.o.length:0));
+    let best=mx?-1e9:1e9;
+    for(const m of mv){const v=app(q,m,pl,al,be);
+      if(mx){if(v>best)best=v;if(best>al)al=best}else{if(v<best)best=v;if(best<be)be=best}
+      if(al>=be)break}
+    return best;
+  };
+  const app=(q,m,pl,al,be)=>{
+    const h=st.hands[q],i=h.indexOf(m.c),tb=st.table,pl0=st.last,tq=team(q),sg=tq===my?1:-1;let dg=0,dc=0;
+    h.splice(i,1);st.left--;
+    if(m.o){st.table=tb.filter(t=>!m.o.includes(t));st.last=tq;dg=W(m.c);for(const c of m.o)dg+=W(c);
+      if(!st.table.length&&!(deckEmpty&&st.left===0))dc=1;
+      if(deckEmpty)st.cap[tq].push(m.c,...m.o)}
+    else st.table=tb.concat(m.c);
+    st.g+=sg*dg;st.ck+=sg*dc;
+    const v=rec((q+1)%n,pl-1,al,be);
+    st.g-=sg*dg;st.ck-=sg*dc;if(m.o&&deckEmpty)st.cap[tq].length-=m.o.length+1;
+    st.table=tb;st.last=pl0;st.left++;h.splice(i,0,m.c);
+    return v;
+  };
+  const tot=root.map(()=>0),budget=n===4?380:260,hard=budget+350,maxW=known?1:(X.mw||(n===4?120:300));let nW=0;
+  while(nW<maxW){
+    let hands;
+    if(known)hands=S.hands.map(h=>[...h]);
+    else{const sh=shuffle([...pool]);let k=0;hands=S.hands.map((h,i)=>i===p?[...h]:sh.slice(k,k+=sizes[i]))}
+    st={hands,table:[...S.table],last:S.last,cap:[[],[]],ck:0,g:0,left:totalLeft};
+    for(let i=0;i<root.length;i++)tot[i]+=app(p,root[i],maxPl,-1e9,1e9);
+    nW++;if(stop||(nW>=6&&Date.now()-t0>budget))break;
+  }
+  let bi=0,bs=-1e9;
+  for(let i=0;i<root.length;i++){const m=root[i];let sc=tot[i]/nW;
+    if(!S.table.length&&!m.o)sc-=layRisk(p,m.c,true)*.002;
+    sc+=Math.random()*.002;if(sc>bs){bs=sc;bi=i}}
+  return root[bi];
+}
 async function cpuTurn(){
   if(S&&S.online) return netTurn();
   if(!S||S.turn===0||S.busy||S.over) return;
   S.busy=true;S.justDealt=false;render();
-  await sleep(T(450+Math.random()*400));
+  await gsleep(T(450+Math.random()*400));
   const p=S.turn,b=cpuChoose(p);
   bubble(p,b.o?`Je prends ${b.o.map(lbl).join(' + ')}`:`Je pose ${lbl(b.c)}`);
   await performPlay(p,b.c,b.o);
@@ -2023,7 +2213,7 @@ async function netTurn(){
   S.busy=true;S.justDealt=false;render();
   const O=S.online,p=S.turn,seat=O.seats[absSeat(p)];
   const auto=()=>{const b=cpuChoose(p);return playEv(p,b.c,b.o)};
-  if(seat.kind==='cpu'){await sleep(T(450+Math.random()*400));netDuty(()=>netPub(auto()),4000)}
+  if(seat.kind==='cpu'){await gsleep(T(450+Math.random()*400));netDuty(()=>netPub(auto()),4000)}
   const ev=await netAwait(p,auto);
   await applyPlayEv(ev);
 }
@@ -2226,7 +2416,7 @@ const myProvs=()=>{const l=(NET.provs&&NET.provs.length?NET.provs:(NET.prov?[NET
 const provText=()=>myProvs().map(p=>PROV_LAB[p]||'un compte').join(' et ');
 const AUTH_ERR={'auth/popup-blocked':'Ton navigateur a bloqué la fenêtre de connexion. Autorise les fenêtres pour ce site, puis réessaie.','auth/popup-closed-by-user':'Connexion annulée.','auth/cancelled-popup-request':'Connexion annulée.',
   'auth/operation-not-allowed':'Cette connexion n\'est pas encore activée.','auth/unauthorized-domain':'Cette adresse n\'est pas encore autorisée pour la connexion.','auth/network-request-failed':'Pas de connexion à Internet.',
-  'auth/operation-not-supported-in-this-environment':'La connexion ne marche pas ici. Ouvre le jeu dans Safari ou Chrome.','auth/account-exists-with-different-credential':'Cette adresse e-mail est déjà liée à un autre mode de connexion. Utilise celui-là.'};
+  'auth/operation-not-supported-in-this-environment':'La connexion n\'a pas pu s\'ouvrir ici. Réessaie, ou ouvre le jeu dans Safari ou Chrome.','auth/account-exists-with-different-credential':'Cette adresse e-mail est déjà liée à un autre mode de connexion. Utilise celui-là.'};
 const PF={msg:'',busy:false,gal:false};
 function renderProf(){const n=myName(),busyGame=!!(S&&S.online&&!S.over)||(typeof MM!=='undefined'&&MM.slot);
   let acct;
@@ -2248,7 +2438,7 @@ function renderProf(){const n=myName(),busyGame=!!(S&&S.online&&!S.over)||(typeo
     <h3>Avatar</h3>
     <div class="pfbtns row"><button class="btn sm" data-pf="gal">${PF.gal?'Masquer la galerie':'Choisir un avatar'}</button><label class="btn sm ghost pffile">📷 Ma photo<input type="file" accept="image/*" id="pfFile" hidden></label>${P.av?'<button class="btn sm ghost" data-pf="noav">Par défaut</button>':''}</div>
     ${PF.gal?`<div class="pfgal">${AV_SEEDS.map(x=>`<button class="av ${P.av==='s:'+x?'on':''}" data-avs="${x}" style="--avc:#e0a526" aria-label="Avatar ${x}">${avatarSVG(x,'#e0a526','s:'+x)}</button>`).join('')}</div>`:''}
-    <h3>Pseudo</h3>${P.nameClash?'<p class="amsg" style="color:#c62828">Ton pseudo est déjà utilisé par un autre joueur : choisis-en un autre.</p>':''}
+    <h3>Pseudo</h3>${P.nameClash?`<p class="amsg" style="color:#c62828">${NET.prov?'Ton pseudo est déjà utilisé par un autre joueur : choisis-en un autre.':'Ce pseudo appartient déjà à un profil. Si c\'est le tien, connecte-toi plus bas pour le retrouver. Sinon, choisis un autre pseudo.'}</p>`:''}
     <div class="pfname"><input class="inp" id="pfName" maxlength="14" value="${esc(P.seats.me||'')}" placeholder="Ton pseudo" autocomplete="off"><button class="btn sm" data-pf="name">Enregistrer</button></div>
     <p class="amsg small" id="pfMsg" style="margin-top:10px">${esc(PF.msg||'De 3 à 14 caractères. Chaque pseudo est unique.')}</p>
     ${TESTER?`<h3>Joueur test</h3><p class="amsg small">Ce profil sert aux essais : il n'apparaît dans aucun classement.</p><button class="btn" data-pf="untest" style="width:100%">Revenir à mon profil</button>`:`<h3>Compte</h3>${acct}`}
@@ -2262,8 +2452,8 @@ async function netRestart(){FR.unsubs.forEach(f=>{try{f()}catch(e){}});FR.unsubs
 function profFromCloud(v){P.seats.me=typeof v.name==='string'?v.name.slice(0,14):'';P.av=avOk(v.av)?v.av:null;P.nameKey=v.nk||null;P.nameUid=NET.uid;P.nameClash=false;
   P.elo=v.elo||1000;P.stats={g:v.g||0,w:Math.min(v.w||0,v.g||0)};P.st=v.st||null;P.per=v.per||null;P.myCode=v.code||null;P.myUid=v.code?NET.uid:null;P.peak=null;savePrefs()}
 function profReset(){P.seats.me='';P.av=null;P.nameKey=null;P.nameUid=null;P.nameClash=false;P.elo=1000;P.stats={g:0,w:0};P.st=null;P.per=null;P.myCode=null;P.myUid=null;P.peak=null;savePrefs()}
-async function profLink(kind){if(PF.busy)return;const add=!!NET.prov;PF.busy=true;PF.msg='';renderProf();
-  try{const r=await NET.link(kind);
+async function profLink(kind,tok){if(PF.busy)return;const add=!!NET.prov;PF.busy=true;PF.msg='';renderProf();
+  try{const r=tok?await NET.linkCred(kind,tok):await NET.link(kind);
     if(r.ok){PF.msg=add?'Compte ajouté ✔ Tu peux maintenant te connecter avec l\'un ou l\'autre.':'Connecté ✔ Ton profil est maintenant gardé.';netSaveProfile()}
     else if(r.exists&&add)PF.msg='Ce compte a déjà un autre profil Chkobba : on ne peut pas réunir deux profils. Rien n\'a changé.';
     else if(r.exists){
@@ -2286,7 +2476,7 @@ async function profOut(){const yes=await askYesNo('Se déconnecter ?','Cet appar
 const FR={list:{},unsubs:[],inv:{},ready:false,err:null};
 function netAvailable(){return !!FB_CONFIG||(()=>{try{return !!localStorage.getItem('chk-mock')}catch(e){return false}})()}
 function myName(){return (P.seats&&P.seats.me)||'Joueur'}
-function netSaveProfile(){if(!NET.ok)return;const st=P.stats||{g:0,w:0};NET.update('users/'+NET.uid,{test:TESTER||null,name:myName(),av:myAv(),nk:P.nameKey||null,code:P.myCode||null,elo:P.elo,g:st.g,w:st.w,at:Date.now(),st:P.st||null,per:P.per||null}).catch(()=>{});netSaveBoard()}
+function netSaveProfile(){if(!NET.ok)return;const st=P.stats||{g:0,w:0};NET.update('users/'+NET.uid,{test:TESTER||null,name:myName(),av:myAv(),nk:P.nameKey||null,code:P.myCode||null,elo:P.elo,g:st.g,w:st.w,at:(P.syncAt=Date.now()),st:P.st||null,per:P.per||null}).catch(()=>{});savePrefs();netSaveBoard()}
 /* comme netBoot, mais attend la fin d'une connexion déjà en cours (sinon netBoot répond « pas prêt » trop tôt) */
 async function netWait(){for(let i=0;i<60&&FR.booting;i++)await sleep(150);return netBoot()}
 async function netBoot(){
@@ -2300,6 +2490,9 @@ async function netBoot(){
       for(let i=0;i<8;i++){const c=Array.from({length:6},()=>A[Math.floor(Math.random()*A.length)]).join('');
         if(await NET.putIfAbsent('codes/'+c,NET.uid)){P.myCode=c;P.myUid=NET.uid;savePrefs();break}}
     }
+    /* profil relié à un compte : si un autre appareil l'a enregistré depuis notre dernier passage, c'est lui qui fait foi
+       (sinon chaque appareil écraserait le profil avec sa vieille copie) */
+    if(NET.prov&&!TESTER){try{const v=await NET.get('users/'+NET.uid);if(v&&v.at&&v.at>(P.syncAt||0)+1500){profFromCloud(v);P.syncAt=v.at;savePrefs();if(typeof syncStart==='function')syncStart()}}catch(e){}}
     await nameBoot();
     cfgLoad();adminCheck().then(()=>{if($('ovProf').classList.contains('on'))renderProf()});
     netSaveProfile();
@@ -2542,7 +2735,7 @@ try{history.replaceState({base:1},'')}catch(e){}
    6 exercices : on touche la bonne carte de sa main (ou la bonne prise). Aucune incidence sur la note ni les statistiques. */
 const TUTO=[
  {t:'Prendre une carte',txt:'À ton tour, tu joues une carte de ta main. Si une carte de la table a <b>la même valeur</b>, tu la prends.',q:'Touche la carte de ta main qui prend quelque chose.',
-  table:[[5,'♠'],[2,'♥'],[9,'♣']],hand:[[1,'♠'],[5,'♦'],[7,'♣']],ok:1,yes:'Oui ! Ton 5 prend le 5. Les deux cartes vont dans ton tas.',no:'Pas celle-là : aucune carte de la table n\'a cette valeur. Cherche la même valeur.'},
+  table:[[5,'♠'],[2,'♥'],[9,'♣']],hand:[[1,'♠'],[5,'♦'],[6,'♣']],ok:1,yes:'Oui ! Ton 5 prend le 5. Les deux cartes vont dans ton tas.',no:'Pas celle-là : aucune carte de la table n\'a cette valeur. Cherche la même valeur.'},
  {t:'Prendre plusieurs cartes',txt:'Tu peux aussi prendre <b>plusieurs cartes dont la somme</b> fait la valeur de ta carte.',q:'Quelle carte prend deux cartes d\'un coup ?',
   table:[[3,'♠'],[4,'♥'],[10,'♣']],hand:[[2,'♣'],[6,'♠'],[7,'♦']],ok:2,yes:'Bien vu : 3 + 4 = 7. Ton 7 ramasse les deux.',no:'Non. Additionne des cartes de la table : laquelle de tes cartes vaut leur somme ?'},
  {t:'Les figures',txt:'Les figures ont une valeur : <b>Dame = 8</b>, <b>Valet = 9</b>, <b>Roi = 10</b>.',q:'Avec quelle figure peux-tu prendre le 3 et le 5 ?',
@@ -2552,7 +2745,10 @@ const TUTO=[
  {t:'La Chkobba',txt:'Si tu ramasses <b>tout ce qu\'il y a sur la table</b>, c\'est une Chkobba : 1 point tout de suite.',q:'Fais une Chkobba !',
   table:[[2,'♠'],[4,'♥']],hand:[[2,'♦'],[6,'♣'],[4,'♠']],ok:1,yes:'Chkobba ! 2 + 4 = 6, la table est vide : 1 point.',no:'Tu prends une carte, mais il en reste une sur la table. Trouve la carte qui prend tout.'},
  {t:'Sans prise, on pose',txt:'Si ta carte ne prend rien, elle reste sur la table… et l\'adversaire pourra la prendre. Les <b>7</b> et les <b>carreaux</b> valent cher : ne les offre pas.',q:'Tu ne peux rien prendre. Quelle carte poses-tu ?',
-  table:[[10,'♠'],[9,'♥']],hand:[[7,'♦'],[2,'♣'],[7,'♥']],ok:1,yes:'Bien joué : le 2 de trèfle ne rapporte rien à l\'adversaire. Tu gardes tes 7.',no:'Aïe : tu offres un 7. Le 7 de carreau vaut même 1 point à lui seul. Pose plutôt ta petite carte.'}
+  table:[[10,'♠'],[9,'♥']],hand:[[7,'♦'],[2,'♣'],[7,'♥']],ok:1,yes:'Bien joué : le 2 de trèfle ne rapporte rien à l\'adversaire. Tu gardes tes 7.',no:'Aïe : tu offres un 7. Le 7 de carreau vaut même 1 point à lui seul. Pose plutôt ta petite carte.'},
+ {t:'Compter les points',txt:'À la fin de la manche, chacun compte ce qu\'il a ramassé. Il y a <b>4 points</b> à gagner : Karta (plus de 20 cartes), Dinari (plus de 5 carreaux), El Haya (le 7 de carreau) et Bermila (le plus de 7 ; à égalité, le plus de 6). Chaque Chkobba ajoute 1 point.',q:'Combien de points marques-tu ?',
+  recap:[['Toi','22 cartes','4 carreaux','le 7 de carreau','deux 7, un 6','1 Chkobba'],['L\'adversaire','18 cartes','6 carreaux','–','deux 7, trois 6','pas de Chkobba']],
+  choices:['2 points','3 points','4 points'],ok:1,yes:'Oui, 3 points : Karta (22 cartes), El Haya (le 7 de carreau) et ta Chkobba. L\'adversaire en marque 2 : Dinari (6 carreaux) et Bermila (deux 7 chacun, mais il a plus de 6).',no:'Recompte ligne par ligne : plus de 20 cartes ? plus de 5 carreaux ? le 7 de carreau ? le plus de 7 (sinon le plus de 6) ? Puis ajoute tes Chkobba.'}
 ];
 let tutoI=0,tutoDone=false;
 const tmk=([v,su],i)=>({v,s:su,red:su==='♦'||su==='♥',id:'tu'+i+v+su});
@@ -2564,19 +2760,24 @@ function tutoRender(){
         <li><b>Karta</b> : le plus de cartes (plus de 20)</li><li><b>Dinari</b> : le plus de carreaux (plus de 5)</li>
         <li><b>El Haya</b> : le 7 de carreau</li><li><b>Bermila</b> : le plus de 7</li><li><b>Chkobba</b> : 1 point à chaque fois</li>
       </ul>
-      <p class="amsg small">Le premier à 11 ou 21 points gagne la partie. Commence au niveau Facile : l'aide te montre les cartes qui peuvent prendre.</p>
+      <p class="amsg small">Le premier à 11 ou 21 points gagne la partie (avec 2 points d'avance, sauf si tu désactives cette règle). Commence au niveau Facile : l'aide te montre les cartes qui peuvent prendre.</p>
       <div class="stack"><button class="btn" id="tutoPlay">Jouer ma première partie</button><button class="btn ghost" id="tutoClose">Retour aux règles</button></div>`;return}
   const st=TUTO[tutoI];
   $('tutoPanel').innerHTML=`<p class="tustep">Exercice ${tutoI+1} sur ${TUTO.length}</p><h2>${st.t}</h2><p style="margin:0 0 10px">${st.txt}</p>
-    <div class="lp-mat tumat"><div class="lp-table">${st.table.map((c,i)=>cardHTML(tmk(c,'t'+i))).join('')}</div></div>
+    ${st.recap?`<div class="turecap">${st.recap.map(r=>`<div><b>${r[0]}</b>${r.slice(1).map(x=>`<span>${x}</span>`).join('')}</div>`).join('')}</div>`:`<div class="lp-mat tumat"><div class="lp-table">${st.table.map((c,i)=>cardHTML(tmk(c,'t'+i))).join('')}</div></div>`}
     <p class="tuq">${st.q}</p>
-    ${st.choices?`<div class="tuhand one">${st.hand.map((c,i)=>cardHTML(tmk(c,'h'+i))).join('')}</div><div class="stack">${st.choices.map((c,i)=>`<button class="btn ghost" data-tu="${i}">${c}</button>`).join('')}</div>`
+    ${st.choices?`${st.recap?'':`<div class="tuhand one">${st.hand.map((c,i)=>cardHTML(tmk(c,'h'+i))).join('')}</div>`}<div class="stack">${st.choices.map((c,i)=>`<button class="btn ghost" data-tu="${i}">${c}</button>`).join('')}</div>`
       :`<div class="tuhand">${st.hand.map((c,i)=>`<button class="tuc" data-tu="${i}">${cardHTML(tmk(c,'h'+i))}</button>`).join('')}</div>`}
     <p class="tufb" id="tuFb"></p>
     <div class="stack"><button class="btn" id="tutoNext" style="display:none">${tutoI===TUTO.length-1?'Terminer':'Suivant'}</button><button class="btn ghost" id="tutoClose">Quitter le tutoriel</button></div>`;
   tutoDone=false;
 }
 $('tutoBtn').onclick=()=>{tutoI=0;tutoRender();$('ovTuto').classList.add('on')};
+/* Partie rapide : à 2, contre l'ordinateur, 11 points. Les réglages du joueur ne sont pas modifiés. */
+$('quickBtn').onclick=async()=>{const k={mode:P.mode,opp:P.opp,target:P.target,level:P.level};
+  P.mode='c2';P.opp='libre';P.target=11;if(!(P.stats&&P.stats.g>0))P.level='facile';syncStart();
+  try{await $('startBtn').onclick()}finally{Object.assign(P,k);savePrefs()}};
+$('homeTuto').onclick=()=>{P.tutoSeen=true;savePrefs();$('homeTuto').style.display='none';$('tutoBtn').onclick()};
 $('tutoPanel').addEventListener('click',e=>{
   if(e.target.id==='tutoClose'){$('ovTuto').classList.remove('on');return}
   if(e.target.id==='tutoNext'){tutoI++;tutoRender();$('tutoPanel').scrollTop=0;return}
@@ -2585,7 +2786,7 @@ $('tutoPanel').addEventListener('click',e=>{
   const st=TUTO[tutoI],good=+b.dataset.tu===st.ok,fb=$('tuFb');
   fb.textContent=good?st.yes:st.no;fb.className='tufb '+(good?'ok':'ko');
   $('tutoPanel').querySelectorAll('[data-tu]').forEach(x=>x.classList.remove('ko'));
-  if(good){tutoDone=true;b.classList.add('ok');$('tutoNext').style.display='';SFX.take&&SFX.take()}else b.classList.add('ko');
+  if(good){tutoDone=true;b.classList.add('ok');$('tutoNext').style.display='';try{$('tutoNext').scrollIntoView({block:'nearest',behavior:'smooth'})}catch(e){}SFX.take&&SFX.take()}else b.classList.add('ko');
 });
 
 /* ================= Statistiques =================
@@ -2942,7 +3143,8 @@ async function admRender(){const t=AD.tab,dis=AD.busy?'disabled':'';let body='';
     +`<p class="amsg small">Pour mettre un mot en gras : &lt;b&gt;mot&lt;/b&gt;.</p><div class="admfoot"><button class="btn" data-ad="savetu" ${dis}>Publier le tutoriel</button><button class="btn sm ghost" data-ad="resettu" ${dis}>Tutoriel d'origine</button></div>`;
   else if(t==='acc')body=await admAccessHTML();
   else if(t==='test')body=`<p>Le joueur test est un profil à part sur cet appareil : son propre pseudo, sa note, ses parties. Il joue normalement, en ligne compris, mais n'apparaît jamais dans les classements et ne touche jamais ton profil.</p>
-    <p class="amsg small">Pour jouer contre toi-même en ligne : joueur test sur un appareil, ton profil sur un autre.</p><button class="btn" data-ad="tester" style="width:100%">Passer en joueur test</button>`;
+    <p class="amsg small">Pour jouer contre toi-même en ligne : joueur test sur un appareil, ton profil sur un autre.</p><button class="btn" data-ad="tester" style="width:100%">Passer en joueur test</button>
+    <h3 style="margin-top:18px">Mes statistiques</h3><p class="amsg small">Remet ta note à 1000 et tes parties à zéro, ici et sur tes autres appareils reliés au même compte (à leur prochaine ouverture). Ton pseudo, ton avatar et tes amis ne changent pas.</p><button class="btn sm ghost" data-ad="zero" style="width:100%">Remettre mes statistiques à zéro</button>`;
   const tabs=[['snd','Sons'],['rx','Réactions'],['txt','Messages'],['nm','Prénoms'],['tu','Tutoriel'],['acc','Accès'],['test','Joueur test']];
   $('admPanel').innerHTML=`<h2>Administration</h2><div class="admtabs">${tabs.map(([k,l])=>`<button class="btn sm ${k===t?'':'ghost'}" data-adt="${k}">${l}</button>`).join('')}</div>
     <p class="amsg" id="admMsg" style="min-height:1.2em">${esc(AD.msg)}</p><div class="admbody">${body}</div>`}
@@ -2981,6 +3183,10 @@ async function admClick(e){const tb=e.target.closest('[data-adt]');if(tb){AD.tab
       if(!await askYesNo('Ajouter un administrateur ?',`${esc(v&&v.name?v.name:'Ce joueur')} pourra tout modifier dans cette console, et ajouter ou retirer d'autres administrateurs.`,'Ajouter','Annuler'))return;
       await NET.set('admins/'+u,true);admMsg('Administrateur ajouté.')}catch(x){admMsg('L\'ajout a échoué : '+((x&&x.code)||x))}admRender()}
   else if(k==='unadm'){if(!await askYesNo('Retirer cet administrateur ?','Il n\'aura plus accès à cette console.','Retirer','Annuler'))return;try{await NET.remove('admins/'+b.dataset.u);admMsg('Administrateur retiré.')}catch(x){admMsg('Le retrait a échoué.')}admRender()}
+  else if(k==='zero'){if(S&&S.online&&!S.over){admMsg('Termine d\'abord ta partie en ligne.');return}
+    if(!await askYesNo('Remettre tes statistiques à zéro ?','Ta note, tes parties, tes victoires et ta place dans les classements seront effacées. C\'est définitif.','Remettre à zéro','Annuler'))return;
+    const per=perGet();for(const p of PER_KEYS.map(x=>`lb/${x}/${per[x].id}/${NET.uid}`))await NET.remove(p).catch(()=>{});
+    P.elo=1000;P.stats={g:0,w:0};P.st=null;P.per=null;P.peak=null;savePrefs();netSaveProfile();admMsg('Statistiques remises à zéro.')}
   else if(k==='tester'){if(S&&S.online&&!S.over){admMsg('Termine d\'abord ta partie en ligne.');return}try{localStorage.setItem('chkobba-mode','test')}catch(x){}location.reload()}}
 async function admUpload(e){const inp=e.target.closest('[data-up]');if(!inp||!inp.files[0])return;const k=inp.dataset.up;AD.busy=true;admMsg('Préparation du son…');admRender();
   try{const r=await admPrepSound(inp.files[0],k);if(r.b64.length>(k==='napola'?560000:400000)){AD.busy=false;admMsg('Ce son est trop long, même coupé à 6 secondes. Choisis un extrait plus court.');admRender();return}
@@ -3169,16 +3375,16 @@ async function sweepRest(){
     const who=S.n===2?(t===0?'toi':S.people[1].n):(t===0?'ton équipe':"l'équipe adverse");
     hintOverride=`Fin de la manche : ${n===1?'la carte restante va':'les '+n+' cartes restantes vont'} à ${who} (dernier à avoir ramassé)`;
     S.taking=new Set(S.table.map(c=>c.id));render();
-    await sleep(T(1300));
+    await gsleep(T(1300));
     let tgt=t===0?$('pile0'):(S.n===2?$('pile1'):($('pileS')||document.querySelector('[data-p="1"] .av')));
     const pr=rect(tgt),tw=Math.min(pr.width||38,38),to={left:pr.left+pr.width/2-tw/2,top:pr.top+pr.height/2-tw*.725,width:tw,height:tw*1.45};
     const fl=S.table.map(c=>{const el=$('table').querySelector(`[data-id="${c.id}"]`);return el?makeFlyer(c,rect(el)):null}).filter(Boolean);
     S.ghost=new Set(S.table.map(c=>c.id));S.taking=new Set();render();
     SFX.take();
-    await Promise.all(fl.map((d,i)=>sleep(T(i*70)).then(()=>moveFlyer(d,to,T(450)))));
+    await Promise.all(fl.map((d,i)=>gsleep(T(i*70)).then(()=>moveFlyer(d,to,T(450)))));
     fl.forEach(d=>d.remove());
     S.piles[t].push(...S.table);S.table=[];S.ghost=new Set();hintOverride=null;render();
-    await sleep(T(400));
+    await gsleep(T(400));
   }
   endManche();
 }
@@ -3222,6 +3428,7 @@ function endManche(){
     if(S.online)watchRematch();
   }
   $('nextBtn').onclick=()=>{
+    if(!$('ovScore').classList.contains('on'))return; /* double toucher : une seule manche suivante */
     $('ovScore').classList.remove('on');
     if(S.over){if(S.online&&S.rmOffer&&NET.ok)NET.set(`tables/${S.rmOffer.code}/quit/${NET.uid}`,true).catch(()=>{});leaveOnline();openStart();return}
     if(S.auto){const L=['facile','moyen','fort','expert'],i=L.indexOf(S.level),d=S.lastTot[0]-S.lastTot[1];
@@ -3276,6 +3483,11 @@ function sizes(){
   document.querySelector('.bottom').classList.toggle('many',many);
   const avail=many?W-28:W-(land?140:148);
   let hcw=land?Math.min(H*.36,124):(n<=5?(S&&S.n===4?Math.min(W*.22,H*.125,92):Math.min(W*.25,H*.14,104)):Math.min(W*.2,H*.12,96)); // à 4 joueurs le tapis est plus étroit : main un peu plus petite pour garder les proportions // main à 3 cartes un peu réduite pour laisser grandir le tapis
+  /* Paysage, cartes sans chiffres : on ne peut lire une carte qu'en voyant tous ses symboles. La main est donc affichée
+     en entier (pas coupée par le bas de l'écran) et sans chevauchement, quitte à être plus petite. */
+  const whole=land&&!idx;
+  if(whole)hcw=Math.max(Math.min(H*.22,(avail-(n-1)*gap)/Math.max(n,1)),H*.12);
+  document.documentElement.style.setProperty('--hcrop',whole?'-.05':'.5');
   let perRow=Math.max(1,Math.floor((avail+gap)/(hcw+gap))),ov=gap;
   if(n>perRow){
     // avec chiffres : éventail sur une ligne, le coin de chaque carte reste visible
@@ -3381,7 +3593,7 @@ function render(){
   const hc=$('hCancel');if(hc) hc.onclick=()=>{S.sel=null;S.pick=new Set();render()};
   $('hint').querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const o=captures(S.sel,S.table)[+b.dataset.o];if(o)performPlay(0,S.sel,o)});
   fitTable(hcw);drawFrame();
-  if(!S.online&&!S.busy&&!S.dealing&&S.turn===0&&!S.over&&!S.sel)saveGame(false);
+  if(!S.online&&!S.busy&&!S.dealing&&S.turn===0&&!S.over&&!S.sel&&!handsEmpty())saveGame(false);
 }
 function bubble(p,t,ms){
   const av=p===0?document.querySelector('#meSeat .av'):document.querySelector(`[data-p="${p}"] .av`);if(!av) return;
@@ -3462,8 +3674,10 @@ function syncStart(){
   [...$('targetRow').children].forEach(b=>b.classList.toggle('on',+b.dataset.t===P.target));
   $('tgNapola').classList.toggle('on',!!P.napola);$('tgEcart').classList.toggle('on',!!P.ecart);$('tgTrain').classList.toggle('on',!!P.train);
   [...$('levelRow').children].forEach(b=>b.classList.toggle('on',b.dataset.l===P.level));$('autoStartBox').style.display=P.level==='auto'?'block':'none';[...$('autoStartRow').children].forEach(b=>b.classList.toggle('on',b.dataset.a===(P.autoStart||'moyen')));
-  $('levelInfo').textContent={facile:"Débutants : ils connaissent les règles mais font souvent des erreurs.",moyen:"Joueurs du dimanche : du bon sens, mais ils ne comptent pas les cartes.",fort:"Bons joueurs : ils comptent les cartes sorties et évitent de t'offrir des Chkobba.",expert:"Experts : ils comptent tout et anticipent ta réponse avant de jouer.",auto:"Ça commence au niveau que tu choisis ci-dessous. Si tu gagnes nettement une manche, ça monte d'un niveau ; si tu perds nettement, ça descend. Pour des parties toujours serrées."}[P.level];
+  $('levelInfo').textContent={facile:"Débutants : ils connaissent les règles mais font souvent des erreurs.",moyen:"Joueurs du dimanche : du bon sens, mais ils ne comptent pas les cartes.",fort:"Bons joueurs : ils comptent les cartes sorties et évitent de t'offrir des Chkobba.",expert:"Experts : ils comptent toutes les cartes, savent quelles courses sont encore à gagner et calculent la fin de manche.",auto:"Ça commence au niveau que tu choisis ci-dessous. Si tu gagnes nettement une manche, ça monte d'un niveau ; si tu perds nettement, ça descend. Pour des parties toujours serrées."}[P.level];
   $('resumeBtn').style.display=(S&&!S.over)?'block':'none';
+  /* premier lancement : on propose le tutoriel tant qu'aucune partie n'a été jouée */
+  $('homeTuto').style.display=(!P.tutoSeen&&!(P.stats&&P.stats.g>0)&&!(S&&!S.over))?'flex':'none';
   [...$('oppRow').children].forEach(b=>b.classList.toggle('on',b.dataset.o===P.opp));
   if(P.opp!=='amis'&&P.opp!=='mm')P.opp='libre';
   $('circleBox').style.display=P.opp==='amis'?'block':'none';$('libreBox').style.display=P.opp==='libre'?'block':'none';$('mmBox').style.display=P.opp==='mm'?'block':'none';
@@ -3494,7 +3708,7 @@ function homeProfile(){
   $('homeStats').textContent=`${lgName(P.elo)} · ${P.elo}`+(st.g?` · ${st.w} victoire${st.w>1?'s':''} sur ${st.g}`:'');
 }
 
-function openStart(){homeIll();homeProfile();syncStart();$('ovStart').classList.add('on')}
+function openStart(){flyersClear();$('ovScore').classList.remove('on');homeIll();homeProfile();syncStart();$('ovStart').classList.add('on')}
 function buildLook(){
   const sample=[{v:7,s:'♦',red:true,id:'p1'},{v:10,s:'♠',red:false,id:'p2'},{v:8,s:'♥',red:true,id:'p3'},{v:9,s:'♣',red:false,id:'p4'}];
   {const mk=(v,su)=>({v,s:su,red:su==='♦'||su==='♥',id:'lp'+v+su});
@@ -3525,7 +3739,7 @@ $('tgNapola').onclick=()=>{P.napola=!P.napola;savePrefs();syncStart()};
 $('tgEcart').onclick=()=>{P.ecart=!P.ecart;savePrefs();syncStart()};
 $('tgTrain').onclick=()=>{P.train=!P.train;savePrefs();syncStart()};
 $('startBtn').onclick=async()=>{ac();SFX.tap();if(!await leaveCurrent())return;if(P.opp==='amis'){createTable();return}if(P.opp==='mm'){mmStart();return}leaveOnline();clearSave();$('ovStart').classList.remove('on');newGame()};
-$('resumeBtn').onclick=()=>{$('ovStart').classList.remove('on');if(S&&S.needNew){S.needNew=false;S.dealer=(S.dealer+1)%S.n;newManche()}else if(S)render()};
+$('resumeBtn').onclick=()=>{$('ovStart').classList.remove('on');if(S&&S.needNew){S.needNew=false;S.dealer=(S.dealer+1)%S.n;newManche()}else if(S){render();if(!S.over&&handsEmpty())afterPlay((S.turn+S.n-1)%S.n)}};
 $('pendBox').addEventListener('click',e=>{if(e.target.id==='pendGo')resumeOnline();if(e.target.id==='pendQuit')leaveCurrent()});
 $('menuBtn').onclick=openMenu;
 /* Scores : manche par manche, puis les parties précédentes contre les mêmes adversaires. Rien sur la manche en cours.
@@ -3839,41 +4053,6 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
   }catch(e){}
 })();
 </script>
-<style id="suivi-direct-style">
-/* Suivi en direct (770lab, 16/11/2026) : sur un écran large (iPhone Duo ouvert, tablette, ordinateur), un volet à droite
-   montre l'état de la manche pendant qu'on joue. Bloc absent du fichier de Laurent, comme les trois autres. */
-#direct{display:none}
-html.direct #app{width:calc(100% - var(--dw));margin:0}
-html.direct .banner{left:calc((100vw - var(--dw))/2)}
-html.direct #direct{display:flex;flex-direction:column;gap:10px;position:fixed;top:0;right:0;bottom:0;width:var(--dw);z-index:5;
-  box-sizing:border-box;overflow-y:auto;scrollbar-width:none;color:#fff;font-weight:700;
-  padding:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 10px) calc(max(env(safe-area-inset-right),var(--safe-area-inset-right,0px)) + 12px) calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 10px) 12px;
-  background:rgba(0,0,0,.22);border-left:1px solid rgba(255,255,255,.14)}
-#direct::-webkit-scrollbar{display:none}
-#direct h4{margin:0;font-family:var(--fd);font-size:17px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-#direct h4 small{font-family:inherit;font-size:12px;font-weight:700;opacity:.7}
-#direct .dq{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:9px 11px}
-#direct .dq.ok{background:rgba(255,207,90,.2);border-color:rgba(255,207,90,.6)}
-#direct .dq.ko{opacity:.72}
-#direct .dt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14.5px;font-weight:900}
-#direct .dt i{font-style:normal;font-size:12px;font-weight:800;opacity:.85;text-align:right}
-#direct .dq.ok .dt i{color:#ffcf5a;opacity:1}
-#direct .db{position:relative;height:9px;border-radius:9px;background:rgba(255,255,255,.14);margin:7px 0 5px;overflow:hidden}
-#direct .db b{position:absolute;top:0;bottom:0;left:0;background:#ffcf5a;border-radius:9px 0 0 9px}
-#direct .db u{position:absolute;top:0;bottom:0;right:0;background:rgba(255,255,255,.55);border-radius:0 9px 9px 0}
-#direct .db s{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.9}
-#direct .dl{display:flex;justify-content:space-between;font-size:12px;font-weight:700;opacity:.85}
-#direct .dl b{font-weight:900;opacity:1}
-#direct .dp{display:flex;gap:8px}
-#direct .dp>div{flex:1;text-align:center;background:rgba(255,255,255,.1);border-radius:14px;padding:8px 4px}
-#direct .dp b{display:block;font-family:var(--fd);font-size:26px;line-height:1}
-#direct .dp span{font-size:11.5px;opacity:.8}
-#direct .dnote{font-size:11.5px;font-weight:600;opacity:.65;line-height:1.3;margin:0}
-#direct table{width:100%;border-collapse:collapse;font-size:12px}
-#direct th,#direct td{padding:3px 2px;text-align:center;font-weight:700}
-#direct td:first-child,#direct th:first-child{text-align:left;opacity:.8}
-#direct th{font-size:11px;opacity:.75;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-</style>
 <script id="suivi-direct">
 /* Suivi en direct de la manche (770lab, 16/11/2026). N'écrit rien, ne change aucune règle : il relit S.piles, S.chk, S.gm
    et tally() après chaque render(). Affiché seulement en entraînement contre l'IA quand le joueur a demandé l'aide au comptage (aideComptage(), règle de Laurent du 18/11), sur un écran d'au moins 700 × 480 (iPhone Duo ouvert,
