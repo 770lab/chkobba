@@ -3956,6 +3956,50 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
   homeProfile=function(){var r=_homeProfile.apply(this,arguments);try{stats()}catch(x){}return r};
   try{stats()}catch(x){}
 })();
+
+/* Historique « face à face » / « ensemble » gardé avec le profil, abandons comptés (770lab, 24/11/2026).
+   Le jeu compte, pour chaque joueur rencontré en ligne, les parties gagnées et perdues contre lui (wa/la) ou avec lui
+   (wp/lp) : P.rel, montré dans « Toi et X ». Trois manques, signalés par un joueur qui voyait « jamais joué ensemble » :
+   1) ce compte n'était gardé que sur l'appareil (localStorage) : sur un autre téléphone ou après une réinstallation,
+      tout l'historique disparaissait, le profil en ligne ne le contenant pas ;
+   2) un abandon (ou une partie finie sans toi au retour) baissait la note sans compter dans ce face à face ;
+   3) la partie en attente (P.pend) ne retenait pas qui était à la table.
+   Rien de Laurent n'est modifié : startOnline, eloAbandon, netSaveProfile et profFromCloud sont enveloppés.
+   - startOnline : P.pend.uids = les identifiants des sièges (null pour l'ordinateur), même ordre que S.seatUid.
+   - eloAbandon(info) : si info.uids est là, chaque joueur réel de la table reçoit une défaite (partenaire : lp,
+     adversaires : la), comme eloUpdate(false) l'aurait fait.
+   - netSaveProfile : envoie P.rel dans users/<uid>/rel, à part du profil (une règle Firebase qui le refuserait ne
+     casserait pas l'enregistrement du profil), seulement s'il a changé depuis le dernier envoi.
+   - profFromCloud(v) : v.rel est fusionné dans P.rel, joueur par joueur, compteur par compteur, le plus grand des deux
+     gagne (rien n'est perdu, rien n'est compté deux fois quand les deux appareils ont le même historique).
+   Règles Firebase : users/$uid/rel doit être accessible en écriture à son propriétaire (comme le reste de son profil). */
+(function(){
+  if(!(typeof startOnline==='function'&&typeof eloAbandon==='function'&&typeof netSaveProfile==='function'&&typeof profFromCloud==='function'&&typeof rel==='function'&&typeof team==='function'))return;
+  var CLES=['wp','lp','wa','la'];
+  var _startOnline=startOnline;
+  startOnline=function(){var r=_startOnline.apply(this,arguments);
+    try{if(P.pend&&S&&S.seatUid){P.pend.uids=S.seatUid.map(function(u){return typeof u==='string'&&u?u:null});savePrefs()}}catch(e){}
+    return r};
+  var _eloAbandon=eloAbandon;
+  eloAbandon=function(info){
+    try{var u=info&&info.uids;if(u&&u.length){for(var p=1;p<u.length;p++){var id=u[p];if(!id||id===NET.uid)continue;var X=rel(id);if(team(p)===0)X.lp++;else X.la++}}}catch(e){}
+    return _eloAbandon.apply(this,arguments); /* savePrefs() et netSaveProfile() sont dedans */
+  };
+  var envoye=null;
+  var _netSaveProfile=netSaveProfile;
+  netSaveProfile=function(){var r=_netSaveProfile.apply(this,arguments);
+    try{if(NET.ok&&NET.uid&&P.rel){var j=JSON.stringify(P.rel);
+      if(j!=='{}'&&j!==envoye){envoye=j;Promise.resolve(NET.set('users/'+NET.uid+'/rel',JSON.parse(j))).catch(function(){envoye=null})}}}catch(e){}
+    return r};
+  var _profFromCloud=profFromCloud;
+  profFromCloud=function(v){var r=_profFromCloud.apply(this,arguments);
+    try{if(v&&v.rel&&typeof v.rel==='object'){P.rel=P.rel||{};
+      Object.keys(v.rel).forEach(function(id){var c=v.rel[id];if(!c||typeof c!=='object')return;
+        var n={},tot=0;CLES.forEach(function(k){n[k]=Math.max(0,Math.floor(+c[k])||0);tot+=n[k]});if(!tot)return; /* rien à prendre : pas d'entrée vide */
+        var X=rel(id);CLES.forEach(function(k){if(n[k]>(+X[k]||0))X[k]=n[k]})});
+      savePrefs()}}catch(e){}
+    return r};
+})();
 </script>
 <script id="ajouts-amis">
 /* Ajouts « jeu entre amis » de 770lab, adaptés le 16/11/2026 à la version de Laurent (repris le 18/11 sur sa livraison finale : pseudo par setMyName). Ce bloc n'est PAS dans son fichier.
