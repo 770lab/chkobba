@@ -48,7 +48,9 @@ Reprendre une nouvelle version de Laurent :
 
 **BASCULE FAITE LE 25/11/2026 À 15 H 14** (« Go, bascule complète » d'Ishay, donné ici et confirmé sur le MacBook Air). Ce qui suit plus bas est
 l'histoire de la préparation ; l'état actuel est celui-ci :
-- Le site (PR #9) et les applis (`chkobba-app` PR #10, TestFlight + APK de test lancés à 15 h 13) pointent vers **`chkobba-770lab`**.
+- Le site (PR #9) et les applis (`chkobba-app` PR #10 : **TestFlight build 46** envoyé à 15 h 21, **APK de test 44** en pré-release
+  `apk-test-44`, ouvert et contrôlé avant publication) pointent vers **`chkobba-770lab`**. Page en ligne ouverte au format téléphone,
+  Firebase bloqué pour ne créer aucun joueur : accueil affiché, aucune erreur de script.
 - Import final à 15 h 10 – 15 h 11, vérifié par la session du MacBook Air puis recoupé depuis le cloud : 139 comptes des deux côtés (mêmes uid,
   mêmes fournisseurs, mêmes adresses), base identique nœud pour nœud, règles identiques, lecture et écriture refusées sans compte (401). Personne
   n'avait joué chez Laurent depuis le 24/11 à 21 h 58 : rien n'a été perdu entre l'export et la bascule.
@@ -58,9 +60,12 @@ l'histoire de la préparation ; l'état actuel est celui-ci :
   ses joueurs et ceux du site ne se voient plus tant qu'il n'a pas repris le nouveau `FB_CONFIG` et `OAUTH.google` de `index.html`.
 - Les exports de 15 h 10 sont dans `~/chkobba-demenagement/export-laurent-J2` sur le MacBook Air (dossier privé : adresses et empreintes de mots de
   passe, jamais dans un dépôt).
-- **Reste à faire** : vérifier que l'écran de consentement Google est « En production » (console Google Cloud → `chkobba-770lab` → Google Auth
-  Platform → Audience), sinon la connexion Google ne marche que pour les comptes de test ; essayer en vrai Google, Facebook et le mot de passe d'un
-  compte e-mail importé ; prévenir Laurent ; faire installer la nouvelle appli aux testeurs (une ancienne appli reste chez Laurent).
+- Écran de consentement Google : « En production » (vu dans la console le 25/11 à 15 h 12), rien à faire.
+- **Reste à faire** : essayer en vrai, sur le site, la connexion Google, Facebook et le mot de passe d'un compte e-mail importé (jamais
+  essayés de bout en bout) ; chez Meta (appli Facebook de Laurent, `1458044300724505`), ajouter l'adresse de retour
+  `https://chkobba-770lab.firebaseapp.com/__/auth/handler` aux URI de redirection OAuth valides (la connexion Facebook par fenêtre, sur
+  ordinateur, passe par elle ; l'aller-retour du téléphone garde `https://770lab.com/chkobba/`) ; prévenir Laurent et lui faire reprendre
+  `FB_CONFIG` et `OAUTH.google` ; faire installer la nouvelle appli aux testeurs (une ancienne appli reste chez Laurent).
 - **Revenir en arrière** (si besoin, dans les premières heures) : `outils/bascule-firebase.mjs` avec l'ancienne configuration (dans l'historique
   git, commit `beb54c0`) ; ce que les joueurs auront écrit chez 770lab entre-temps n'y sera pas.
 
