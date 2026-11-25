@@ -79,8 +79,8 @@ chabadclub770@gmail.com ; dossier privé `~/chkobba-demenagement`, hors git). D'
 **Les applis ne sont dans aucun magasin** (vérifié le 25/11 dans `chkobba-app`) : iPhone = TestFlight à la demande (`ios.yml`, `testflight=true`),
 Android = APK de test à chaque push sur `main` (l'envoi Play « test interne » n'a jamais servi). « Le site et les applis en même temps » = environ
 une heure de construction, sans validation Apple ni Google. La copie d'essai de Laurent (chkobba-55555.netlify.app) reste sur son projet tant qu'il
-ne reprend pas le nouveau `FB_CONFIG`. Le site est servi avec `cache-control: max-age=600` : un joueur peut garder l'ancienne page une dizaine de
-minutes, et tant que son service worker n'a pas pris la nouvelle.
+ne reprend pas le nouveau `FB_CONFIG`. Le jour J, `index.html` est servi avec `cache-control: max-age=600` et `sw.js` reste 4 h chez Cloudflare (`max-age=14400`) : le service worker
+va chercher la page sur le réseau d'abord, donc un joueur passe sur le nouveau projet dans les dix minutes, pas tous au même instant.
 
 Ensuite, sur un Mac où `firebase` est connecté avec chabadclub770 (l'iMac ou le MacBook Air ; jamais depuis le cloud : il faut le compte) :
 1. **Exporter chez Laurent** : la base (`firebase database:get / --project chkobba-55555 -o base-laurent.json`), les comptes
