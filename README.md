@@ -37,6 +37,20 @@ de Laurent sont enveloppées, pas modifiées. **Règles Firebase : `users/$uid/r
 propriétaire** (à vérifier dans les règles réelles ; sur le projet de 770lab, les règles seront à nous). Essais : `node essais/rel.test.mjs`
 (Playwright + `essais/faux-firebase.mjs`, un faux Firebase qui répond à `initMock` ; format téléphone ; 33 vérifications, jamais sur une vraie base).
 
+Ajouts du 25/11/2026 dans `correctifs-jeu` (avant l'envoi à Apple) :
+- **« Supprimer mon profil »**, à la fin de « Mon profil » (`renderProf` enveloppé). Apple l'exige dès qu'une appli permet de créer un
+  compte (règle 5.1.1 v). Deux confirmations, jamais pendant une partie en ligne ; un compte relié doit s'être identifié depuis moins de
+  4 minutes (mot de passe redemandé, ou fenêtre Google / Facebook) ; puis sont effacés : le joueur dans la liste de chaque ami, `board/<uid>`,
+  `lb/<période>/<id>/<uid>` pour toutes les périodes depuis octobre 2026 (`DEBUT`), `names/<pseudo>`, `status/<uid>`, `users/<uid>`, et le compte
+  Firebase. **`codes/<code>` reste** : la règle ne laisse écrire un code que s'il n'existe pas ; il ne contient que l'identifiant. L'appareil
+  repart en invité, comme après « Se déconnecter ». `confidentialite.html` l'explique.
+- **Le son est rendu quand on quitte le jeu** (signalé par Laurent le 25/11 : le lecteur « Chkobba » restait sur l'écran verrouillé de
+  l'iPhone et bloquait les autres sources audio) : `audioUnlock()` joue une boucle muette (`IOSAUD`) que rien n'arrêtait. Page cachée → boucle
+  arrêtée et jetée, moteur de sons en pause, session audio rendue ; elle revient au toucher suivant. Laurent dit avoir fait cette correction
+  de son côté (« une de mes deux modifs ») : sa copie en ligne ne la contenait pas le 25/11, **à reprendre de son fichier quand il l'enverra**.
+- Essais : `node essais/suppression.test.mjs` (22 vérifications, faux Firebase) ; plus un essai réel le 25/11 avec un invité jetable sur
+  `chkobba-770lab` : fiche, classements, présence et compte effacés, rien n'est réapparu à la coupure de la connexion.
+
 Reprendre une nouvelle version de Laurent :
 1. garder nos trois blocs (les copier depuis l'`index.html` actuel), remplacer le reste par son fichier, reposer les blocs ;
 2. changer `V` dans `sw.js` (`chkobba-AAAAMMJJ-HHMM`) ;
