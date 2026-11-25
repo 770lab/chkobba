@@ -152,6 +152,29 @@ try {
     ok(erreurs.length === 0, 'aucune erreur de page' + (erreurs.length ? ' : ' + erreurs.join(' | ') : ''));
     await ctx.close();
   }
+
+  console.log('7. « Signaler ce joueur » sur la fiche d\'un autre joueur');
+  await reset();
+  {
+    const { ctx, page, erreurs } = await ouvrir('M');
+    await page.evaluate(async () => { await NET.set('users/B', { name: 'Bob <b>', elo: 1040, g: 5, w: 3, st: { g: 5, w: 3, chk: 2 } }); });
+    await page.evaluate(() => openCompare('B'));
+    await attendreBoite(page, 'Toi et Bob');
+    const l = await page.evaluate(() => { const a = document.querySelector('#askPanel [data-signal]'); return a ? { texte: a.textContent, href: a.getAttribute('href'), avantBoutons: !!(a.closest('p').nextElementSibling && a.closest('p').nextElementSibling.classList.contains('stack')), html: a.closest('p').innerHTML } : null; });
+    ok(!!l && l.texte === 'Signaler ce joueur' && l.avantBoutons, 'le lien est sur la fiche, au-dessus du bouton Fermer');
+    const corps = l ? decodeURIComponent(l.href.split('body=')[1] || '') : '';
+    ok(!!l && l.href.startsWith('mailto:contact@770lab.com?subject=') && corps.includes('Bob <b>') && corps.includes('identifiant B') && /Mon code ami : [A-Z0-9]{6}/.test(corps), 'l\'e-mail part à contact@770lab.com avec le pseudo, l\'identifiant du joueur et mon code ami');
+    ok(!!l && !l.html.includes('<b>'), 'un pseudo contenant du code n\'est pas interprété dans la page');
+    await page.locator('#askNo').click(); await dodo(200);
+    await page.evaluate(() => openCompare('B')); await attendreBoite(page, 'Toi et Bob');
+    ok(await page.evaluate(() => document.querySelectorAll('#askPanel [data-signal]').length) === 1, 'un seul lien à chaque ouverture');
+    await page.locator('#askNo').click(); await dodo(200);
+    await page.evaluate(() => openCompare('inconnu-zzz')); await dodo(600);
+    ok(await page.evaluate(() => !document.querySelector('#askPanel [data-signal]') || !document.getElementById('ovAsk').classList.contains('on')), 'joueur introuvable : pas de fiche, pas de lien');
+    ok((await ops()).filter(o => /signal|report/i.test(o.path)).length === 0, 'rien n\'est écrit dans la base');
+    ok(erreurs.length === 0, 'aucune erreur de page' + (erreurs.length ? ' : ' + erreurs.join(' | ') : ''));
+    await ctx.close();
+  }
 } catch (e) {
   echecs++; console.log('  ✗ exception : ' + (e && e.stack || e));
 } finally {

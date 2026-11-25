@@ -48,7 +48,10 @@ Ajouts du 25/11/2026 dans `correctifs-jeu` (avant l'envoi à Apple) :
   l'iPhone et bloquait les autres sources audio) : `audioUnlock()` joue une boucle muette (`IOSAUD`) que rien n'arrêtait. Page cachée → boucle
   arrêtée et jetée, moteur de sons en pause, session audio rendue ; elle revient au toucher suivant. Laurent dit avoir fait cette correction
   de son côté (« une de mes deux modifs ») : sa copie en ligne ne la contenait pas le 25/11, **à reprendre de son fichier quand il l'enverra**.
-- Essais : `node essais/suppression.test.mjs` (22 vérifications, faux Firebase) ; plus un essai réel le 25/11 avec un invité jetable sur
+- **« Signaler ce joueur »** sur la fiche « Toi et X » (`openCompare` enveloppé) : un e-mail à contact@770lab.com avec le pseudo et
+  l'identifiant du joueur. Apple le demande quand les joueurs voient les pseudos et photos des autres (règle 1.2). Rien n'est écrit dans
+  la base ; un profil déplacé se retire à la main dans la console Firebase (la console d'administration du jeu ne gère pas les joueurs).
+- Essais : `node essais/suppression.test.mjs` (29 vérifications, faux Firebase) ; plus un essai réel le 25/11 avec un invité jetable sur
   `chkobba-770lab` : fiche, classements, présence et compte effacés, rien n'est réapparu à la coupure de la connexion.
 
 Reprendre une nouvelle version de Laurent :

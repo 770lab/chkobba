@@ -4098,6 +4098,26 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
   }
   window.__supprimerProfil=supprimer; /* pour les essais */
 })();
+
+/* « Signaler ce joueur » (770lab, 25/11/2026). Les joueurs voient le pseudo et l'avatar ou la photo des autres (classements,
+   amis, tables) : Apple demande alors un moyen de signaler un contenu déplacé (règle 1.2). Sur la fiche « Toi et X »
+   (openCompare enveloppé), un lien ouvre un e-mail à contact@770lab.com avec le pseudo et l'identifiant du joueur ;
+   le profil signalé est retiré à la main depuis la console Firebase. Rien n'est écrit dans la base. */
+(function(){
+  if(typeof openCompare!=='function')return;
+  var _openCompare=openCompare;
+  openCompare=async function(uid){var r=await _openCompare.apply(this,arguments);
+    try{var o=document.getElementById('ovAsk'),p=document.getElementById('askPanel');
+      if(o&&p&&o.classList.contains('on')&&p.querySelector('.gstab.cmp')&&!p.querySelector('[data-signal]')&&uid&&(typeof NET==='undefined'||uid!==NET.uid)){
+        var h=p.querySelector('h2'),nom=h?h.textContent.replace(/^Toi et /,''):'',moi='';try{moi=P.myCode||''}catch(e){}
+        var corps='Joueur signalé : '+nom+' (identifiant '+uid+')\nMon code ami : '+moi+'\n\nCe qui ne va pas (pseudo, photo, comportement) :\n';
+        var d=document.createElement('p');d.className='amsg small';d.style.marginTop='10px';
+        var a=document.createElement('a');a.setAttribute('data-signal','1');a.style.color='inherit';a.textContent='Signaler ce joueur';
+        a.href='mailto:contact@770lab.com?subject='+encodeURIComponent('Chkobba : signalement d\'un joueur')+'&body='+encodeURIComponent(corps);
+        d.appendChild(a);d.appendChild(document.createTextNode(' (pseudo ou photo déplacés : par e-mail à contact@770lab.com)'));
+        var b=p.querySelector('.stack');if(b)p.insertBefore(d,b);else p.appendChild(d)}}catch(e){}
+    return r};
+})();
 </script>
 <script id="ajouts-amis">
 /* Ajouts « jeu entre amis » de 770lab, adaptés le 16/11/2026 à la version de Laurent (repris le 18/11 sur sa livraison finale : pseudo par setMyName). Ce bloc n'est PAS dans son fichier.
