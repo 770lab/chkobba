@@ -2,7 +2,8 @@
 
 (Ancienne adresse `770lab.com/chkoba`, avec un seul b : le dépôt `770lab/chkoba` ne fait plus que rediriger ici.)
 
-Le jeu de cartes tunisien (contre l'ordinateur, à 2 ou à 4, en ligne via Firebase `chkobba-55555`).
+Le jeu de cartes tunisien (contre l'ordinateur, à 2 ou à 4, en ligne via Firebase `chkobba-770lab`, le projet de 770lab,
+depuis le 25/11/2026 ; avant : `chkobba-55555`, le projet de Laurent).
 Site statique servi par GitHub Pages (mode legacy, `.nojekyll`), ex-chkobba-55555.netlify.app.
 
 - `index.html` : tout le jeu (polices et cartes intégrées en base64).
@@ -44,6 +45,24 @@ Reprendre une nouvelle version de Laurent :
 4. lui rendre le journal de ce qui vient de nous, pour que sa copie reste identique.
 
 ## Déménagement vers le Firebase de 770lab (depuis le 23/11/2026)
+
+**BASCULE FAITE LE 25/11/2026 À 15 H 14** (« Go, bascule complète » d'Ishay, donné ici et confirmé sur le MacBook Air). Ce qui suit plus bas est
+l'histoire de la préparation ; l'état actuel est celui-ci :
+- Le site (PR #9) et les applis (`chkobba-app` PR #10, TestFlight + APK de test lancés à 15 h 13) pointent vers **`chkobba-770lab`**.
+- Import final à 15 h 10 – 15 h 11, vérifié par la session du MacBook Air puis recoupé depuis le cloud : 139 comptes des deux côtés (mêmes uid,
+  mêmes fournisseurs, mêmes adresses), base identique nœud pour nœud, règles identiques, lecture et écriture refusées sans compte (401). Personne
+  n'avait joué chez Laurent depuis le 24/11 à 21 h 58 : rien n'a été perdu entre l'export et la bascule.
+- **`chkobba-770lab` est la base en service : NE PLUS JAMAIS y réimporter** (`database:set /`, `auth:import`, règles), ni y faire d'essai qui crée
+  un joueur ou une table (le classement est public). Pour essayer : `essais/` (faux Firebase).
+- `chkobba-55555` (Laurent) n'a pas été modifié et reste tel quel. La copie d'essai de Laurent (chkobba-55555.netlify.app) est encore dessus :
+  ses joueurs et ceux du site ne se voient plus tant qu'il n'a pas repris le nouveau `FB_CONFIG` et `OAUTH.google` de `index.html`.
+- Les exports de 15 h 10 sont dans `~/chkobba-demenagement/export-laurent-J2` sur le MacBook Air (dossier privé : adresses et empreintes de mots de
+  passe, jamais dans un dépôt).
+- **Reste à faire** : vérifier que l'écran de consentement Google est « En production » (console Google Cloud → `chkobba-770lab` → Google Auth
+  Platform → Audience), sinon la connexion Google ne marche que pour les comptes de test ; essayer en vrai Google, Facebook et le mot de passe d'un
+  compte e-mail importé ; prévenir Laurent ; faire installer la nouvelle appli aux testeurs (une ancienne appli reste chez Laurent).
+- **Revenir en arrière** (si besoin, dans les premières heures) : `outils/bascule-firebase.mjs` avec l'ancienne configuration (dans l'historique
+  git, commit `beb54c0`) ; ce que les joueurs auront écrit chez 770lab entre-temps n'y sera pas.
 
 Ishay, 23/11 : « On va passer sur mon firebase ». Tant que la bascule n'est pas faite, le jeu reste sur `chkobba-55555` (Laurent) et
 rien ne change pour les joueurs. **Seul `index.html` dépend du projet, à deux endroits** : `FB_CONFIG` (configuration web) et
