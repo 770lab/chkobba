@@ -60,7 +60,29 @@ rien ne change pour les joueurs. **Seul `index.html` dépend du projet, à deux 
   Domaines autorisés : `770lab.com`, `www.770lab.com`. Puis relever le **client Google** (Authentication → Google → configuration du SDK Web :
   `565136876072-….apps.googleusercontent.com`) et la **configuration web** (`firebase apps:sdkconfig WEB --project chkobba-770lab`).
 
-Ensuite, sur l'iMac (jamais depuis le cloud : il faut le compte) :
+**Répétition faite dans la nuit du 24 au 25/11/2026**, par une session lancée sur le MacBook Air d'Ishay (outils `firebase` et `gcloud` connectés avec
+chabadclub770@gmail.com ; dossier privé `~/chkobba-demenagement`, hors git). D'après son bilan, relu depuis le cloud :
+- Invitation de Laurent acceptée : chabadclub770 est propriétaire de `chkobba-55555`.
+- `chkobba-770lab` : Anonyme, E-mail / Mot de passe, Google et Facebook activés (Facebook : même identifiant `1458044300724505`, clé secrète lue chez
+  Laurent, jamais gardée dans un fichier) ; domaines autorisés + `770lab.com` et `www.770lab.com` ; suppression automatique des invités de plus de
+  30 jours COUPÉE (elle est activée par défaut sur un projet neuf, pas chez Laurent). `identityPlatform:initializeAuth` exige la facturation : passer
+  par `firebase deploy --only auth`.
+- **Client Google du projet** (à donner à `outils/bascule-firebase.mjs`) : `565136876072-dn7af2rn87phd7v5ot82ar5j6atnegm0.apps.googleusercontent.com`,
+  adresses de retour `https://770lab.com/chkobba/` et `https://www.770lab.com/chkobba/` déclarées. Écran de consentement Google : état « En production »
+  pas encore vérifié.
+- Export (lecture seule) puis import : **139 comptes, dont 136 invités et 3 Google** (20 actifs sur 7 jours) ; base et règles identiques. Les règles de
+  Laurent laissent chaque joueur écrire sous `users/$uid` : **`users/$uid/rel` est déjà accepté, aucune règle à ajouter.**
+- Essai du jeu en local contre `chkobba-770lab` : invité, pseudo et code ami, classement, compte e-mail créé depuis l'invité, table à deux. Pas essayé :
+  Google de bout en bout (il faut le vrai site), le mot de passe d'un compte importé, Facebook.
+- La base de `chkobba-770lab` contient ces essais : **elle est à refaire à neuf le jour de la bascule** (nouvel export, nouvel import).
+
+**Les applis ne sont dans aucun magasin** (vérifié le 25/11 dans `chkobba-app`) : iPhone = TestFlight à la demande (`ios.yml`, `testflight=true`),
+Android = APK de test à chaque push sur `main` (l'envoi Play « test interne » n'a jamais servi). « Le site et les applis en même temps » = environ
+une heure de construction, sans validation Apple ni Google. La copie d'essai de Laurent (chkobba-55555.netlify.app) reste sur son projet tant qu'il
+ne reprend pas le nouveau `FB_CONFIG`. Le site est servi avec `cache-control: max-age=600` : un joueur peut garder l'ancienne page une dizaine de
+minutes, et tant que son service worker n'a pas pris la nouvelle.
+
+Ensuite, sur un Mac où `firebase` est connecté avec chabadclub770 (l'iMac ou le MacBook Air ; jamais depuis le cloud : il faut le compte) :
 1. **Exporter chez Laurent** : la base (`firebase database:get / --project chkobba-55555 -o base-laurent.json`), les comptes
    (`firebase auth:export comptes-laurent.json --format json --project chkobba-55555`, avec les paramètres de hachage des mots de passe lus dans
    la console, Authentication → Utilisateurs → ⋮) et les **règles** (console → Realtime Database → Règles ; ou
