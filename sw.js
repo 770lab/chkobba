@@ -1,5 +1,5 @@
 // Chkobba : garde l'appli en mémoire pour jouer sans Internet
-const V='chkobba-20261120-1600';
+const V='chkobba-20261125-1140';
 const FILES=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','icon-maskable.png','apple-touch-icon.png','firebase-app-compat.js','firebase-auth-compat.js','firebase-database-compat.js'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES).then(()=>c.add('confidentialite.html').catch(()=>{}))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
