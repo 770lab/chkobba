@@ -4000,6 +4000,104 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&window.top===
       savePrefs()}}catch(e){}
     return r};
 })();
+
+/* iPhone : le jeu rend la main sur le son quand on le quitte (770lab, 25/11/2026, signalé par Laurent : le lecteur
+   « Chkobba » restait sur l'écran verrouillé et bloquait les autres sources audio). Pour que le bouton « silencieux »
+   ne coupe pas les sons, audioUnlock() joue en boucle un son muet (IOSAUD) et passe la session audio en « playback » ;
+   rien ne l'arrêtait quand l'appli passait derrière. Ici, dès que la page est cachée : la boucle est arrêtée et jetée
+   (audioUnlock la recrée au prochain toucher), le moteur de sons est mis en pause (le jeu le relance déjà au retour),
+   la session audio et le lecteur du téléphone sont rendus. Le code de Laurent n'est pas modifié. */
+(function(){
+  function lacher(){
+    try{if(typeof IOSAUD!=='undefined'&&IOSAUD){var a=IOSAUD;IOSAUD=null;a.pause();a.removeAttribute('src');a.load()}}catch(e){}
+    try{if(typeof AC!=='undefined'&&AC&&AC.state==='running'){var p=AC.suspend();if(p&&p.catch)p.catch(function(){})}}catch(e){}
+    try{if(navigator.audioSession)navigator.audioSession.type='auto'}catch(e){}
+    try{if(navigator.mediaSession){navigator.mediaSession.metadata=null;navigator.mediaSession.playbackState='none'}}catch(e){}
+  }
+  document.addEventListener('visibilitychange',function(){if(document.hidden)lacher()});
+  addEventListener('pagehide',lacher);
+})();
+
+/* « Supprimer mon profil » (770lab, 25/11/2026). Apple l'exige dès qu'une appli permet de créer un compte (règle 5.1.1 v),
+   et c'est le droit de chaque joueur : jusque-là il fallait écrire à contact@770lab.com.
+   Un bouton est ajouté à la fin de « Mon profil » (renderProf enveloppé). Après deux confirmations, et hors partie en ligne :
+   1) un compte relié (e-mail, Google, Facebook) doit s'être identifié depuis moins de 4 minutes, sinon Firebase refuse
+      d'effacer le compte : on redemande le mot de passe, ou la fenêtre Google / Facebook. Rien n'est effacé avant.
+   2) effacé dans la base, avec ce que les règles permettent au joueur lui-même : sa place dans la liste de chaque ami,
+      sa ligne du classement général et de chaque classement par période depuis octobre 2026, son pseudo réservé, sa
+      présence, puis sa fiche entière (profil, amis, invitations, historique). Si la fiche ne part pas, on s'arrête là.
+      Le code ami (codes/<code>) ne peut pas être effacé par le joueur (règle : écriture seulement s'il n'existe pas) : il
+      reste, mais ne contient que l'identifiant, qui ne mène plus à rien.
+   3) le compte de connexion est effacé (un invité trop ancien pour l'être est seulement déconnecté : son identifiant
+      anonyme ne dit rien de lui), puis l'appareil repart avec un profil invité neuf, comme après « Se déconnecter ». */
+(function(){
+  if(!(typeof renderProf==='function'&&typeof profReset==='function'&&typeof netRestart==='function'&&typeof askBox==='function'&&typeof perGet==='function'))return;
+  var enCours=false,DEBUT=new Date(2026,9,1);
+  var _renderProf=renderProf;
+  renderProf=function(){var r=_renderProf.apply(this,arguments);
+    try{var p=document.getElementById('profPanel');
+      if(p&&!p.querySelector('[data-suppr]')&&typeof NET!=='undefined'&&NET.ok&&!(typeof TESTER!=='undefined'&&TESTER)){
+        var d=document.createElement('div');
+        d.innerHTML='<button class="btn sm ghost" data-suppr="1" style="width:100%;margin-top:14px;color:#c62828"'+(enCours?' disabled':'')+'>Supprimer mon profil'+(NET.prov?' et mon compte':'')+'</button>';
+        p.appendChild(d)}}catch(e){}
+    return r};
+  var pan=document.getElementById('profPanel');
+  if(pan)pan.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-suppr]');if(b){e.preventDefault();supprimer()}});
+
+  /* toutes les périodes de classement depuis le lancement du jeu (les règles ne laissent pas les lister) */
+  function periodes(){var o={wk:{},mo:{},qt:{},yr:{}},fin=new Date();fin.setDate(fin.getDate()+7);
+    for(var d=new Date(DEBUT);d<=fin;d.setDate(d.getDate()+7)){o.wk[weekId(d)]=1;o.mo[monthId(d)]=1;o.qt[quarterId(d)]=1;o.yr[String(d.getFullYear())]=1}
+    try{var per=perGet();PER_KEYS.forEach(function(k){if(per[k]&&per[k].id)o[k][per[k].id]=1})}catch(e){}
+    return o}
+
+  /* identification récente d'un compte relié ; rend true si le compte peut être effacé */
+  async function identifier(user){
+    try{var tr=await user.getIdTokenResult();if(Date.now()-new Date(tr.authTime).getTime()<4*60*1000)return true}catch(e){}
+    var fs=(user.providerData||[]).map(function(x){return x.providerId});
+    if(fs.indexOf('password')>=0&&user.email){
+      if(!await askBox('<h2>Confirme que c\'est bien toi</h2><p>Pour effacer ton compte, entre ton mot de passe.</p><input class="inp" id="supPw" type="password" autocomplete="current-password" placeholder="Mot de passe" style="width:100%">','Continuer','Annuler'))return false;
+      var pw=(document.getElementById('supPw')||{}).value||'';
+      try{await user.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(user.email,pw));return true}
+      catch(e){await askBox('<p style="margin:0">Mot de passe incorrect, ou pas de connexion. Rien n\'a été effacé.</p>',null,'OK');return false}}
+    var f=fs.indexOf('google.com')>=0?new firebase.auth.GoogleAuthProvider():fs.indexOf('facebook.com')>=0?new firebase.auth.FacebookAuthProvider():null;
+    if(f){try{await user.reauthenticateWithPopup(f);return true}catch(e){}}
+    await askBox('<h2>Reconnecte-toi d\'abord</h2><p>Pour effacer ton compte, il faut t\'être connecté il y a moins de quelques minutes. Touche « Se déconnecter », reconnecte-toi, puis reviens ici tout de suite. Rien n\'a été effacé.</p>',null,'Compris');
+    return false}
+
+  async function supprimer(){
+    if(enCours||typeof NET==='undefined'||!NET.ok)return;
+    if((typeof S!=='undefined'&&S&&S.online&&!S.over)||(typeof MM!=='undefined'&&MM&&MM.slot)||P.pend){
+      await askBox('<h2>Partie en ligne en cours</h2><p>Termine ou abandonne ta partie en ligne avant de supprimer ton profil.</p>',null,'Compris');return}
+    var relie=!!NET.prov;
+    if(!await askBox('<h2>Supprimer mon profil ?</h2><p>Ton pseudo, ton avatar ou ta photo, ta note, tes statistiques, ta liste d\'amis et tes lignes dans les classements seront <b>effacés pour de bon</b>'+(relie?', ainsi que ton compte de connexion':'')+'.</p><p class="amsg small">Cette action ne peut pas être annulée.</p>','Continuer','Annuler'))return;
+    if(!await askBox('<h2>Dernière confirmation</h2><p>Tout effacer, définitivement ?</p>','Oui, tout supprimer','Non, je garde mon profil'))return;
+    var user=null;try{if(NET.kind==='firebase'&&window.firebase&&firebase.auth)user=firebase.auth().currentUser}catch(e){}
+    if(user&&!user.isAnonymous&&!await identifier(user))return;
+    enCours=true;try{PF.busy=true;PF.msg='Suppression en cours…';renderProf()}catch(e){}
+    var uid=NET.uid,rates=0,sur=function(f){try{return Promise.resolve(f()).catch(function(){rates++})}catch(e){rates++;return Promise.resolve()}};
+    try{
+      try{if(user&&window.firebase&&firebase.database)await firebase.database().ref('status/'+uid).onDisconnect().cancel()}catch(e){}
+      var amis={};try{amis=(await NET.get('users/'+uid+'/friends'))||{}}catch(e){}
+      await Promise.all(Object.keys(amis).map(function(a){return sur(function(){return NET.remove('users/'+a+'/friends/'+uid)})}));
+      await sur(function(){return NET.remove('board/'+uid)});
+      var per=periodes(),chemins=[];Object.keys(per).forEach(function(k){Object.keys(per[k]).forEach(function(id){chemins.push('lb/'+k+'/'+id+'/'+uid)})});
+      for(var i=0;i<chemins.length;i+=25)await Promise.all(chemins.slice(i,i+25).map(function(c){return sur(function(){return NET.remove(c)})}));
+      if(P.nameKey&&P.nameUid===uid)await sur(function(){return NET.remove('names/'+P.nameKey)});
+      await sur(function(){return NET.remove('status/'+uid)});
+      var fiche=true;try{await NET.remove('users/'+uid)}catch(e){fiche=false}
+      if(!fiche){enCours=false;try{PF.busy=false;PF.msg='';renderProf()}catch(e){}
+        await askBox('<h2>La suppression n\'a pas abouti</h2><p>Vérifie ta connexion à Internet et recommence. Ton profil est toujours là.</p>',null,'OK');return}
+      var compte=true,invite=!user||user.isAnonymous;
+      if(user){try{await user.delete()}catch(e){compte=false}}
+      try{if(typeof NET.signOut==='function')await NET.signOut()}catch(e){}
+      profReset();P.rel={};P.fav={};P.foe={};P.table={};P.pend=null;P.bd=null;P.bdp=null;P.syncAt=0;savePrefs();
+      try{await netRestart()}catch(e){}
+      enCours=false;try{PF.busy=false;PF.msg='';PF.mail=false;renderProf();homeProfile();if(typeof syncStart==='function')syncStart()}catch(e){}
+      await askBox('<h2>Profil supprimé</h2><p>Ton profil a été effacé'+(rates?' (quelques lignes de classement n\'ont pas pu l\'être : écris à contact@770lab.com si tu en vois encore)':'')+'.'+(compte||invite?'':' Ton compte de connexion, lui, n\'a pas pu être effacé : écris à contact@770lab.com pour le faire supprimer.')+'</p><p class="amsg small">Cet appareil repart avec un profil invité tout neuf.</p>',null,'OK');
+    }catch(e){enCours=false;try{PF.busy=false;PF.msg='';renderProf()}catch(x){}}
+  }
+  window.__supprimerProfil=supprimer; /* pour les essais */
+})();
 </script>
 <script id="ajouts-amis">
 /* Ajouts « jeu entre amis » de 770lab, adaptés le 16/11/2026 à la version de Laurent (repris le 18/11 sur sa livraison finale : pseudo par setMyName). Ce bloc n'est PAS dans son fichier.
